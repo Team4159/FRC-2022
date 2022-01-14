@@ -17,6 +17,7 @@ public class Drivetrain extends SubsystemBase {
 
     private Pigeon2 pigeon;
 
+
     public Drivetrain() {
         rightFrontTalon = new WPI_TalonFX(Constants.CanIds.rightFrontTalon);
         rightRearTalon = new WPI_TalonFX(Constants.CanIds.rightRearTalon);
@@ -32,6 +33,8 @@ public class Drivetrain extends SubsystemBase {
 
         leftMotors.setInverted(true);
         rightMotors.setInverted(false);
+
+        
     }
 
     public void drive(double leftSpeed, double rightSpeed) {
@@ -39,18 +42,37 @@ public class Drivetrain extends SubsystemBase {
         rightMotors.set(rightSpeed);
     }
 
-    private double error;
 
-    public void setSetpoint(double setpoint) { // In Meters
 
+
+    @Override
+    public void periodic() {
+        
+    }
+    
+
+    public void zeroSensors() {
+        zeroEncoders();
     }
 
+    public void zeroEncoders() {
+        leftFrontTalon.setSelectedSensorPosition(0);
+        rightFrontTalon.setSelectedSensorPosition(0);
+        leftRearTalon.setSelectedSensorPosition(0);
+        rightRearTalon.setSelectedSensorPosition(0);
+    }
+
+    //Return Position from Integrated Encoders from TalonFXs 
+
+    /*
+        Need to Check How Accurate This Is
+    */
     public double getLeftPosition() {
-        return leftFrontTalon.getSelectedSensorPosition();
+        return leftFrontTalon.getSelectedSensorPosition() * Constants.DriveTrainConstants.metersPerRev;
     }
 
     public double getRightPosition() {
-        return rightFrontTalon.getSelectedSensorPosition();
+        return rightFrontTalon.getSelectedSensorPosition() * Constants.DriveTrainConstants.metersPerRev;
     }
 
     public double getRightVelocity() {

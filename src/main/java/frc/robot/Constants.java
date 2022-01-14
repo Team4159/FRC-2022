@@ -24,12 +24,12 @@ public class Constants {
         public final static int shooterSpark2 = 13;
     }
 
-    public class JoystickConstants {
+    public static class JoystickConstants {
         public final static int leftJoystickPort = 0;
         public final static int rightJoystickPort = 1;
         public final static int secondaryJoystickPort = 2;
 
-        public class SecondaryJoystick { // Temporary Buttons for Controls meant for Week 1 Teams to use
+        public static class SecondaryJoystick { // Temporary Buttons for Controls meant for Week 1 Teams to use
             public final static int lowerArm = 0; // Implement PID System to preset these positions
             public final static int raiseArm = 1;
             public final static int runIntakeForward = 2;
@@ -40,14 +40,11 @@ public class Constants {
 
     }
 
-    public class DriveTrainConstants {
-        public final static double kP = 0.5;
-        public final static double kI = 0;
-        public final static double kD = 0;
+    public static class DriveTrainConstants {
 
-        public final double metersPerRev = Units.metersToInches(3) * 2 * Math.PI;
+        public final static double metersPerRev = Units.metersToInches(3) * 2 * Math.PI;
 
-        public final double trackWidth = 0.5; // TODO: Need To Determine In Meters
+        public final static double trackWidth = 0.5; // TODO: Need To Determine In Meters
 
     }
 
