@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.CanIds;
@@ -31,5 +30,18 @@ public class Drivetrain extends SubsystemBase{
     public void drive(double leftSpeed, double rightSpeed) {
         leftMotors.set(leftSpeed);
         rightMotors.set(rightSpeed);
+    }
+
+    public double getSpeed() {
+        return ((leftMotors.get() + rightMotors.get()) / 2);
+    }
+
+    public void close() throws Exception {
+        leftMotors.close();
+        rightMotors.close();
+        leftFrontTalon.close();
+        leftRearTalon.close();
+        rightFrontTalon.close();
+        rightRearTalon.close();
     }
 }
