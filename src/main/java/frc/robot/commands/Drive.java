@@ -15,6 +15,7 @@ public class Drive extends CommandBase{
         this.drivetrain = drivetrain;
         this.leftJoystick = leftJoystick;
         this.rightJoystick = rightJoystick;
+        addRequirements(drivetrain);
     }
 
     @Override

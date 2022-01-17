@@ -42,6 +42,11 @@ public class Drivetrain extends SubsystemBase {
         rightMotors.set(rightSpeed);
     }
 
+    public void stop(){
+        leftMotors.set(0);
+        rightMotors.set(0);
+    }
+
 
 
 
