@@ -6,6 +6,7 @@ import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.Encoder;
 
 public class Drivetrain extends SubsystemBase {
     private WPI_TalonFX rightFrontTalon;
@@ -17,6 +18,8 @@ public class Drivetrain extends SubsystemBase {
 
     private Pigeon2 pigeon;
 
+    private Encoder rightEncoder;
+    private Encoder leftEncoder;
 
     public Drivetrain() {
         rightFrontTalon = new WPI_TalonFX(Constants.CanIds.rightFrontTalon);
@@ -29,10 +32,26 @@ public class Drivetrain extends SubsystemBase {
 
         pigeon = new Pigeon2(Constants.CanIds.pigeonId);
 
+
+
         // TODO: Need to See Which Ones Are Inverted
 
         leftMotors.setInverted(true);
         rightMotors.setInverted(false);
+
+        rightEncoder = new Encoder(
+            Constants.DriveTrainConstants.rightEncoderChannelA,
+            Constants.DriveTrainConstants.rightEncoderChannelB,
+            Constants.DriveTrainConstants.rightEncoderReverseDirection,
+            Constants.DriveTrainConstants.rightEncoderEncodingType
+        );
+
+        leftEncoder = new Encoder(
+            Constants.DriveTrainConstants.leftEncoderChannelA,
+            Constants.DriveTrainConstants.leftEncoderChannelB,
+            Constants.DriveTrainConstants.leftEncoderReverseDirection,
+            Constants.DriveTrainConstants.leftEncoderEncodingType
+        );
 
         
     }

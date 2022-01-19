@@ -2,6 +2,8 @@ package frc.robot;
 
 import edu.wpi.first.math.util.Units;
 import java.lang.Math;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+
 
 public class Constants {
 
@@ -41,6 +43,16 @@ public class Constants {
     }
 
     public static class DriveTrainConstants {
+
+        public final static int rightEncoderChannelA = 0;
+        public final static int rightEncoderChannelB = 1;
+        public final static boolean rightEncoderReverseDirection = true;
+        public final static EncodingType rightEncoderEncodingType = EncodingType.k1X;
+
+        public final static int leftEncoderChannelA = 0;
+        public final static int leftEncoderChannelB = 1;
+        public final static boolean leftEncoderReverseDirection = true;
+        public final static EncodingType leftEncoderEncodingType = EncodingType.k1X;
 
         public final static double metersPerRev = Units.metersToInches(3) * 2 * Math.PI;
 
