@@ -6,7 +6,9 @@ import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class Drivetrain extends SubsystemBase {
     private WPI_TalonFX rightFrontTalon;
@@ -21,6 +23,9 @@ public class Drivetrain extends SubsystemBase {
     private Encoder rightEncoder;
     private Encoder leftEncoder;
 
+    private final DifferentialDrive drive;
+    //private final DifferentialDriveOdometry odometry;
+
     public Drivetrain() {
         rightFrontTalon = new WPI_TalonFX(Constants.CanIds.rightFrontTalon);
         rightRearTalon = new WPI_TalonFX(Constants.CanIds.rightRearTalon);
@@ -30,7 +35,11 @@ public class Drivetrain extends SubsystemBase {
         leftMotors = new MotorControllerGroup(leftFrontTalon, leftRearTalon);
         rightMotors = new MotorControllerGroup(rightFrontTalon, rightRearTalon);
 
+        drive = new DifferentialDrive(leftMotors, rightMotors);
+
         pigeon = new Pigeon2(Constants.CanIds.pigeonId);
+
+        
 
 
 
@@ -66,9 +75,6 @@ public class Drivetrain extends SubsystemBase {
         rightMotors.set(0);
     }
 
-
-
-
     @Override
     public void periodic() {
         
@@ -80,30 +86,28 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void zeroEncoders() {
-        leftFrontTalon.setSelectedSensorPosition(0);
-        rightFrontTalon.setSelectedSensorPosition(0);
-        leftRearTalon.setSelectedSensorPosition(0);
-        rightRearTalon.setSelectedSensorPosition(0);
+        leftEncoder.reset();
+        rightEncoder.reset();
+    }
+
+    public MotorControllerGroup getLeftMotors() {
+        return leftMotors;
+    }
+
+    public MotorControllerGroup getRightMotors() {
+        return rightMotors;
     }
 
     //Return Position from Integrated Encoders from TalonFXs 
 
-    /*
-        Need to Check How Accurate This Is
-    */
+    //TODO: Check How Accurate Encoder Values Are
+
     public double getLeftPosition() {
-        return leftFrontTalon.getSelectedSensorPosition() * Constants.DriveTrainConstants.metersPerRev;
+        return leftEncoder.getDistance() * Constants.DriveTrainConstants.metersPerRev;
     }
 
     public double getRightPosition() {
-        return rightFrontTalon.getSelectedSensorPosition() * Constants.DriveTrainConstants.metersPerRev;
+        return rightEncoder.getDistance() * Constants.DriveTrainConstants.metersPerRev;
     }
 
-    public double getRightVelocity() {
-        return rightFrontTalon.getSelectedSensorVelocity();
-    }
-
-    public double getLeftVelocity() {
-        return leftFrontTalon.getSelectedSensorVelocity();
-    }
 }
