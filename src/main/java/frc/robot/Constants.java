@@ -1,7 +1,11 @@
 package frc.robot;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+
 import java.lang.Math;
+
+import javax.sound.sampled.AudioFormat.Encoding;
 
 public class Constants {
 
@@ -50,13 +54,24 @@ public class Constants {
         public final double trackWidth = 0.5; // TODO: Need To Determine In Meters
 
     }
-    public class IntakeAndArmConstants {
+    public static class IntakeAndArmConstants {
         public final static double intakeSpeed = 0.3;
         public final static double backwardsIntakeSpeed = -0.3;
         
         public final static double raiseArmSpeed = 0.1;
         public final static double lowerArmSpeed = -0.1;
 
-    }
+        public final static int encoderChannelA = 0;
+        public final static int encoderChannelB = 1;
+        public final static boolean encoderReverse = false;
+        public final static EncodingType encodingType = EncodingType.k1X;
+
+        public final static int kP = 0;
+        public final static int kI = 0;
+        public final static int kD = 0;
+        
+        public final static int pidLowSetPoint = 0;
+        public final static int pidHighSetPoint = 0;
+        }
 
 }
