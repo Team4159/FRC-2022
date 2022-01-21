@@ -29,5 +29,8 @@ public class Intake extends SubsystemBase {
         return intakeSpark;
     }
 
+    public void close() {
+        intakeSpark.close();
+    }
 
 }

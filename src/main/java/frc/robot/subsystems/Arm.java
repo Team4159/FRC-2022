@@ -54,4 +54,10 @@ public class Arm extends SubsystemBase{
         pid.reset();
     }
 
+    public void close() {
+        armSpark.close();
+        encoder.close();
+        pid.close();
+    }
+
 }
