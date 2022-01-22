@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Auto.*;
 import frc.robot.commands.*;
+import frc.robot.commands.MoveArm.ArmState;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -33,9 +34,9 @@ public class RobotContainer {
   // Commands
   private final Drive drive = new Drive(drivetrain, leftJoystick, rightJoystick);
   private final Drive exampleCommand = new Drive(drivetrain, leftJoystick, rightJoystick);
-  private final MoveArm stopArm = new MoveArm(arm, 0); // unused
-  private final MoveArm lowerArm = new MoveArm(arm, 1);
-  private final MoveArm raiseArm = new MoveArm(arm, 2);
+  private final MoveArm stopArm = new MoveArm(arm, ArmState.STOP); // unused
+  private final MoveArm lowerArm = new MoveArm(arm, ArmState.LOW);
+  private final MoveArm raiseArm = new MoveArm(arm, ArmState.HIGH);
   private final RunIntake runIntake = new RunIntake(intake, true);
   private final RunIntake runIntakeBackwards = new RunIntake(intake, false);
 

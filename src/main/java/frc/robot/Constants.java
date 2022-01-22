@@ -5,8 +5,6 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 
 import java.lang.Math;
 
-import javax.sound.sampled.AudioFormat.Encoding;
-
 public class Constants {
 
     public class CanIds {

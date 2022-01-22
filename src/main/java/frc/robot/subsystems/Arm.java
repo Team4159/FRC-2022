@@ -60,4 +60,8 @@ public class Arm extends SubsystemBase{
         pid.close();
     }
 
+    public void runArm(int setPoint) {
+        setArmSpeed(pid.calculate(getEncoderRaw(), setPoint));
+    }
+
 }
