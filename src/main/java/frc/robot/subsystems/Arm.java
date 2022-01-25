@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -13,6 +14,16 @@ public class Arm extends SubsystemBase{
     private Encoder encoder;
     private PIDController pid;
 
+    
+    public static enum ArmState {
+        LOW,
+        HIGH
+    }
+    
+    private ArmState armState;
+
+    private int lowSetPoint, highSetPoint;
+
     public Arm() {
         armSpark = new CANSparkMax(Constants.CanIds.armSpark, MotorType.kBrushless);
         encoder = new Encoder(
@@ -21,6 +32,8 @@ public class Arm extends SubsystemBase{
             Constants.IntakeAndArmConstants.encoderReverse,
             Constants.IntakeAndArmConstants.encodingType
         );
+        lowSetPoint = Constants.IntakeAndArmConstants.pidLowSetPoint;
+        highSetPoint = Constants.IntakeAndArmConstants.pidHighSetPoint;
 
         pid = new PIDController(
             Constants.IntakeAndArmConstants.kP, 
@@ -28,14 +41,11 @@ public class Arm extends SubsystemBase{
             Constants.IntakeAndArmConstants.kD
         );
 
+        armState = ArmState.HIGH;
     }
 
     public void setArmSpeed(double speed) {
         armSpark.set(speed);
-    }
-
-    public void stopArm() {
-        armSpark.set(0);
     }
 
     public CANSparkMax getArmSpark() {
@@ -60,8 +70,22 @@ public class Arm extends SubsystemBase{
         pid.close();
     }
 
-    public void runArm(int setPoint) {
-        setArmSpeed(pid.calculate(getEncoderRaw(), setPoint));
+    public void runArm(ArmState armState) {
+        this.armState = armState;
+        switch (this.armState) {
+            case HIGH:
+                setArmSpeed(calculatePID(getEncoderRaw(), highSetPoint));
+                break;
+            case LOW:
+                setArmSpeed(calculatePID(getEncoderRaw(), lowSetPoint));
+                break;
+        }
+    }
+
+    public void zeroArm() {
+        pid.reset();
+        armState = ArmState.HIGH;
+        runArm(armState);
     }
 
 }
