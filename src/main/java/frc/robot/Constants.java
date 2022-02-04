@@ -64,6 +64,9 @@ public class Constants {
 
         public final static int pidLowSetPoint = 0;
         public final static int pidHighSetPoint = 0;
+
+        public final static int topLimitSwitchChannel = 4;
+        public final static int bottomLimitSwitchChannel = 5;
     }
 
     public static class IntakeAndArmConstants {
