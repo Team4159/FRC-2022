@@ -38,9 +38,7 @@ public class Trajectories {
            drivetrain::getVelocities,
            drivetrain.getLeftPIDController(),
            drivetrain.getRightPIDController(),
-           (leftVoltage, rightVoltage) -> drivetrain.drive(leftVoltage/12, rightVoltage/12),
-           drivetrain
-        );
+           (leftVoltage, rightVoltage) -> drivetrain.drive(leftVoltage/12, rightVoltage/12),drivetrain);
         return command.andThen(drivetrain::stop);
     }
 
