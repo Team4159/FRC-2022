@@ -1,9 +1,12 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class Dashboard {
-
+    private ShuffleboardTab driveTeam = Shuffleboard.getTab("Drive Team");
+    private ShuffleboardTab electrical = Shuffleboard.getTab("Electrical");
+    private ShuffleboardTab testing = Shuffleboard.getTab("Testing");
 
     public Dashboard() {
         display();
@@ -18,7 +21,7 @@ public class Dashboard {
     }
 
     public void intakeInfo() {
-        SmartDashboard.putBoolean("String", true); //Example
+        
     }
 
     public void feederInfo() {
