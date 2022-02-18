@@ -13,6 +13,11 @@ public class RunNeck extends CommandBase {
 
     @Override
     public void execute() {
-        shooter.runNeck();
+        shooter.setNeck();
+    }
+
+    @Override
+    public void end(boolean i) {
+        shooter.stop();
     }
 }

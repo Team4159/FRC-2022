@@ -8,34 +8,34 @@ import frc.robot.Constants;
 import frc.robot.Constants.Direction;
 
 public class Feeder extends SubsystemBase {
-    private CANSparkMax feederSpark;
+    private CANSparkMax motor;
     private Direction direction;
 
     public Feeder() {
-        feederSpark = new CANSparkMax(Constants.CanIds.feederSpark, MotorType.kBrushless);
-        direction = Direction.FORWARDS;
+        this.motor = new CANSparkMax(Constants.CanIds.feederSpark, MotorType.kBrushless);
     }
 
-    public void runFeeder(Direction direction) {
+    public void set(Direction direction) {
         this.direction = direction;
-        switch(direction) {
+        switch (direction) {
             case FORWARDS:
-                feederSpark.set(Constants.FeederConstants.feederSpeed);
+                this.motor.set(Constants.FeederConstants.feederSpeed);
                 break;
             case BACKWARDS:
-                feederSpark.set(Constants.FeederConstants.feederSpeed);
+                this.motor.set(-Constants.FeederConstants.feederSpeed);
                 break;
         }
     }
+
     public void stop() {
-        feederSpark.set(0.0);
+        this.motor.set(0.0);
     }
 
-    public CANSparkMax getFeederSpark() {
-        return this.feederSpark;
+    public CANSparkMax getMotor() {
+        return this.motor;
     }
 
-    public void close(){
-        feederSpark.close();    
-}
+    public void close() {
+        this.motor.close();
+    }
 }

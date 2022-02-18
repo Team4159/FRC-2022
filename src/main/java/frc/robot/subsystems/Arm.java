@@ -9,93 +9,82 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.math.controller.PIDController;
 
-public class Arm extends SubsystemBase{
-    private CANSparkMax armSpark1;
-    private CANSparkMax armSpark2;
-    private MotorControllerGroup armSparks;
-    private Encoder encoder;
-    private PIDController pid;
-    
+public class Arm extends SubsystemBase {
     public static enum ArmState {
-        LOW,
-        HIGH
+        LOW, HIGH
     }
-    
-    private ArmState armState;
 
+    private CANSparkMax[] armSparkMotors = new CANSparkMax[2];
+    private MotorControllerGroup motor;
+    private ArmState state;
+
+    private PIDController pid;
+    private Encoder encoder;
     private int lowSetPoint, highSetPoint;
 
     public Arm() {
-        armSpark1 = new CANSparkMax(Constants.CanIds.armSpark1, MotorType.kBrushless);
-        armSpark2 = new CANSparkMax(Constants.CanIds.armSpark2, MotorType.kBrushless);
+        this.armSparkMotors[0] = new CANSparkMax(Constants.CanIds.armSpark1, MotorType.kBrushless);
+        this.armSparkMotors[1] = new CANSparkMax(Constants.CanIds.armSpark2, MotorType.kBrushless);
+        this.armSparkMotors[0].setInverted(true); // TODO: CHECK WHICH ONES ARE INVERTED
+        this.motor = new MotorControllerGroup(this.armSparkMotors[0], this.armSparkMotors[1]);
 
-        //TODO: CHECK WHICH ONES ARE INVERTED
-        armSpark1.setInverted(true);
-        armSpark2.setInverted(false);
-
-        armSparks = new MotorControllerGroup(armSpark1, armSpark2);
         encoder = new Encoder(
-            Constants.IntakeAndArmConstants.encoderChannelA,
-            Constants.IntakeAndArmConstants.encoderChannelB,
-            Constants.IntakeAndArmConstants.encoderReverse,
-            Constants.IntakeAndArmConstants.encodingType
-        );
-        lowSetPoint = Constants.IntakeAndArmConstants.pidLowSetPoint;
-        highSetPoint = Constants.IntakeAndArmConstants.pidHighSetPoint;
-
+                Constants.IntakeAndArmConstants.encoderChannelA,
+                Constants.IntakeAndArmConstants.encoderChannelB,
+                Constants.IntakeAndArmConstants.encoderReverse,
+                Constants.IntakeAndArmConstants.encodingType);
         pid = new PIDController(
-            Constants.IntakeAndArmConstants.kP, 
-            Constants.IntakeAndArmConstants.kI, 
-            Constants.IntakeAndArmConstants.kD
-        );
-
-        armState = ArmState.HIGH;
+                Constants.IntakeAndArmConstants.kP,
+                Constants.IntakeAndArmConstants.kI,
+                Constants.IntakeAndArmConstants.kD);
     }
 
-    public void setArmSpeed(double speed) {
-        armSparks.set(speed);
+    public void runArm(ArmState armState) {
+        this.state = armState;
+        switch (this.state) {
+            case HIGH:
+                motor.set(calculatePID(getEncoderRaw(), Constants.IntakeAndArmConstants.pidHighSetPoint));
+                break;
+            case LOW:
+                motor.set(calculatePID(getEncoderRaw(), Constants.IntakeAndArmConstants.pidLowSetPoint));
+                break;
+        }
     }
 
-    public int getEncoderRaw() {
-        return encoder.getRaw();
+    public void setDirect(double speed) {
+        motor.set(speed);
+    }
+
+    public void zeroArm() {
+        pid.reset();
+        state = ArmState.HIGH;
+        runArm(state);
     }
 
     public double calculatePID(double encoderRaw, int setPoint) {
         return pid.calculate(encoderRaw, setPoint);
     }
 
-    public void runArm(ArmState armState) {
-        this.armState = armState;
-        switch (this.armState) {
-            case HIGH:
-                setArmSpeed(calculatePID(getEncoderRaw(), highSetPoint));
-                break;
-            case LOW:
-                setArmSpeed(calculatePID(getEncoderRaw(), lowSetPoint));
-                break;
-        }
-    }
-
     public void resetPID() {
         pid.reset();
     }
 
-    public MotorControllerGroup getArmSpark() {
-        return armSparks;
+    public int getEncoderRaw() {
+        return encoder.getRaw();
     }
 
-    public void zeroArm() {
-        pid.reset();
-        armState = ArmState.HIGH;
-        runArm(armState);
+    public void stop() {
+        this.motor.set(0.0f);
+    }
+
+    public MotorControllerGroup getMotor() {
+        return motor;
     }
 
     public void close() {
-        armSpark1.close();
-        armSpark2.close();
+        this.armSparkMotors[0].close();
+        this.armSparkMotors[1].close();
         encoder.close();
         pid.close();
     }
-
 }
-

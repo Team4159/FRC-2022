@@ -23,5 +23,6 @@ public class Drive extends CommandBase{
     public void execute() {
         drivetrain.drive(leftJoystick.getRawAxis(0), rightJoystick.getRawAxis(1));
     }
-    
 }
+
+// im too afraid to mess with drivetrain. i'll be back

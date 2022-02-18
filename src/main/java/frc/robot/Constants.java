@@ -6,6 +6,10 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import java.lang.Math;
 
 public class Constants {
+    public static enum Direction {
+        FORWARDS,
+        BACKWARDS
+    }
 
     public class CanIds {
       
@@ -81,15 +85,10 @@ public class Constants {
 
 
         //Need to get actual values later from the characterization tool.
-        public static final  double kS = 1;
+        public static final double kS = 1;
         public static final double kV = 1;
         public static final double kA = 1;
 
-    }
-
-    public static enum Direction {
-        FORWARDS,
-        BACKWARDS
     }
 
     public static class IntakeAndArmConstants {

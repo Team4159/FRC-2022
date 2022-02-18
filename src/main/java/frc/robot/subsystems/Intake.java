@@ -8,36 +8,34 @@ import frc.robot.Constants;
 import frc.robot.Constants.Direction;
 
 public class Intake extends SubsystemBase {
-    private CANSparkMax intakeSpark;
+    private CANSparkMax motor;
     private Direction direction;
 
     public Intake() {
-        intakeSpark = new CANSparkMax(Constants.CanIds.intakeSpark, MotorType.kBrushless);
+        this.motor = new CANSparkMax(Constants.CanIds.intakeSpark, MotorType.kBrushless);
     }
 
-    public void runIntake(Direction direction) {
+    public void set(Direction direction) {
         this.direction = direction;
-        switch(direction) {
+        switch (direction) {
             case FORWARDS:
-                intakeSpark.set(Constants.IntakeAndArmConstants.intakeSpeed);
+                motor.set(Constants.IntakeAndArmConstants.intakeSpeed);
                 break;
             case BACKWARDS:
-                intakeSpark.set(Constants.IntakeAndArmConstants.backwardsIntakeSpeed);
+                motor.set(-Constants.IntakeAndArmConstants.intakeSpeed);
                 break;
         }
     }
 
-
-    public void stopIntake() {
-        intakeSpark.set(0);
+    public void stop() {
+        this.motor.set(0);
     }
 
-    public CANSparkMax getIntakeSpark() { 
-        return this.intakeSpark;
+    public CANSparkMax getMotor() {
+        return this.motor;
     }
 
     public void close() {
-        this.intakeSpark.close();
+        this.motor.close();
     }
-
 }

@@ -8,16 +8,16 @@ public class RunFeeder extends CommandBase{
     private Feeder feeder;
     private Direction direction;
 
-    public RunFeeder(Feeder feeder, Direction direction) {
+    public RunFeeder(Feeder feeder, Direction dir) {
         this.feeder = feeder;
-        this.direction = direction;
+        this.direction = dir;
 
         addRequirements(feeder);
     }
 
     @Override
     public void execute() {
-        feeder.runFeeder(Direction.FORWARDS);
+        feeder.set(this.direction);
     }
 
     @Override
