@@ -20,7 +20,7 @@ public class Drive extends CommandBase{
 
     @Override
     public void execute() {
-        drivetrain.drive(leftJoystick.getRawAxis(0), rightJoystick.getRawAxis(1));
+        drivetrain.drive(leftJoystick.getY(), rightJoystick.getY());
     }
     
 }

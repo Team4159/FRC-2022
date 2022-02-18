@@ -23,7 +23,7 @@ public class Drivetrain extends SubsystemBase {
     private Encoder rightEncoder;
     private Encoder leftEncoder;
 
-    private final DifferentialDrive drive;
+    private DifferentialDrive drive;
     //private final DifferentialDriveOdometry odometry;
 
     public Drivetrain() {
@@ -35,7 +35,7 @@ public class Drivetrain extends SubsystemBase {
         leftMotors = new MotorControllerGroup(leftFrontTalon, leftRearTalon);
         rightMotors = new MotorControllerGroup(rightFrontTalon, rightRearTalon);
 
-        drive = new DifferentialDrive(leftMotors, rightMotors);
+        //drive = new DifferentialDrive(leftMotors, rightMotors);
 
         pigeon = new Pigeon2(Constants.CanIds.pigeonId);
 
@@ -47,21 +47,6 @@ public class Drivetrain extends SubsystemBase {
 
         leftMotors.setInverted(true);
         rightMotors.setInverted(false);
-
-        rightEncoder = new Encoder(
-            Constants.DriveTrainConstants.rightEncoderChannelA,
-            Constants.DriveTrainConstants.rightEncoderChannelB,
-            Constants.DriveTrainConstants.rightEncoderReverseDirection,
-            Constants.DriveTrainConstants.rightEncoderEncodingType
-        );
-
-        leftEncoder = new Encoder(
-            Constants.DriveTrainConstants.leftEncoderChannelA,
-            Constants.DriveTrainConstants.leftEncoderChannelB,
-            Constants.DriveTrainConstants.leftEncoderReverseDirection,
-            Constants.DriveTrainConstants.leftEncoderEncodingType
-        );
-
         
     }
 
