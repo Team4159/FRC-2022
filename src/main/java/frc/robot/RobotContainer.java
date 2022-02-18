@@ -83,27 +83,18 @@ public class RobotContainer {
   private final FeederAndShoot feederAndShoot = new FeederAndShoot(feeder, shooter);
   private final ArmIntakeAndFeeder armIntakeAndFeeder = new ArmIntakeAndFeeder(arm, intake, feeder);
 
-  // Auto
-  private final ZeroAuto zeroAuto = new ZeroAuto();
-  private final FirstAuto firstAuto = new FirstAuto(drivetrain, arm, intake, feeder, shooter);
-  private final SecondAuto secondAuto = new SecondAuto();
-  private final ThirdAuto thirdAuto = new ThirdAuto();
-
-  private final SendableChooser<Command> sendableChooser = new SendableChooser<>();
 
 
 
   public RobotContainer() {
     configureButtonBindings();
-    configureAutos();
-    zeroSubsystems();
   }
 
   public void periodic() {
 
   }  
 
-  private void zeroSubsystems() {
+  public void zeroSubsystems() {
     arm.zeroArm();
     climber.zeroClimber();
   }
@@ -124,18 +115,6 @@ public class RobotContainer {
     runIntakeAndFeederButton.whenHeld(intakeAndFeeder);
     runFeederAndShootButton.whenHeld(feederAndShoot);
     lowerArmIntakeAndFeederButton.whenHeld(armIntakeAndFeeder);
-  }
-
-  private void configureAutos() {
-    // TODO: Rename Autos on Dashboard
-    sendableChooser.setDefaultOption("No Auto", zeroAuto);
-    sendableChooser.addOption("First Auto", firstAuto);
-    sendableChooser.addOption("Second Auto", secondAuto);
-    sendableChooser.addOption("Third Auto", thirdAuto);
-  }
-
-  public Command getAutonomousCommand() {
-    return sendableChooser.getSelected();
   }
 }
 
