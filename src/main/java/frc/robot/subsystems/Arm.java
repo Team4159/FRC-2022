@@ -39,7 +39,7 @@ public class Arm extends SubsystemBase {
                 Constants.ArmConstants.kD);
     }
 
-    public void runArm(ArmState armState) {
+    public void set(ArmState armState) {
         this.state = armState;
         switch (this.state) {
             case HIGH:
@@ -58,7 +58,7 @@ public class Arm extends SubsystemBase {
     public void zeroArm() {
         pid.reset();
         state = ArmState.HIGH;
-        runArm(state);
+        set(state);
     }
 
     public double calculatePID(double encoderRaw, int setPoint) {

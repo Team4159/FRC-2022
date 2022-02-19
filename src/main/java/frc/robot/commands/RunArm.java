@@ -17,6 +17,11 @@ public class RunArm extends CommandBase {
 
     @Override
     public void execute() {
-        arm.runArm(armState);
+        arm.set(armState);
+    }
+
+    @Override
+    public void end(boolean i) {
+        arm.stop();
     }
 }
