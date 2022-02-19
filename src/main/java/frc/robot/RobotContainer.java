@@ -26,6 +26,7 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Neck;
 import frc.robot.subsystems.Shooter;
 
 public class RobotContainer {
@@ -36,6 +37,7 @@ public class RobotContainer {
     private final Feeder feeder = new Feeder();
     private final Climber climber = new Climber();
     private final Shooter shooter = new Shooter();
+    private final Neck neck = new Neck();
 
     // Joysticks
     private Joystick leftJoystick = new Joystick(Constants.JoystickConstants.leftJoystickPort);
@@ -82,7 +84,7 @@ public class RobotContainer {
     private final RunFeeder runFeederBackwards = new RunFeeder(feeder, Direction.BACKWARDS);
     private final RunClimber raiseClimber = new RunClimber(climber, Direction.FORWARDS);
     private final RunClimber lowerClimber = new RunClimber(climber, Direction.BACKWARDS);
-    private final RunNeck runNeck = new RunNeck(shooter);
+    private final RunNeck runNeckForwards = new RunNeck(neck, Direction.FORWARDS);
     private final RunShooter shoot = new RunShooter(shooter);
     private final ArmAndIntake armAndIntake = new ArmAndIntake(arm, intake);
     private final IntakeAndFeeder intakeAndFeeder = new IntakeAndFeeder(intake, feeder);
@@ -114,19 +116,21 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         drivetrain.setDefaultCommand(drive);
-        runIntakeButton.whenHeld(runIntakeForwards);
         shootButton.whenHeld(shoot);
-        runNeckButton.whenHeld(runNeck);
+        runNeckButton.whenHeld(runNeckForwards);
+        raiseClimberButton.whenHeld(raiseClimber);
+        lowerClimberButton.whenHeld(lowerClimber);
+
+        runIntakeButton.whenHeld(runIntakeForwards);
         runIntakeBackwardsButton.whenHeld(runIntakeBackwards);
         raiseArmButton.whenHeld(raiseArm);
         lowerArmButton.whenHeld(lowerArm);
         runFeederForwardsButton.whenHeld(runFeederForwards);
         runFeederBackwardsButton.whenHeld(runFeederBackwards);
-        raiseClimberButton.whenHeld(raiseClimber);
-        lowerClimberButton.whenHeld(lowerClimber);
+
         lowerArmAndIntakeButton.whenHeld(armAndIntake);
-        runIntakeAndFeederButton.whenHeld(intakeAndFeeder);
         runFeederAndShootButton.whenHeld(feederAndShoot);
+        runIntakeAndFeederButton.whenHeld(intakeAndFeeder);
         lowerArmIntakeAndFeederButton.whenHeld(armIntakeAndFeeder);
     }
 

@@ -12,7 +12,6 @@ public class Constants {
     }
 
     public class CanIds {
-      
         public final static int pigeonId = 0;
         public final static int rightFrontTalon = 1;
         public final static int rightRearTalon = 2;
@@ -27,7 +26,7 @@ public class Constants {
         public final static int neckSpark = 11;
         public final static int climberSpark1 = 12;
         public final static int climberSpark2 = 13;
-        
+
     }
 
     public class JoystickConstants {
@@ -60,15 +59,15 @@ public class Constants {
         public final static double kI = 0;
         public final static double kD = 0;
         public final static double metersPerRev = Units.metersToInches(3) * 2 * Math.PI;
-        
+
         public final static double trackWidth = Units.inchesToMeters(25);
-        
-        //TODO: Need to get actual values later from the characterization tool.
+
+        // TODO: Need to get actual values later from the characterization tool.
         public static final double kS = 1;
         public static final double kV = 1;
         public static final double kA = 1;
     }
-    
+
     public static class ClimberConstants {
         public final static int encoderChannelA = 2;
         public final static int encoderChannelB = 3;
@@ -81,22 +80,17 @@ public class Constants {
 
         public final static int pidLowSetPoint = 0;
         public final static int pidHighSetPoint = 0;
+
         public final double trackWidth = Units.inchesToMeters(25); // TODO: Need To Determine In Meters
 
-
-        //Need to get actual values later from the characterization tool.
+        // Need to get actual values later from the characterization tool.
         public static final double kS = 1;
         public static final double kV = 1;
         public static final double kA = 1;
-
     }
 
-    public static class IntakeAndArmConstants {
-        public final static double intakeSpeed = 0.3;
-        public final static double backwardsIntakeSpeed = -0.3;
-        
-        public final static double raiseArmSpeed = 0.1;
-        public final static double lowerArmSpeed = -0.1;
+    public static class ArmConstants {
+        public final static double armSpeed = 0.1;
 
         public final static int encoderChannelA = 0;
         public final static int encoderChannelB = 1;
@@ -106,21 +100,24 @@ public class Constants {
         public final static int kP = 0;
         public final static int kI = 0;
         public final static int kD = 0;
-        
+
         public final static int pidLowSetPoint = 0;
         public final static int pidHighSetPoint = 0;
     }
 
+    public static class IntakeConstants {
+        public final static double intakeSpeed = 0.3;
+    }
+
     public static class FeederConstants {
         public final static double feederSpeed = 0.3;
-        public final static double backwardsFeederSpeed = -0.3;
     }
 
+    public static class NeckConstants {
+        public final static double neckSpeed = 0.5;
+    }
 
     public static class ShooterConstants {
-        public final static double neckSpeed = 0.5;
         public final static double shootSpeed = 1.0;
     }
-
-
 }

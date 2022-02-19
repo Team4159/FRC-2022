@@ -13,7 +13,6 @@ import frc.robot.Constants.Direction;
 public class Climber extends SubsystemBase {
     private CANSparkMax[] climberSparkMotors = new CANSparkMax[2];
     private MotorControllerGroup motor;
-    private Direction direction;
 
     private PIDController pid;
     private Encoder encoder;
@@ -36,7 +35,6 @@ public class Climber extends SubsystemBase {
     }
 
     public void set(Direction direction) {
-        this.direction = direction;
         switch (direction) {
             case FORWARDS:
                 motor.set(calculatePID(getEncoderRaw(), Constants.ClimberConstants.pidHighSetPoint));
@@ -53,7 +51,6 @@ public class Climber extends SubsystemBase {
 
     public void zeroClimber() {
         this.resetPID();
-        direction = Direction.BACKWARDS;
         set(Direction.BACKWARDS);
     }
 
@@ -78,7 +75,7 @@ public class Climber extends SubsystemBase {
     }
 
     public void close() {
-        motor.close();
+        this.motor.close();
         this.climberSparkMotors[0].close();
         this.climberSparkMotors[1].close();
         encoder.close();

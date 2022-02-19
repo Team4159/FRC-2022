@@ -14,7 +14,7 @@ public class RunShooter extends CommandBase {
 
     @Override
     public void execute() {
-        shooter.setShooter();
+        shooter.set();
     }
 
     @Override

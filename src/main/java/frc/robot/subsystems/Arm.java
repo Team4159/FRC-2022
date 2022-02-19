@@ -3,11 +3,11 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Arm extends SubsystemBase {
     public static enum ArmState {
@@ -29,24 +29,24 @@ public class Arm extends SubsystemBase {
         this.motor = new MotorControllerGroup(this.armSparkMotors[0], this.armSparkMotors[1]);
 
         encoder = new Encoder(
-                Constants.IntakeAndArmConstants.encoderChannelA,
-                Constants.IntakeAndArmConstants.encoderChannelB,
-                Constants.IntakeAndArmConstants.encoderReverse,
-                Constants.IntakeAndArmConstants.encodingType);
+                Constants.ArmConstants.encoderChannelA,
+                Constants.ArmConstants.encoderChannelB,
+                Constants.ArmConstants.encoderReverse,
+                Constants.ArmConstants.encodingType);
         pid = new PIDController(
-                Constants.IntakeAndArmConstants.kP,
-                Constants.IntakeAndArmConstants.kI,
-                Constants.IntakeAndArmConstants.kD);
+                Constants.ArmConstants.kP,
+                Constants.ArmConstants.kI,
+                Constants.ArmConstants.kD);
     }
 
     public void runArm(ArmState armState) {
         this.state = armState;
         switch (this.state) {
             case HIGH:
-                motor.set(calculatePID(getEncoderRaw(), Constants.IntakeAndArmConstants.pidHighSetPoint));
+                motor.set(calculatePID(getEncoderRaw(), Constants.ArmConstants.pidHighSetPoint));
                 break;
             case LOW:
-                motor.set(calculatePID(getEncoderRaw(), Constants.IntakeAndArmConstants.pidLowSetPoint));
+                motor.set(calculatePID(getEncoderRaw(), Constants.ArmConstants.pidLowSetPoint));
                 break;
         }
     }
@@ -70,7 +70,7 @@ public class Arm extends SubsystemBase {
     }
 
     public int getEncoderRaw() {
-        return encoder.getRaw();
+        return this.encoder.getRaw();
     }
 
     public void stop() {
@@ -78,10 +78,11 @@ public class Arm extends SubsystemBase {
     }
 
     public MotorControllerGroup getMotor() {
-        return motor;
+        return this.motor;
     }
 
     public void close() {
+        this.motor.close();
         this.armSparkMotors[0].close();
         this.armSparkMotors[1].close();
         encoder.close();
