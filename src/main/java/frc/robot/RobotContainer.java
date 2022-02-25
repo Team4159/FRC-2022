@@ -36,7 +36,7 @@ import frc.robot.Constants.Direction;
 
 public class RobotContainer {
 
-  //Subsystems
+  //Subsystems, will be accessed with getters here in the same file
   private final Drivetrain drivetrain = new Drivetrain();
   private final Intake intake = new Intake();
   private final Arm arm = new Arm();
@@ -141,5 +141,30 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return sendableChooser.getSelected();
   }
+
+  //Getters for the 6 subsystems
+  public Arm getArm() {
+    return arm;
+  }
+  public Drivetrain getDriveTrain() {
+    return drivetrain;
+  }
+
+  public Intake getIntake() {
+    return intake;
+  }
+
+  public Feeder getFeeder() {
+    return feeder;
+  }
+
+  public Climber getClimber() {
+    return climber;
+  }
+
+  public Shooter getShooter(){
+    return shooter;
+  }
+
 }
 
