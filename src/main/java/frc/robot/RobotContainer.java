@@ -166,5 +166,8 @@ public class RobotContainer {
     return shooter;
   }
 
+  public Neck getneck(){
+    return neck;
+  }
 }
 

@@ -1,8 +1,5 @@
 package frc.robot;
 
-<<<<<<< Updated upstream
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-=======
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -15,7 +12,6 @@ import frc.robot.subsystems.Shooter;
 
 //import com.ctre.phoenix.sensors.Pigeon2;
 //import com.ctre.phoenix.sensors.PigeonIMU;
->>>>>>> Stashed changes
 
 public class Dashboard {
 
@@ -27,13 +23,14 @@ public class Dashboard {
     private Climber climber;
     private Drivetrain drivetrain;
 
-    public Dashboard (Arm, Shooter, Feeder, Intake, Climber, Drivetrain) {
+    public Dashboard (Arm, Shooter, Feeder, Intake, Climber, Drivetrain, Neck) {
         this.arm = arm;
         this.shooter = shooter;
         this.feeder = feeder;
         this.intake = intake;
         this.climber = climber;
         this.drivetrain = drivetrain;
+        this.neck=neck;
     }
     //Pigeon Gyro, check if it works
     public void pigeonData() {
@@ -43,11 +40,6 @@ public class Dashboard {
             .withSize(2, 2)
             .withPosition(4, 0);
     }
-<<<<<<< Updated upstream
-
-    public void intakeInfo() {
-        SmartDashboard.putBoolean("String", true); //Example
-=======
     //Encoders for arm and climber, check if they work
     public void armEncoderData(){
         electrical
@@ -56,7 +48,6 @@ public class Dashboard {
             .withSize(2, 1)
             .withPosition(4, 2)
             .getEntry();
->>>>>>> Stashed changes
     }
 
     public void climberEncoderData(){
