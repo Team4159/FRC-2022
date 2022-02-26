@@ -1,9 +1,12 @@
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 
 import java.lang.Math;
+
+import org.w3c.dom.views.DocumentView;
 
 public class Constants {
 
@@ -32,38 +35,51 @@ public class Constants {
         public final static int secondaryJoystickPort = 2;
 
         public class SecondaryJoystick { 
-            public final static int lowerArm = 2; 
-            public final static int raiseArm = 3;
-            public final static int runIntakeForwards = 4;
-            public final static int runIntakeBackwards = 5;
+            public final static int lowerArm = 13; 
+            public final static int raiseArm = 14;
+            public final static int runIntakeForwards = 12;
+            public final static int runIntakeBackwards = 15;
 
-            public final static int runFeederForwards = 6;
-            public final static int runFeederBackwards = 7;
-            public final static int runShooter = 8;
-            public final static int raiseClimber = 9;
-            public final static int lowerClimber = 10;
-            public final static int runNeck = 11;
-            public final static int runNeckBackwards = 12;
+            public final static int runFeederForwards = 7;
+            public final static int runFeederBackwards = 8;
+            
+            public final static int raiseClimber = 4;
+            public final static int lowerClimber = 3;
+            public final static int runNeck = 6;
+            public final static int runNeckBackwards = 9;
 
-            public final static int moveArmAndIntake = 13;
-            public final static int runIntakeAndFeeder = 14;
-            public final static int runFeederAndShoot = 15;
-            public final static int moveArmIntakeandShoot = 16;
+            public final static int runNeckAndShoot = 1;
+            public final static int moveArmIntakeAndFeed = 2;
+
+            //public final static int runShooter = 10;
         }
     }
 
     public static class DriveTrainConstants {
+        public final static double encoderEdgesPerRev = 2048;
+        public final static double gearRatio = 8.667;
+        public final static double wheelCircumference = 2 * Math.PI * Units.inchesToMeters(3);
+
+
         public final static double kP = 0.5;
         public final static double kI = 0;
         public final static double kD = 0;
-        public final static double metersPerRev = Units.metersToInches(3) * 2 * Math.PI;
-        
+
         public final static double trackWidth = Units.inchesToMeters(25);
+        public static final DifferentialDriveKinematics kDriveKinematics =new DifferentialDriveKinematics(trackWidth);
+
         
         //TODO: Need to get actual values later from the characterization tool.
         public static final double kS = 1;
         public static final double kV = 1;
         public static final double kA = 1;
+
+        public static final double kMaxSpeedMetersPerSecond = 3;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+
+        //Officially Tested 
+        public static final double kRamseteB = 2;
+        public static final double kRamseteZeta = 0.7;
     }
     
     public static class ClimberConstants {
@@ -105,12 +121,13 @@ public class Constants {
         public final static boolean encoderReverse = false;
         public final static EncodingType encodingType = EncodingType.k1X;
 
-        public final static int kP = 0;
-        public final static int kI = 0;
-        public final static int kD = 0;
+        public final static double kP = 0.00022; //Don't touch these constants unless yaknow whatcha doing
+        public final static double kI = 0;
+        public final static double kD = 0.00000001;
+        public final static double tolerance = 100;
         
-        public final static int pidLowSetPoint = 0;
-        public final static int pidHighSetPoint = 0;
+        public final static double pidLowSetPoint = 2200;
+        public final static double pidHighSetPoint = 0;
     }
 
     public static class FeederConstants {
@@ -124,7 +141,13 @@ public class Constants {
     }
 
     public static class ShooterConstants {
-        public final static double shootSpeed = 1.0;
+        public final static int kPIDLoopIdx = 0;
+        public final static double kP = 0;
+        public final static double kI = 0;
+        public final static double kD = 0;
+        public final static double kF = 0;
+
+        public final static double targetVelocity = 10;
     }
 
 }

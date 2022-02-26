@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
@@ -19,12 +20,22 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandGroupBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants;
 import frc.robot.commands.Drive;
 import frc.robot.subsystems.Drivetrain;
 
 public class Trajectories {
  //Max velocity & acceleration
     public static CommandGroupBase followTrajectory(Drivetrain drivetrain, Trajectory trajectory){
+
+      var autoVoltageConstraint =
+      new DifferentialDriveVoltageConstraint(
+          new SimpleMotorFeedforward(
+              Constants.DriveTrainConstants.kS,
+              Constants.DriveTrainConstants.kV,
+              Constants.DriveTrainConstants.kA),
+          Constants.DriveTrainConstants.kDriveKinematics,
+      10);
         //double maxVoltage = 8;
         //DifferentialDriveVoltageConstraint constraint = new DifferentialDriveVoltageConstraint(drivetrain.getMotorFeedForward(), drivetrain.getDifferentialDriveKinematics(), maxVoltage);
         TrajectoryConfig config = new TrajectoryConfig(Units.feetToMeters(1), Units.feetToMeters(1)).setKinematics(drivetrain.getDifferentialDriveKinematics());

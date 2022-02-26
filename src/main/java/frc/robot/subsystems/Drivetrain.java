@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -29,7 +30,7 @@ public class Drivetrain extends SubsystemBase {
     private MotorControllerGroup leftMotors;
     private MotorControllerGroup rightMotors;
 
-    private PigeonIMU pigeon;
+    private WPI_PigeonIMU pigeon;
 
     /*public PigeonIMU getPigeon(){
         return pigeon;
@@ -58,7 +59,7 @@ public class Drivetrain extends SubsystemBase {
 
         //drive = new DifferentialDrive(leftMotors, rightMotors);
 
-        pigeon = new PigeonIMU(Constants.CanIds.pigeonId);
+        pigeon = new WPI_PigeonIMU(Constants.CanIds.pigeonId);
 
         // TODO: Need to See Which Ones Are Inverted
         leftMotors.setInverted(true);
@@ -68,7 +69,7 @@ public class Drivetrain extends SubsystemBase {
         //Kinematics parameter is the distance between the wheels aka track width.
         kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(23d));
         feedforward = new SimpleMotorFeedforward(DriveTrainConstants.kS, DriveTrainConstants.kV, DriveTrainConstants.kA);
-        odometry = new DifferentialDriveOdometry(getHeading());
+        odometry = new DifferentialDriveOdometry(getRotation());
         leftPID = new PIDController(DriveTrainConstants.kP, DriveTrainConstants.kI, DriveTrainConstants.kD);
         rightPID = new PIDController(DriveTrainConstants.kP, DriveTrainConstants.kI, DriveTrainConstants.kD);
     }
@@ -85,16 +86,15 @@ public class Drivetrain extends SubsystemBase {
 
     @Override
     public void periodic() {
-        pose = odometry.update(getHeading(), getLeftPosition(), getRightPosition());
+        pose = odometry.update(getRotation(), getLeftPosition(), getRightPosition());
     }
     
 
     public void zeroSensors() {
-        zeroEncoders();
-    }
-
-    public void zeroEncoders() {
-
+        // leftFrontTalon.setSelectedSensorPosition(0);
+        // rightFrontTalon.setSelectedSensorPosition(0);
+        // odometry.resetPosition(pose, pigeon.getRotation2d());
+        // pigeon.reset();
     }
 
     public MotorControllerGroup getLeftMotors() {
@@ -105,26 +105,26 @@ public class Drivetrain extends SubsystemBase {
         return rightMotors;
     }
     public double getLeftPosition() {
-        return leftFrontTalon.getSelectedSensorPosition() * Constants.DriveTrainConstants.metersPerRev;
+        return leftFrontTalon.getSelectedSensorPosition() * Constants.DriveTrainConstants.wheelCircumference / (Constants.DriveTrainConstants.gearRatio * Constants.DriveTrainConstants.encoderEdgesPerRev);
     }
 
     public double getRightPosition() {
-        return rightFrontTalon.getSelectedSensorPosition() * Constants.DriveTrainConstants.metersPerRev;
+        return rightFrontTalon.getSelectedSensorPosition() * Constants.DriveTrainConstants.wheelCircumference / (Constants.DriveTrainConstants.gearRatio * Constants.DriveTrainConstants.encoderEdgesPerRev);
     }
 
     public double getRightVelocity() {
-        return rightFrontTalon.getSelectedSensorVelocity();
+        return rightFrontTalon.getSelectedSensorVelocity() *   Constants.DriveTrainConstants.wheelCircumference / (Constants.DriveTrainConstants.gearRatio * Constants.DriveTrainConstants.encoderEdgesPerRev);
     }
 
     public double getLeftVelocity() {
-        return leftFrontTalon.getSelectedSensorVelocity();
+        return leftFrontTalon.getSelectedSensorVelocity() * Constants.DriveTrainConstants.wheelCircumference / (Constants.DriveTrainConstants.gearRatio * Constants.DriveTrainConstants.encoderEdgesPerRev);
     }
 
     
     //Use Pigeon to get angle
-    public Rotation2d getHeading(){
+    public Rotation2d getRotation(){
         //Need to double check the reading from this later.
-        return Rotation2d.fromDegrees(pigeon.getCompassHeading() * -1);
+        return Rotation2d.fromDegrees(pigeon.getAngle());
     }
 
     public DifferentialDriveKinematics getDifferentialDriveKinematics(){

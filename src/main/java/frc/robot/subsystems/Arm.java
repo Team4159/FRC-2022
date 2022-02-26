@@ -1,11 +1,13 @@
 package frc.robot.subsystems;
 
+import java.util.TooManyListenersException;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.math.controller.PIDController;
 
@@ -13,7 +15,7 @@ public class Arm extends SubsystemBase{
     private CANSparkMax armSpark1;
     private CANSparkMax armSpark2;
     private MotorControllerGroup armSparks;
-    private RelativeEncoder encoder;
+    private Encoder encoder1, encoder2;
     private PIDController pid;
     
     public static enum ArmState {
@@ -23,7 +25,7 @@ public class Arm extends SubsystemBase{
     
     private ArmState armState;
 
-    private int lowSetPoint, highSetPoint;
+    private double lowSetPoint, highSetPoint;
 
     public Arm() {
         armSpark1 = new CANSparkMax(Constants.CanIds.armSpark1, MotorType.kBrushless);
@@ -34,7 +36,14 @@ public class Arm extends SubsystemBase{
         armSpark2.setInverted(false);
 
         armSparks = new MotorControllerGroup(armSpark1, armSpark2);
-        encoder = armSpark1.getEncoder();
+        encoder1 = new Encoder(
+            2,
+            3
+        );
+        encoder2 = new Encoder(
+            0,
+            1
+        );
         lowSetPoint = Constants.IntakeAndArmConstants.pidLowSetPoint;
         highSetPoint = Constants.IntakeAndArmConstants.pidHighSetPoint;
 
@@ -44,19 +53,33 @@ public class Arm extends SubsystemBase{
             Constants.IntakeAndArmConstants.kD
         );
 
+        //pid.setTolerance(Constants.IntakeAndArmConstants.tolerance);
+
         armState = ArmState.HIGH;
     }
 
     public void setArmSpeed(double speed) {
+        if (speed >= 0.6) {
+            speed = 0.6;
+        } else if (speed <= -0.6) {
+            speed = -0.6;
+        }
+        System.out.println(speed);
         armSparks.set(speed);
     }
 
     public double getEncoderRaw() {
-        return encoder.getPosition();
+        //System.out.println("Encoder Average: " + (encoder1.getRaw()+encoder2.getRaw())/2);
+        return encoder2.getRaw();
     }
 
-    public double calculatePID(double encoderRaw, int setPoint) {
-        return pid.calculate(encoderRaw, setPoint);
+    
+    public double calculatePID(double encoderRaw, double setPoint) {
+        if (atSetpoint(setPoint, Constants.IntakeAndArmConstants.tolerance)) {
+            return 0;
+        } else {
+            return pid.calculate(encoderRaw, setPoint);
+        }
     }
 
     public void runArm(ArmState armState) {
@@ -66,7 +89,7 @@ public class Arm extends SubsystemBase{
                 setArmSpeed(calculatePID(getEncoderRaw(), highSetPoint));
                 break;
             case LOW:
-            setArmSpeed(calculatePID(getEncoderRaw(), lowSetPoint));
+                setArmSpeed(calculatePID(getEncoderRaw(), lowSetPoint));
                 break;
         }
     }
@@ -81,8 +104,14 @@ public class Arm extends SubsystemBase{
 
     public void zeroArm() {
         resetPID();
+        encoder1.reset();
+        encoder2.reset();
         armState = ArmState.HIGH;
         runArm(armState);
+    }
+
+    public boolean atSetpoint(Double setpoint, Double tolerance) {
+        return getEncoderRaw() <= setpoint + tolerance && getEncoderRaw() >= setpoint - tolerance;
     }
 
     public void close() {
@@ -92,4 +121,3 @@ public class Arm extends SubsystemBase{
     }
 
 }
-
