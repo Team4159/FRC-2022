@@ -31,6 +31,10 @@ public class Drivetrain extends SubsystemBase {
 
     private PigeonIMU pigeon;
 
+    /*public PigeonIMU getPigeon(){
+        return pigeon;
+    }*/
+
     //private final DifferentialDrive drive;
     //private final DifferentialDriveOdometry odometry;
     private DifferentialDriveKinematics kinematics;

@@ -3,6 +3,7 @@ package frc.robot;
 import com.fasterxml.jackson.databind.util.PrimitiveArrayBuilder;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -35,7 +36,8 @@ import frc.robot.Constants.Direction;
 
 
 public class RobotContainer {
-
+  //Power Distribution
+  PowerDistribution PDH = new PowerDistribution();
   //Subsystems, will be accessed with getters here in the same file
   private final Drivetrain drivetrain = new Drivetrain();
   private final Intake intake = new Intake();
@@ -166,7 +168,7 @@ public class RobotContainer {
     return shooter;
   }
 
-  public Neck getneck(){
+  public Neck getNeck(){
     return neck;
   }
 }
