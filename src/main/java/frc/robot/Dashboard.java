@@ -23,14 +23,14 @@ public class Dashboard {
         pigeonData();
         armEncoderData();
         climberEncoderData();
-        lJoystickPort();
-        rJoystickPort();
-        secJoystickPort();
+        //lJoystickPort();
+        //rJoystickPort();
+        //secJoystickPort();
     }
     //Pigeon Gyro, check if it works
     public void pigeonData() {
         Shuffleboard.getTab("Electrical")
-            .add("Gyro data", /*hope this works->*/robotContainer.getDriveTrain().getHeading())
+            .add("Gyro data", /*hope this works->*/robotContainer.getDriveTrain().getRotation())
             .withWidget(BuiltInWidgets.kGyro)
             .withSize(2, 2)
             .withPosition(4, 0);
@@ -70,23 +70,35 @@ public class Dashboard {
         //Left Joystick
     public void lJoystickPort () {
         Shuffleboard.getTab("Electrical")
-            .add("Left Joystick Voltage", robotContainer.PDH.getVoltage())
+        //getVoltage returns voltage for whole robot, not a specific port. 
+        //what exactly is wanted to be put here?
+            .add("Left Joystick Current", robotContainer.PDH.getCurrent(0))
             .withWidget(BuiltInWidgets.kPowerDistribution);
-            //.getVoltage()
-            //.getCurrent(0);
     }
         //Right Joystick
     public void rJoystickPort () {
         Shuffleboard.getTab("Electrical")
-            .add("Right Joystick", robotContainer.PDH.getVoltage())
+            .add("Right Joystick", robotContainer.PDH.getCurrent(1))
             .withWidget(BuiltInWidgets.kPowerDistribution);
     }
         //Secondary Joystick
     public void secJoystickPort () {
         Shuffleboard.getTab("Electrical")
-            .add("Right Joystick", robotContainer.PDH.getVoltage())
+            .add("Right Joystick", robotContainer.PDH.getCurrent(2))
             .withWidget(BuiltInWidgets.kPowerDistribution);
     }
+        //Pigeon gyro 
+    public void pigeonPDP () {
+        Shuffleboard.getTab("Electrical")
+            .add("Pigeon Current", robotContainer.PDH.getCurrent(0))
+            .withWidget(BuiltInWidgets.kPowerDistribution);
+    }
+        //Right front talon
+        public void rTalonFrontPDP () {
+            Shuffleboard.getTab("Electrical")
+                .add("Right Front Talon Current", robotContainer.PDH.getCurrent(1))
+                .withWidget(BuiltInWidgets.kPowerDistribution);
+        }
 
     /*public void PDP_TotalCurrent(){
         electrical

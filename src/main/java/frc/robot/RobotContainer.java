@@ -43,6 +43,16 @@ public class RobotContainer {
   private Joystick rightJoystick = new Joystick(Constants.JoystickConstants.rightJoystickPort);
   private Joystick secondaryJoystick = new Joystick(Constants.JoystickConstants.secondaryJoystickPort);
 
+  //Joystick getters
+  public Joystick getLJoystick() {
+    return leftJoystick;
+  }
+  public Joystick getRJoystick(){
+    return rightJoystick;
+  }
+  public Joystick getSecJoystick(){
+    return secondaryJoystick;
+  }
 
   //Buttons
   private final JoystickButton runIntakeButton = new JoystickButton(secondaryJoystick, Constants.JoystickConstants.SecondaryJoystick.runIntakeForwards);
