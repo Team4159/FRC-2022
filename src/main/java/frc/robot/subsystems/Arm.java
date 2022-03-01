@@ -64,7 +64,7 @@ public class Arm extends SubsystemBase{
         } else if (speed <= -0.6) {
             speed = -0.6;
         }
-        System.out.println(speed);
+        //System.out.println(speed);
         armSparks.set(speed);
     }
 
@@ -73,7 +73,6 @@ public class Arm extends SubsystemBase{
         return encoder2.getRaw();
     }
 
-    
     public double calculatePID(double encoderRaw, double setPoint) {
         if (atSetpoint(setPoint, Constants.IntakeAndArmConstants.tolerance)) {
             return 0;

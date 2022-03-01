@@ -32,6 +32,8 @@ public class Shooter extends SubsystemBase {
 
     public void shoot(double targetVelocity) {
         this.targetVelocity = targetVelocity;
+        System.out.println(getVelocity());
+        System.out.println(shooterTalonLeft.getMotorOutputPercent());
         shooterTalonRight.set(ControlMode.Velocity, targetVelocity); 
     }
 
@@ -44,9 +46,7 @@ public class Shooter extends SubsystemBase {
     }
 
     //WaitUntilCommand Refuses to Accept Boolean Values
-    public BooleanSupplier atSetpoint() {
-        return () -> getVelocity() == targetVelocity; 
-    }
+
 
     public WPI_TalonFX getLeftShooterTalon() {
         return shooterTalonLeft;

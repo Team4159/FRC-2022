@@ -60,22 +60,19 @@ public class Constants {
         public final static double gearRatio = 8.667;
         public final static double wheelCircumference = 2 * Math.PI * Units.inchesToMeters(3);
 
-
-        public final static double kP = 0.5;
-        public final static double kI = 0;
-        public final static double kD = 0;
-
         public final static double trackWidth = Units.inchesToMeters(25);
         public static final DifferentialDriveKinematics kDriveKinematics =new DifferentialDriveKinematics(trackWidth);
 
         
         //TODO: Need to get actual values later from the characterization tool.
-        public static final double kS = 1;
-        public static final double kV = 1;
-        public static final double kA = 1;
+        public static final double ksVolts = 0.771205;
+        public static final double kvVoltSecondsPerMeter = 1.96575;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.681715;
 
-        public static final double kMaxSpeedMetersPerSecond = 3;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+        public static final double kPDriveVel = 3.06255;
+
+        public static final double kMaxSpeedMetersPerSecond = 5;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 2;
 
         //Officially Tested 
         public static final double kRamseteB = 2;
@@ -110,8 +107,8 @@ public class Constants {
     }
 
     public static class IntakeAndArmConstants {
-        public final static double intakeSpeed = 0.3;
-        public final static double backwardsIntakeSpeed = -0.3;
+        public final static double intakeSpeed = 0.6;
+        public final static double backwardsIntakeSpeed = -0.6;
         
         public final static double raiseArmSpeed = 0.1;
         public final static double lowerArmSpeed = -0.1;
@@ -136,18 +133,18 @@ public class Constants {
     }
 
     public static class NeckConstants {
-        public final static double neckSpeed = 0.5;
-        public final static double backwardsNeckSpeed = -0.5;
+        public final static double neckSpeed = 1;
+        public final static double backwardsNeckSpeed = -1;
     }
 
     public static class ShooterConstants {
         public final static int kPIDLoopIdx = 0;
-        public final static double kP = 0;
-        public final static double kI = 0;
-        public final static double kD = 0;
+        public final static double kP = 1;
+        public final static double kI = 0.1;
+        public final static double kD = 0.3;
         public final static double kF = 0;
 
-        public final static double targetVelocity = 10;
+        public final static double targetVelocity = 21000;
     }
 
 }

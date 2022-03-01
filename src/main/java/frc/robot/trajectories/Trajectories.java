@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.CommandGroupBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
+import frc.robot.Constants.DriveTrainConstants;
 import frc.robot.commands.Drive;
 import frc.robot.subsystems.Drivetrain;
 
@@ -31,33 +32,36 @@ public class Trajectories {
       var autoVoltageConstraint =
       new DifferentialDriveVoltageConstraint(
           new SimpleMotorFeedforward(
-              Constants.DriveTrainConstants.kS,
-              Constants.DriveTrainConstants.kV,
-              Constants.DriveTrainConstants.kA),
+              Constants.DriveTrainConstants.ksVolts,
+              Constants.DriveTrainConstants.kvVoltSecondsPerMeter,
+              Constants.DriveTrainConstants.kaVoltSecondsSquaredPerMeter),
           Constants.DriveTrainConstants.kDriveKinematics,
       10);
         //double maxVoltage = 8;
         //DifferentialDriveVoltageConstraint constraint = new DifferentialDriveVoltageConstraint(drivetrain.getMotorFeedForward(), drivetrain.getDifferentialDriveKinematics(), maxVoltage);
-        TrajectoryConfig config = new TrajectoryConfig(Units.feetToMeters(1), Units.feetToMeters(1)).setKinematics(drivetrain.getDifferentialDriveKinematics());
+      TrajectoryConfig config = new TrajectoryConfig(Constants.DriveTrainConstants.kMaxSpeedMetersPerSecond, Constants.DriveTrainConstants.kMaxAccelerationMetersPerSecondSquared)
+      .setKinematics(Constants.DriveTrainConstants.kDriveKinematics)
+      .addConstraint(autoVoltageConstraint);
         
-        RamseteCommand command = new RamseteCommand(
-           trajectory,
-           drivetrain::getPose,
-           new RamseteController(.2d,.2d),
-           drivetrain.getMotorFeedForward(),
-           drivetrain.getDifferentialDriveKinematics(),
-           drivetrain::getVelocities,
-           drivetrain.getLeftPIDController(),
-           drivetrain.getRightPIDController(),
-           (leftVoltage, rightVoltage) -> drivetrain.drive(leftVoltage/12, rightVoltage/12),
-           drivetrain
-        );
-        return command.andThen(drivetrain::stop);
-    }
+       
+      RamseteCommand command = new RamseteCommand(
+          trajectory,
+          drivetrain::getPose,
+          new RamseteController(DriveTrainConstants.kRamseteB, DriveTrainConstants.kRamseteZeta),
+          drivetrain.getMotorFeedForward(),
+          Constants.DriveTrainConstants.kDriveKinematics,
+          drivetrain::getVelocities,
+          drivetrain.getLeftPIDController(),
+          drivetrain.getRightPIDController(),
+          drivetrain::tankDriveVolts,
+          drivetrain
+      );
+     return command.andThen(drivetrain::stop);
+ }
 
     public static Trajectory loadTrajectory(String path) { //JSON path
         try {
-          return TrajectoryUtil.fromPathweaverJson(Filesystem.getDeployDirectory().toPath().resolve("output/" + path));
+          return TrajectoryUtil.fromPathweaverJson(Filesystem.getDeployDirectory().toPath().resolve(path));
         } catch (IOException e) {
           DriverStation.reportError("Trajectory not found. " + path, e.getStackTrace());
           e.printStackTrace();

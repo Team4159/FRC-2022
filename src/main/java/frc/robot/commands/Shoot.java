@@ -4,6 +4,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Neck;
 import frc.robot.subsystems.Shooter;
+import frc.robot.Constants;
 import frc.robot.Constants.Direction;
 
 public class Shoot extends CommandBase {
@@ -21,7 +22,7 @@ public class Shoot extends CommandBase {
 
     @Override
     public void execute() {
-        shooter.shoot(targetVelocity);
+        shooter.getRightShooterTalon().set(1);
     }
 
     @Override 

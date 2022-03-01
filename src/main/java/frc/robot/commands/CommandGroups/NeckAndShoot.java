@@ -12,20 +12,25 @@ import frc.robot.commands.Shoot;
 import frc.robot.Constants;
 import frc.robot.Constants.Direction;
 
-public class NeckAndShoot extends ParallelCommandGroup {
+public class NeckAndShoot extends SequentialCommandGroup {
     private Neck neck;
     private Shooter shooter;
+    private Feeder feeder;
 
 
-    public NeckAndShoot (Neck neck, Shooter shooter) {
-        this.shooter = shooter;
+
+    public NeckAndShoot (Feeder feeder, Neck neck, Shooter shooter) {
+        this.feeder = feeder;
         this.neck = neck;
+        this.shooter = shooter;
+
 
         addCommands(
-            new Shoot(shooter, Constants.ShooterConstants.targetVelocity),
-            new SequentialCommandGroup(
-                new WaitUntilCommand(shooter.atSetpoint()),
-                new RunNeck(neck, Direction.FORWARDS)
+            new Shoot(shooter,Constants.ShooterConstants.targetVelocity).withTimeout(0.2),
+            new ParallelCommandGroup(
+                new Shoot(shooter, Constants.ShooterConstants.targetVelocity),
+                new RunNeck(neck, Direction.FORWARDS),
+                new RunFeeder(feeder, Direction.FORWARDS)
             )
         );
     }
