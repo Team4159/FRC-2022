@@ -12,15 +12,6 @@ import frc.robot.trajectories.Trajectories;
 
 
 public class FirstAuto extends ParallelCommandGroup {
-    Drivetrain drivetrain;
-    Arm arm;
-    Intake intake;
-    Feeder feeder;
-    Shooter shooter;
-    Neck neck;
-    Trajectories trajectories = new Trajectories();
-    Trajectory trajectory;
-
 
 
     // public FirstAuto(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Shooter shooter, Neck neck) {

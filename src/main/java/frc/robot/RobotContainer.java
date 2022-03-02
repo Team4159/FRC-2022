@@ -75,13 +75,9 @@ public class RobotContainer {
   private final Shoot shoot = new Shoot(shooter);
   private final NeckAndShoot neckAndShoot = new NeckAndShoot(feeder,neck, shooter);
   private final ArmIntakeAndFeeder armIntakeAndFeeder = new ArmIntakeAndFeeder(arm, intake, feeder);
-  
-  //Autos
-  private BlueAuto2 blueAuto2 = new BlueAuto2(drivetrain, arm, intake, feeder, shooter);
-  private Trajectory trajectory = Trajectories.loadTrajectory("paths/BlueAuto2.wpilib.json");;
-  
 
-
+  private Trajectories trajectories = new Trajectories();
+  private Trajectory trajectory = trajectories.loadTrajectory("paths/BlueAuto2.wpilib.json");
 
 
   public RobotContainer() {
@@ -101,7 +97,6 @@ public class RobotContainer {
   private void zeroSubsystems() {
     arm.zeroArm();
     climber.zeroClimber();
-    drivetrain.zeroSensors();
   }
 
   private void configureButtonBindings() {

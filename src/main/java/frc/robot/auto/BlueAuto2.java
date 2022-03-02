@@ -16,7 +16,7 @@ public class BlueAuto2 extends ParallelCommandGroup{
     Intake intake;
     Feeder feeder;
     Shooter shooter;
-    Trajectories trajectories = new Trajectories();
+    //Trajectories trajectories = new Trajectories();
     Trajectory trajectory;
 
     public BlueAuto2(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Shooter shooter) {
@@ -25,7 +25,7 @@ public class BlueAuto2 extends ParallelCommandGroup{
         this.intake = intake;
         this.feeder = feeder;
         this.shooter = shooter;
-        trajectory =  Trajectories.loadTrajectory("paths/BlueAuto2.wpilib.json");
+        //trajectory =  Trajectories.loadTrajectory("paths/BlueAuto2.wpilib.json");
 
         ParallelDeadlineGroup BlueAuto2 = new ParallelDeadlineGroup(
             new WaitCommand(15),

@@ -38,7 +38,7 @@ public class Drivetrain extends SubsystemBase {
     private DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading());
     private SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.DriveTrainConstants.ksVolts, Constants.DriveTrainConstants.kvVoltSecondsPerMeter, Constants.DriveTrainConstants.kaVoltSecondsSquaredPerMeter);
 
-    private PIDController leftPidController = new PIDController(Constants.DriveTrainConstants.kPDriveVel, 0,0);
+    private PIDController leftPIDController = new PIDController(Constants.DriveTrainConstants.kPDriveVel, 0,0);
     private PIDController rightPIDController = new PIDController(Constants.DriveTrainConstants.kPDriveVel, 0, 0);
 
     public Drivetrain() {
@@ -63,51 +63,50 @@ public class Drivetrain extends SubsystemBase {
         rightMotors.set(0);
     }
 
-    @Override
-    public void periodic() {
-        pose = odometry.update(getHeading(), getLeftVelocity(), getRightVelocity());
-    }
-
-    public void setOutput(double leftVolts, double rightVolts) {
-        leftMotors.set(leftVolts/12);
-        rightMotors.set(rightVolts/12);
-    }
-
-    public DifferentialDriveWheelSpeeds getSpeeds() {
-        return new DifferentialDriveWheelSpeeds(getLeftVelocity(), getRightVelocity());
-    }
-
     public Rotation2d getHeading() {
         return Rotation2d.fromDegrees(-pigeon.getAngle());
-    }
-
-    public DifferentialDriveKinematics getDifferentialDriveKinematics() {
+      }
+    
+      public DifferentialDriveWheelSpeeds getSpeeds() {
+        return new DifferentialDriveWheelSpeeds(
+            getLeftVelocity(),
+            getRightVelocity()
+        );
+      }
+    
+      public DifferentialDriveKinematics getKinematics() {
         return kinematics;
-    }
-
-    public Pose2d getPose() {
-        return odometry.getPoseMeters();
-    }
-
-    public MotorControllerGroup getLeftMotors() {
-        return leftMotors;
-    }
-
-    public MotorControllerGroup getRightMotors() {
-        return rightMotors;
-    }
-
-    public SimpleMotorFeedforward getFeedForward() {
+      }
+    
+      public Pose2d getPose() {
+        return pose;
+      }
+    
+      public SimpleMotorFeedforward getFeedforward() {
         return feedforward;
-    }
-
-    public PIDController getLeftPIDController() {
-        return leftPidController;
-    }
-
-    public PIDController getRightPIDController() {
+      }
+    
+      public PIDController getLeftPIDController() {
+        return leftPIDController;
+      }
+    
+      public PIDController getRightPIDController() {
         return rightPIDController;
-    }
+      }
+    
+      public void setOutputVolts(double leftVolts, double rightVolts) {
+        leftMotors.set(leftVolts / 12);
+        rightMotors.set(rightVolts / 12);
+      }
+    
+      public void reset() {
+        odometry.resetPosition(new Pose2d(), getHeading());
+      }
+    
+      @Override
+      public void periodic() {
+        pose = odometry.update(getHeading(), getLeftPosition(), getRightPosition());
+      }
 
     public double getLeftPosition() {
         return leftFrontTalon.getSelectedSensorPosition() * Constants.DriveTrainConstants.wheelCircumference / (Constants.DriveTrainConstants.gearRatio * Constants.DriveTrainConstants.encoderEdgesPerRev);
@@ -126,3 +125,4 @@ public class Drivetrain extends SubsystemBase {
     }
 
 }
+

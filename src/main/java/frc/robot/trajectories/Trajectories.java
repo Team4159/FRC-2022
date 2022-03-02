@@ -27,37 +27,39 @@ import frc.robot.commands.Drive;
 import frc.robot.subsystems.Drivetrain;
 
 public class Trajectories {
-  //Max velocity & acceleration
-     public static CommandGroupBase followTrajectory(Drivetrain drivetrain, Trajectory trajectory){
-         //double maxVoltage = 8;
-         //DifferentialDriveVoltageConstraint constraint = new DifferentialDriveVoltageConstraint(drivetrain.getMotorFeedForward(), drivetrain.getDifferentialDriveKinematics(), maxVoltage);
-       TrajectoryConfig config = new TrajectoryConfig(Constants.DriveTrainConstants.kMaxSpeedMetersPerSecond, Constants.DriveTrainConstants.kMaxAccelerationMetersPerSecondSquared)
-       .setKinematics(Constants.DriveTrainConstants.kDriveKinematics)
-         
-        
+
+  public Trajectories() {
+
+  }  //Max velocity & acceleration
+
+  public static CommandGroupBase followTrajectory(Drivetrain drivetrain, Trajectory trajectory) {
+      
       RamseteCommand command = new RamseteCommand(
-        trajectory,
-        drivetrain::getPose,
-        new RamseteController(Constants.DriveTrainConstants.kRamseteB, Constants.DriveTrainConstants.kRamseteZeta),
-        drivetrain::getFeedForward,
-        drivetrain::getDifferentialDriveKinematics,
-        drivetrain::getSpeeds,
-        drivetrain::getLeftPIDController,
-        drivetrain::getRightPIDController,
-        drivetrain::setOutput,
-        drivetrain
-      );
-      return command;
+      trajectory,
+      drivetrain::getPose,
+      new RamseteController(Constants.DriveTrainConstants.kRamseteB, Constants.DriveTrainConstants.kRamseteZeta),
+      drivetrain.getFeedforward(),
+      drivetrain.getKinematics(),
+      drivetrain::getSpeeds,
+      drivetrain.getLeftPIDController(),
+      drivetrain.getRightPIDController(),
+      drivetrain::setOutputVolts,
+      drivetrain
+  );
+
+    return command.andThen(() -> drivetrain.setOutputVolts(0, 0));
   }
  
-     public static Trajectory loadTrajectory(String path) { //JSON path
-         try {
-           return TrajectoryUtil.fromPathweaverJson(Filesystem.getDeployDirectory().toPath().resolve(path));
-         } catch (IOException e) {
-           DriverStation.reportError("Trajectory not found. " + path, e.getStackTrace());
-           e.printStackTrace();
-           return TrajectoryGenerator.generateTrajectory(Arrays.asList(new Pose2d(), new Pose2d()), new TrajectoryConfig(0, 0));
-         }
-       }
-     
+  public static Trajectory loadTrajectory(String path) { //JSON path
+    TrajectoryConfig config = new TrajectoryConfig(Constants.DriveTrainConstants.kMaxSpeedMetersPerSecond, Constants.DriveTrainConstants.kMaxAccelerationMetersPerSecondSquared);
+    config.setKinematics(Constants.DriveTrainConstants.kDriveKinematics);
+
+    try {
+      return TrajectoryUtil.fromPathweaverJson(Filesystem.getDeployDirectory().toPath().resolve(path));
+    } catch (IOException e) {
+      DriverStation.reportError("Trajectory not found. " + path, e.getStackTrace());
+      e.printStackTrace();
+      return TrajectoryGenerator.generateTrajectory(Arrays.asList(new Pose2d(), new Pose2d()), config);
+      }
+    }
  }
