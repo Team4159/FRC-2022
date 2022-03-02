@@ -40,8 +40,6 @@ public class RobotContainer {
   private final Neck neck = new Neck();
   private final Shooter shooter = new Shooter();
 
-  private final PowerDistribution powerDistribution = new PowerDistribution(0, null);
-
   //Joysticks
   private Joystick leftJoystick = new Joystick(Constants.JoystickConstants.leftJoystickPort);
   private Joystick rightJoystick = new Joystick(Constants.JoystickConstants.rightJoystickPort);
@@ -151,10 +149,6 @@ public class RobotContainer {
 
   public Neck getNeck() {
     return neck;
-  }
-
-  public PowerDistribution getPowerDistribution(){
-    return powerDistribution;
   }
 }
 

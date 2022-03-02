@@ -33,10 +33,10 @@ public class Drivetrain extends SubsystemBase {
     private WPI_PigeonIMU pigeon;
 
 
-    private DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.DriveTrainConstants.trackWidth);
+    private DifferentialDriveKinematics kinematics;
     private Pose2d pose;
-    private DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading());
-    private SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.DriveTrainConstants.ksVolts, Constants.DriveTrainConstants.kvVoltSecondsPerMeter, Constants.DriveTrainConstants.kaVoltSecondsSquaredPerMeter);
+    private DifferentialDriveOdometry odometry;
+    private SimpleMotorFeedforward feedforward;
 
     private PIDController leftPIDController = new PIDController(Constants.DriveTrainConstants.kPDriveVel, 0,0);
     private PIDController rightPIDController = new PIDController(Constants.DriveTrainConstants.kPDriveVel, 0, 0);
@@ -51,6 +51,10 @@ public class Drivetrain extends SubsystemBase {
         rightMotors = new MotorControllerGroup(rightFrontTalon, rightRearTalon);
         
         pigeon = new WPI_PigeonIMU(Constants.CanIds.pigeonId);
+
+        kinematics = new DifferentialDriveKinematics(Constants.DriveTrainConstants.trackWidth);
+        feedforward = new SimpleMotorFeedforward(Constants.DriveTrainConstants.ksVolts, Constants.DriveTrainConstants.kvVoltSecondsPerMeter, Constants.DriveTrainConstants.kaVoltSecondsSquaredPerMeter);
+        odometry = new DifferentialDriveOdometry(getHeading());
     }
 
     public void drive(double leftSpeed, double rightSpeed) {
