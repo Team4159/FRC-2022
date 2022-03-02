@@ -32,17 +32,14 @@ public class Drivetrain extends SubsystemBase {
 
     private WPI_PigeonIMU pigeon;
 
-    //private final DifferentialDrive drive;
-    //private final DifferentialDriveOdometry odometry;
 
-    private DifferentialDrive drive;
-    private DifferentialDriveKinematics kinematics;
-    private DifferentialDriveOdometry odometry;
-    private SimpleMotorFeedforward feedforward;
+    private DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.DriveTrainConstants.trackWidth);
     private Pose2d pose;
+    private DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading());
+    private SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.DriveTrainConstants.ksVolts, Constants.DriveTrainConstants.kvVoltSecondsPerMeter, Constants.DriveTrainConstants.kaVoltSecondsSquaredPerMeter);
 
-    private PIDController leftPID, rightPID;
-
+    private PIDController leftPidController = new PIDController(Constants.DriveTrainConstants.kPDriveVel, 0,0);
+    private PIDController rightPIDController = new PIDController(Constants.DriveTrainConstants.kPDriveVel, 0, 0);
 
     public Drivetrain() {
         rightFrontTalon = new WPI_TalonFX(Constants.CanIds.rightFrontTalon);
@@ -53,27 +50,7 @@ public class Drivetrain extends SubsystemBase {
         leftMotors = new MotorControllerGroup(leftRearTalon, leftFrontTalon);
         rightMotors = new MotorControllerGroup(rightFrontTalon, rightRearTalon);
         
-
-        //TODO: Need to See Which Ones Are Inverted
-
-        
-        
         pigeon = new WPI_PigeonIMU(Constants.CanIds.pigeonId);
-
-        // TODO: Need to See Which Ones Are Inverted
-        leftMotors.setInverted(true);
-        rightMotors.setInverted(false);
-
-
-        //Kinematics parameter is the distance between the wheels aka track width.
-        drive = new DifferentialDrive(leftMotors, rightMotors);
-        kinematics = new DifferentialDriveKinematics(Constants.DriveTrainConstants.trackWidth);
-        feedforward = new SimpleMotorFeedforward(DriveTrainConstants.ksVolts, DriveTrainConstants.kvVoltSecondsPerMeter, DriveTrainConstants.kaVoltSecondsSquaredPerMeter);
-        odometry = new DifferentialDriveOdometry(pigeon.getRotation2d());
-        leftPID = new PIDController(DriveTrainConstants.kPDriveVel, 0,0);
-        rightPID = new PIDController(DriveTrainConstants.kPDriveVel, 0,0);
-
-        zeroSensors();
     }
 
     public void drive(double leftSpeed, double rightSpeed) {
@@ -88,46 +65,28 @@ public class Drivetrain extends SubsystemBase {
 
     @Override
     public void periodic() {
-        pose = odometry.update(getRotation(), getLeftPosition(), getRightPosition());
-        drive = new DifferentialDrive(leftMotors, rightMotors);
-    }
-    
-
-    public void zeroSensors() {
-        zeroEncoders();
-        pigeon.reset();
+        pose = odometry.update(getHeading(), getLeftVelocity(), getRightVelocity());
     }
 
-    public void zeroEncoders() {
-        leftFrontTalon.setSelectedSensorPosition(0);
-        rightFrontTalon.setSelectedSensorPosition(0);
+    public void setOutput(double leftVolts, double rightVolts) {
+        leftMotors.set(leftVolts/12);
+        rightMotors.set(rightVolts/12);
     }
 
-    public void arcadeDrive(double fwd, double rot) {
-        drive.arcadeDrive(fwd, rot);
-      }
-
-    public void tankDriveVolts(double leftVolts, double rightVolts) {
-        leftMotors.setVoltage(leftVolts);
-        rightMotors.setVoltage(rightVolts);
-        drive.feed();
-      }
-
-    public double getAverageEncoderDistance() {
-        return (getLeftPosition() + getRightPosition()) / 2.0;
+    public DifferentialDriveWheelSpeeds getSpeeds() {
+        return new DifferentialDriveWheelSpeeds(getLeftVelocity(), getRightVelocity());
     }
 
-    public void zeroHeading() {
-        pigeon.reset();
+    public Rotation2d getHeading() {
+        return Rotation2d.fromDegrees(-pigeon.getAngle());
     }
-    
-    public double getTurnRate() {
-        return -pigeon.getRate();
-    }
-    
 
-    public void resetOdometry() {
-        odometry.resetPosition(pose, pigeon.getRotation2d());
+    public DifferentialDriveKinematics getDifferentialDriveKinematics() {
+        return kinematics;
+    }
+
+    public Pose2d getPose() {
+        return odometry.getPoseMeters();
     }
 
     public MotorControllerGroup getLeftMotors() {
@@ -137,6 +96,19 @@ public class Drivetrain extends SubsystemBase {
     public MotorControllerGroup getRightMotors() {
         return rightMotors;
     }
+
+    public SimpleMotorFeedforward getFeedForward() {
+        return feedforward;
+    }
+
+    public PIDController getLeftPIDController() {
+        return leftPidController;
+    }
+
+    public PIDController getRightPIDController() {
+        return rightPIDController;
+    }
+
     public double getLeftPosition() {
         return leftFrontTalon.getSelectedSensorPosition() * Constants.DriveTrainConstants.wheelCircumference / (Constants.DriveTrainConstants.gearRatio * Constants.DriveTrainConstants.encoderEdgesPerRev);
     }
@@ -152,40 +124,5 @@ public class Drivetrain extends SubsystemBase {
     public double getLeftVelocity() {
         return leftFrontTalon.getSelectedSensorVelocity() * Constants.DriveTrainConstants.wheelCircumference / (Constants.DriveTrainConstants.gearRatio * Constants.DriveTrainConstants.encoderEdgesPerRev);
     }
-
-    
-    //Use Pigeon to get angle
-    public Rotation2d getRotation(){
-        //Need to double check the reading from this later.
-        return Rotation2d.fromDegrees(pigeon.getAngle());
-    }
-
-    public DifferentialDriveKinematics getDifferentialDriveKinematics(){
-        return kinematics;
-    }
-    
-    public Pose2d getPose(){
-        return odometry.getPoseMeters();
-    }
-
-    public SimpleMotorFeedforward getMotorFeedForward() {
-        return feedforward;
-    }
-    
-    public DifferentialDriveWheelSpeeds getVelocities() {
-        //I suspect we might have to do RPM motor to RPM wheel before converting to m/time
-        //So we might need gear ratios? => sensorVelocity / GEAR_RATIO *2PI * m/min / 60s
-        return new DifferentialDriveWheelSpeeds(
-            getLeftPosition(),
-            getRightPosition()
-        );
-    }
-    public PIDController getLeftPIDController() {
-        return leftPID;
-    }
-    public PIDController getRightPIDController() {
-        return rightPID;
-    }
-
 
 }
