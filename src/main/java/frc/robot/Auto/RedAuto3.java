@@ -10,12 +10,11 @@ import frc.robot.commands.MoveArm;
 import frc.robot.commands.RunFeeder;
 import frc.robot.commands.RunNeck;
 import frc.robot.commands.Shoot;
-import frc.robot.commands.CommandGroups.ArmAndIntake;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Arm.ArmState;
 import frc.robot.trajectories.Trajectories;
 
-public class ThirdAutoRed extends CommandBase{
+public class RedAuto3 extends CommandBase{
     Drivetrain drivetrain;
     Arm arm;
     Intake intake;
@@ -25,7 +24,7 @@ public class ThirdAutoRed extends CommandBase{
     Trajectories trajectories = new Trajectories();
     Trajectory trajectory;
 
-    public ThirdAutoRed(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Shooter shooter, Neck neck) {
+    public RedAuto3(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Shooter shooter, Neck neck) {
         this.drivetrain = drivetrain;
         this.arm = arm;
         this.intake = intake;
