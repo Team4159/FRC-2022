@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -15,6 +16,7 @@ import frc.robot.auto.ZeroAuto;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Climber.ClimberState;
+import frc.robot.trajectories.Trajectories;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
@@ -82,13 +84,12 @@ public class RobotContainer {
   private final Climb lowerClimber = new Climb(climber, ClimberState.LOWER);
   private final RunNeck runNeck = new RunNeck(neck, Direction.FORWARDS);
   private final RunNeck runNeckBackwards = new RunNeck(neck, Direction.BACKWARDS);
-  private final Shoot shoot = new Shoot(shooter, Constants.ShooterConstants.targetVelocity);
+  private final Shoot shoot = new Shoot(shooter);
   private final NeckAndShoot neckAndShoot = new NeckAndShoot(feeder,neck, shooter);
   private final ArmIntakeAndFeeder armIntakeAndFeeder = new ArmIntakeAndFeeder(arm, intake, feeder);
-  
-  private BlueAuto2 blueAuto2 = new BlueAuto2(drivetrain, arm, intake, feeder, shooter);
 
-
+  private Trajectories trajectories = new Trajectories();
+  private Trajectory trajectory = trajectories.loadTrajectory("paths/BlueAuto2.wpilib.json");
 
 
   public RobotContainer() {
@@ -104,7 +105,6 @@ public class RobotContainer {
   private void zeroSubsystems() {
     arm.zeroArm();
     climber.zeroClimber();
-    drivetrain.zeroSensors();
   }
 
   private void configureButtonBindings() {
@@ -131,23 +131,22 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return blueAuto2;
+    return Trajectories.followTrajectory(drivetrain, trajectory);
   }
-
-  //Getters for the 6 subsystems
+  //Getters for the 7 subsystems
   public Arm getArm() {
     return arm;
   }
+  public Feeder getFeeder() {
+    return feeder;
+  }
+
   public Drivetrain getDriveTrain() {
     return drivetrain;
   }
 
   public Intake getIntake() {
     return intake;
-  }
-
-  public Feeder getFeeder() {
-    return feeder;
   }
 
   public Climber getClimber() {
@@ -158,8 +157,8 @@ public class RobotContainer {
     return shooter;
   }
 
-  public Neck getNeck(){
+  public Neck getNeck() {
     return neck;
   }
-}
 
+ 

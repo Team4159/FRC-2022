@@ -4,17 +4,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Neck;
 import frc.robot.subsystems.Shooter;
-import frc.robot.Constants;
-import frc.robot.Constants.Direction;
 
 public class Shoot extends CommandBase {
-    private Neck neck;
     private Shooter shooter;
-    private Double targetVelocity;
 
 
-    public Shoot(Shooter shooter, double targetVelocity) {
-        this.targetVelocity = targetVelocity;
+
+    public Shoot(Shooter shooter) {
         this.shooter = shooter;
 
         addRequirements(shooter);
