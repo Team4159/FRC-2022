@@ -41,7 +41,7 @@ public class Climber extends SubsystemBase{
         );
 
         lowSetPoint = Constants.ClimberConstants.pidLowSetPoint;
-        lowSetPoint = Constants.ClimberConstants.pidHighSetPoint;
+        highSetPoint = Constants.ClimberConstants.pidHighSetPoint;
         
         climberState = ClimberState.LOWER;
     }

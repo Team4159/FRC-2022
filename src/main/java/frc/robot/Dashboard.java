@@ -20,6 +20,9 @@ public class Dashboard {
     //Call methods here to run them so they do their thing in shuffleboard
     public Dashboard (RobotContainer robotContainer) {
         this.robotContainer = robotContainer;
+    }
+
+    public void update() {
         //test();
         //pigeonData();
         armEncoderData();
@@ -28,6 +31,8 @@ public class Dashboard {
         //lJoystickPort();
         //rJoystickPort();
         //secJoystickPort();
+
+        System.out.println("update");
     }
     //Pigeon Gyro, check if it works
     //public void pigeonData() {
@@ -40,15 +45,16 @@ public class Dashboard {
     //Encoders for arm and climber, check if they work
     public void armEncoderData(){
         SmartDashboard.putNumber("Arm Encoder", robotContainer.getArm().getEncoderRaw());
-        /*Shuffleboard.getTab("Electrical")
+        Shuffleboard.getTab("Electrical")
             .add("Arm Encoder", robotContainer.getArm().getEncoderRaw())
             .withWidget(BuiltInWidgets.kEncoder)
             .withSize(2, 1)
             .withPosition(4, 2)
-            .getEntry();*/
+            .getEntry();
     }
-/*
+
     public void climberEncoderData(){
+        SmartDashboard.putNumber("Climber Encoder", robotContainer.getClimber().getEncoderRaw());
         Shuffleboard.getTab("Electrical")
             .add("Climber Encoder", robotContainer.getClimber().getEncoderRaw())
             .withWidget(BuiltInWidgets.kEncoder)
@@ -59,7 +65,7 @@ public class Dashboard {
     //Encoders for all motors
     public void motorEncoder1 () {
         //stuff
-    }*/
+    }
 
     /*
     public void intakeEncoderData(){
@@ -108,7 +114,6 @@ public class Dashboard {
         electrical
             .withWidget(BuiltInWidgets.kPowerDistribution)
             .getTotalCurrent();
-
         double leftJoystickCurr = leftJoystickPort.getCurrent();
     }*/
     /*public String green (){
