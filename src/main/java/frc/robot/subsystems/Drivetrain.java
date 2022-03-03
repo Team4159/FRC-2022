@@ -23,7 +23,7 @@ import frc.robot.commands.Drive;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class Drivetrain extends SubsystemBase {
-    private WPI_TalonFX rightFrontTalon;
+    public WPI_TalonFX rightFrontTalon;
     private WPI_TalonFX rightRearTalon;
     private WPI_TalonFX leftFrontTalon;
     private WPI_TalonFX leftRearTalon;

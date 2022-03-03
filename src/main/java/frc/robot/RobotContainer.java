@@ -78,7 +78,7 @@ public class RobotContainer {
   private final ArmIntakeAndFeeder armIntakeAndFeeder = new ArmIntakeAndFeeder(arm, intake, feeder);
 
   private Trajectories trajectories = new Trajectories();
-  private Trajectory trajectory = trajectories.loadTrajectory("paths/BlueAuto2.wpilib.json");
+  private Trajectory trajectory = trajectories.loadTrajectory("paths/ZeroAuto.wpilib.json");
 
 
   public RobotContainer() {
@@ -90,10 +90,6 @@ public class RobotContainer {
   public void periodic() {
 
   }  
-
-  public Arm getArm() {
-    return arm;
-  }
 
   private void zeroSubsystems() {
     arm.zeroArm();
@@ -124,7 +120,11 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Trajectories.followTrajectory(drivetrain, trajectory);
+    return Trajectories.followTrajectory(drivetrain, trajectory).withTimeout(1.5);
+  }
+
+  public Arm getArm() {
+    return arm;
   }
 
   public Feeder getFeeder() {
