@@ -9,10 +9,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-import frc.robot.auto.BlueAuto2;
-import frc.robot.auto.FirstAuto;
-import frc.robot.auto.ThirdAuto;
-import frc.robot.auto.ZeroAuto;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Climber.ClimberState;
@@ -77,8 +73,7 @@ public class RobotContainer {
   private final NeckAndShoot neckAndShoot = new NeckAndShoot(feeder,neck, shooter);
   private final ArmIntakeAndFeeder armIntakeAndFeeder = new ArmIntakeAndFeeder(arm, intake, feeder);
 
-  private Trajectories trajectories = new Trajectories();
-  private Trajectory trajectory = trajectories.loadTrajectory("paths/ZeroAuto.wpilib.json");
+  private Trajectory trajectory = Trajectories.loadTrajectory("paths/output/ZeroAuto.wpilib.json");
 
 
   public RobotContainer() {
@@ -93,6 +88,7 @@ public class RobotContainer {
 
   private void zeroSubsystems() {
     arm.zeroArm();
+    //drivetrain.zeroSensors();
     climber.zeroClimber();
   }
 

@@ -55,6 +55,8 @@ public class Drivetrain extends SubsystemBase {
         kinematics = new DifferentialDriveKinematics(Constants.DriveTrainConstants.trackWidth);
         feedforward = new SimpleMotorFeedforward(Constants.DriveTrainConstants.ksVolts, Constants.DriveTrainConstants.kvVoltSecondsPerMeter, Constants.DriveTrainConstants.kaVoltSecondsSquaredPerMeter);
         odometry = new DifferentialDriveOdometry(getHeading());
+
+        zeroSensors();
     }
 
     public void drive(double leftSpeed, double rightSpeed) {
@@ -65,6 +67,12 @@ public class Drivetrain extends SubsystemBase {
     public void stop(){
         leftMotors.set(0);
         rightMotors.set(0);
+    }
+
+    public void zeroSensors() {
+      leftFrontTalon.setSelectedSensorPosition(0);
+      rightFrontTalon.setSelectedSensorPosition(0);
+      pigeon.setFusedHeading(0);
     }
 
     public Rotation2d getHeading() {
