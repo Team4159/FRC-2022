@@ -134,7 +134,7 @@ public class RobotContainer {
     return blueAuto2;
   }
 
-  //Getters for the 6 subsystems
+  //Getters for the subsystems
   public Arm getArm() {
     return arm;
   }
