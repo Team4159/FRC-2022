@@ -42,6 +42,7 @@ public class RedAuto1 extends ParallelCommandGroup {
                 new NeckAndShoot(feeder, neck, shooter).withTimeout(1),
                 new MoveDistance(drivetrain, -1),
                 new TurnDegrees(drivetrain, 180),
+                new MoveDistance(drivetrain, 0.5),
                 new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(1.5),
                 new TurnDegrees(drivetrain, 90),
                 new MoveDistance(drivetrain, 1.5),
