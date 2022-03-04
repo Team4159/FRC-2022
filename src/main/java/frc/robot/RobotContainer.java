@@ -29,7 +29,7 @@ import frc.robot.Constants.Direction;
 
 public class RobotContainer {
   //Power Distribution
-  PowerDistribution PDH = new PowerDistribution();
+  private final PowerDistribution PDH = new PowerDistribution();
   //Subsystems, will be accessed with getters here in the same file
   private final Drivetrain drivetrain = new Drivetrain();
   private final Intake intake = new Intake();
@@ -160,5 +160,9 @@ public class RobotContainer {
 
   public Neck getNeck(){
     return neck;
+  }
+  //Getter for power distribtion
+  public PowerDistribution getPDP(){
+    return PDH;
   }
 }

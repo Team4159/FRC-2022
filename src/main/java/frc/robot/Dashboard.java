@@ -62,6 +62,17 @@ public class Dashboard {
             .withPosition(4, 3)
             .getEntry();
     }
+    //PDP code
+    public void powerDistData(){
+        SmartDashboard.putNumber("PDP Data", robotContainer.getPDP().getTotalCurrent());
+        Shuffleboard.getTab("Electrical")
+        .add("PDP Data", robotContainer.getPDP().getTotalCurrent())
+        .withWidget(BuiltInWidgets.kPowerDistribution)
+        .withSize(3, 2)
+        .withPosition(0,0)//temporary position
+        .getEntry();
+    }
+
     //Encoders for all motors
     public void motorEncoder1 () {
         //stuff
