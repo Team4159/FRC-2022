@@ -78,7 +78,7 @@ public class RobotContainer {
   private final ArmIntakeAndFeeder armIntakeAndFeeder = new ArmIntakeAndFeeder(arm, intake, feeder);
 
   private Trajectories trajectories = new Trajectories();
-  private Trajectory trajectory = trajectories.loadTrajectory("paths/output/ZeroAuto.wpilib.json");
+  private Trajectory trajectory = trajectories.loadTrajectory("paths/ZeroAuto.wpilib.json");
 
 
   public RobotContainer() {

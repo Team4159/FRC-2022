@@ -1,7 +1,6 @@
 package frc.robot.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.DriveWithoutControls;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.CommandGroups.NeckAndShoot;
 import frc.robot.subsystems.Arm;
@@ -30,10 +29,10 @@ public class ZeroAuto extends SequentialCommandGroup{
         this.shooter = shooter;
 
         addCommands(
-            new NeckAndShoot(feeder, neck, shooter).withTimeout(1),
-            new DriveWithoutControls(drivetrain, 0.5, 0.5).withTimeout(0.5),
-            new DriveWithoutControls(drivetrain, -0.1, -0.1).withTimeout(0.1),
-            new MoveArm(arm, ArmState.HIGH).withTimeout(0.1)
+            // new NeckAndShoot(feeder, neck, shooter).withTimeout(1),
+            // new DriveWithoutControls(drivetrain, 0.5, 0.5).withTimeout(0.5),
+            // new DriveWithoutControls(drivetrain, -0.1, -0.1).withTimeout(0.1),
+            // new MoveArm(arm, ArmState.HIGH).withTimeout(0.1)
         );
     }
 

@@ -6,22 +6,22 @@ import frc.robot.subsystems.Drivetrain;
 
 public class Drive extends CommandBase{
 
-    private Drivetrain drivetrain;
-    private Joystick leftJoystick;
-    private Joystick rightJoystick;
+  private Drivetrain drivetrain;
+  private Joystick leftJoystick;
+  private Joystick rightJoystick;
 
-    
-    public Drive(Drivetrain drivetrain, Joystick leftJoystick, Joystick rightJoystick) {
-        this.drivetrain = drivetrain;
-        this.leftJoystick = leftJoystick;
-        this.rightJoystick = rightJoystick;
+  
+  public Drive(Drivetrain drivetrain, Joystick leftJoystick, Joystick rightJoystick) {
+    this.drivetrain = drivetrain;
+    this.leftJoystick = leftJoystick;
+    this.rightJoystick = rightJoystick;
 
-        addRequirements(drivetrain);
-    }
+    addRequirements(drivetrain);
+  }
 
-    @Override
-    public void execute() {
-      drivetrain.drive(leftJoystick.getY(), rightJoystick.getY());
-    }
-    
+  @Override
+  public void execute() {
+    drivetrain.drive(leftJoystick.getY(), rightJoystick.getY());
+  }
+  
 }
