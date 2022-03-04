@@ -65,7 +65,7 @@ public class Dashboard {
     //Encoders for all motors
     public void motorEncoder1 () {
         //stuff
-    }*/
+    }
 
     /*
     public void intakeEncoderData(){
