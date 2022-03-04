@@ -62,7 +62,7 @@ public class Dashboard {
             .withPosition(4, 3)
             .getEntry();
     }
-    //PDP code
+    //PDP code, has total current, check if need to add voltage
     public void powerDistData(){
         SmartDashboard.putNumber("PDP Data", robotContainer.getPDP().getTotalCurrent());
         Shuffleboard.getTab("Electrical")
