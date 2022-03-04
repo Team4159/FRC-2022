@@ -26,7 +26,6 @@ public class MoveArm extends CommandBase{
 
     @Override
     public void end(boolean i) {
-        System.out.println(arm.atSetpoint(Constants.IntakeAndArmConstants.pidHighSetPoint, Constants.IntakeAndArmConstants.tolerance));
         if(armState == ArmState.HIGH && arm.atSetpoint(Constants.IntakeAndArmConstants.pidHighSetPoint, Constants.IntakeAndArmConstants.tolerance)) {
             arm.setArmSpeed(0);
             //System.out.println("true");

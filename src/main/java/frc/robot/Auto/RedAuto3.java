@@ -14,15 +14,13 @@ import frc.robot.subsystems.*;
 import frc.robot.subsystems.Arm.ArmState;
 import frc.robot.trajectories.Trajectories;
 
-public class RedAuto3 extends CommandBase{
+public class RedAuto3 extends ParallelCommandGroup{
     Drivetrain drivetrain;
     Arm arm;
     Intake intake;
     Feeder feeder;
     Shooter shooter;
     Neck neck;
-    Trajectories trajectories = new Trajectories();
-    Trajectory trajectory;
 
     public RedAuto3(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Shooter shooter, Neck neck) {
         this.drivetrain = drivetrain;
@@ -31,6 +29,7 @@ public class RedAuto3 extends CommandBase{
         this.feeder = feeder;
         this.shooter = shooter;
         this.neck = neck;
+
     }
 
 }
