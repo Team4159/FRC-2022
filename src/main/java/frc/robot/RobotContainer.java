@@ -77,9 +77,6 @@ public class RobotContainer {
   private final NeckAndShoot neckAndShoot = new NeckAndShoot(feeder,neck, shooter);
   private final ArmIntakeAndFeeder armIntakeAndFeeder = new ArmIntakeAndFeeder(arm, intake, feeder);
 
-  private Trajectories trajectories = new Trajectories();
-  private Trajectory trajectory = trajectories.loadTrajectory("paths/ZeroAuto.wpilib.json");
-
 
   public RobotContainer() {
     configureButtonBindings();
@@ -91,7 +88,7 @@ public class RobotContainer {
 
   }  
 
-  private void zeroSubsystems() {
+  public void zeroSubsystems() {
     arm.zeroArm();
     climber.zeroClimber();
   }
@@ -120,7 +117,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Trajectories.followTrajectory(drivetrain, trajectory).withTimeout(1.5);
+    return null;
   }
 
   public Arm getArm() {

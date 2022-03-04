@@ -32,24 +32,24 @@ public class RedAuto2 extends ParallelCommandGroup{
         this.intake = intake;
         this.feeder = feeder;
         this.shooter = shooter;
-        trajectory =  trajectories.loadTrajectory("../trajectories/output/RedAuto2.wpilib.json");
+    // trajectory =  trajectories.loadTrajectory("../trajectories/output/RedAuto2.wpilib.json");
 
-        ParallelDeadlineGroup BlueAuto2 = new ParallelDeadlineGroup(
-            new WaitCommand(15d),
-            Trajectories.followTrajectory(drivetrain, trajectory),
-            new SequentialCommandGroup(
-                new Shoot(shooter).withTimeout(1),
-                new WaitCommand(3),
-                new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(2),
-                new WaitCommand(2),
-                new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(2),
-                new WaitCommand(3),
-                new Shoot(shooter).withTimeout(2)
-            )  
-        );
+    //     ParallelDeadlineGroup BlueAuto2 = new ParallelDeadlineGroup(
+    //         new WaitCommand(15d),
+    //         Trajectories.followTrajectory(drivetrain, trajectory),
+    //         new SequentialCommandGroup(
+    //             new Shoot(shooter).withTimeout(1),
+    //             new WaitCommand(3),
+    //             new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(2),
+    //             new WaitCommand(2),
+    //             new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(2),
+    //             new WaitCommand(3),
+    //             new Shoot(shooter).withTimeout(2)
+    //         )  
+    //     );
 
-        addCommands(BlueAuto2);
-    }
+    //     addCommands(BlueAuto2);
+   }
 }
 
 

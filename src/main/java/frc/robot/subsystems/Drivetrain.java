@@ -39,41 +39,75 @@ public class Drivetrain extends SubsystemBase {
   private DifferentialDriveOdometry odometry;
   private SimpleMotorFeedforward feedforward;
 
-  private PIDController leftPIDController = new PIDController(Constants.DriveTrainConstants.kPDriveVel, 0,0);
-  private PIDController rightPIDController = new PIDController(Constants.DriveTrainConstants.kPDriveVel, 0, 0);
+  private PIDController linearDriveTrainPID = new PIDController(Constants.DriveTrainConstants.lP, Constants.DriveTrainConstants.lI, Constants.DriveTrainConstants.lD);
+  private PIDController angularDriveTrainPID = new PIDController(Constants.DriveTrainConstants.aP, Constants.DriveTrainConstants.aI, Constants.DriveTrainConstants.aD);
 
   public Drivetrain() {
-      rightFrontTalon = new WPI_TalonFX(Constants.CanIds.rightFrontTalon);
-      rightRearTalon = new WPI_TalonFX(Constants.CanIds.rightRearTalon);
-      leftFrontTalon = new WPI_TalonFX(Constants.CanIds.leftFrontTalon);
-      leftRearTalon = new WPI_TalonFX(Constants.CanIds.leftRearTalon);
+    rightFrontTalon = new WPI_TalonFX(Constants.CanIds.rightFrontTalon);
+    rightRearTalon = new WPI_TalonFX(Constants.CanIds.rightRearTalon);
+    leftFrontTalon = new WPI_TalonFX(Constants.CanIds.leftFrontTalon);
+    leftRearTalon = new WPI_TalonFX(Constants.CanIds.leftRearTalon);
 
-      leftMotors = new MotorControllerGroup(leftRearTalon, leftFrontTalon);
-      rightMotors = new MotorControllerGroup(rightFrontTalon, rightRearTalon);
-      
-      pigeon = new WPI_PigeonIMU(Constants.CanIds.pigeonId);
+    leftMotors = new MotorControllerGroup(leftRearTalon, leftFrontTalon);
+    rightMotors = new MotorControllerGroup(rightFrontTalon, rightRearTalon);
+    
+    pigeon = new WPI_PigeonIMU(Constants.CanIds.pigeonId);
 
-      kinematics = new DifferentialDriveKinematics(Constants.DriveTrainConstants.trackWidth);
-      feedforward = new SimpleMotorFeedforward(Constants.DriveTrainConstants.ksVolts, Constants.DriveTrainConstants.kvVoltSecondsPerMeter, Constants.DriveTrainConstants.kaVoltSecondsSquaredPerMeter);
-      odometry = new DifferentialDriveOdometry(getHeading());
+    kinematics = new DifferentialDriveKinematics(Constants.DriveTrainConstants.trackWidth);
+    feedforward = new SimpleMotorFeedforward(Constants.DriveTrainConstants.ksVolts, Constants.DriveTrainConstants.kvVoltSecondsPerMeter, Constants.DriveTrainConstants.kaVoltSecondsSquaredPerMeter);
+    odometry = new DifferentialDriveOdometry(getHeading());
   }
 
   public void drive(double leftSpeed, double rightSpeed) {
-      leftMotors.set(leftSpeed);
-      rightMotors.set(rightSpeed);
+    leftMotors.set(leftSpeed);
+    rightMotors.set(rightSpeed);
   }
 
   public void stop(){
-      leftMotors.set(0);
-      rightMotors.set(0);
+    leftMotors.set(0);
+    rightMotors.set(0);
+  }
+
+  public void zeroSensors() {
+    leftFrontTalon.setSelectedSensorPosition(0);
+    rightFrontTalon.setSelectedSensorPosition(0);
+    pigeon.setFusedHeading(0);
   }
 
   public void moveDistance(double distance) {
-    
+    double output = linearDriveTrainPID.calculate(getRightPosition(), distance);
+    leftMotors.set(output);
+    rightMotors.set(output);
   }
 
-  public void turnDegrees(double angle) {
+  public boolean atDistanceSetpoint(double distance, double tolerance) {
+    if(getRightPosition() <= distance + tolerance && getRightPosition() >= distance - tolerance) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 
+  public void turnDegrees(double angle) { //Angle needs to be between 0 and 360
+    double output = angularDriveTrainPID.calculate(getAngle(), angle);
+    if(angle >= 0 && angle <= 180) {
+      rightMotors.set(output);
+      leftMotors.set(-output);
+    }
+    else if (angle > 180 && angle < 360) {
+      rightMotors.set(-output);
+      leftMotors.set(output);
+    }
+  }
+
+  public boolean atAngleSetpoint(double angle, double tolerance) {
+    if(getAngle() <= angle + tolerance && getAngle() >= angle - tolerance) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   public double getAngle() {
@@ -101,14 +135,6 @@ public class Drivetrain extends SubsystemBase {
 
   public SimpleMotorFeedforward getFeedforward() {
     return feedforward;
-  }
-
-  public PIDController getLeftPIDController() {
-    return leftPIDController;
-  }
-
-  public PIDController getRightPIDController() {
-    return rightPIDController;
   }
 
   public void setOutputVolts(double leftVolts, double rightVolts) {

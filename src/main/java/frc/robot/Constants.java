@@ -56,9 +56,15 @@ public class Constants {
     }
 
     public static class DriveTrainConstants {
-        private final static double kP = 0.5;
-        private final static double kI = 0;
-        private final static double kD = 0;
+        public final static double lP = 0.5;
+        public final static double lI = 0;
+        public final static double lD = 0;
+        public final static double lTolerance = 0.2; //In meters
+
+        public final static double aP = 0.5;
+        public final static double aI = 0;
+        public final static double aD = 0;
+        public final static double aTolerance = 5; // In Degrees
 
         public final static double encoderEdgesPerRev = 2048;
         public final static double gearRatio = 8.667;
