@@ -1,5 +1,4 @@
 package frc.robot.auto;
-
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -18,8 +17,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Arm.ArmState;
 import frc.robot.trajectories.Trajectories;
 
-
-public class RedAuto2 extends ParallelCommandGroup{
+public class BlueAuto1 extends ParallelCommandGroup{
     private Drivetrain drivetrain;
     private Arm arm;
     private Intake intake;
@@ -28,7 +26,7 @@ public class RedAuto2 extends ParallelCommandGroup{
     private Shooter shooter;
 
 
-    public RedAuto2(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Shooter shooter, Neck neck) {
+    public BlueAuto1(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Shooter shooter, Neck neck) {
         this.drivetrain = drivetrain;
         this.arm = arm;
         this.intake = intake;
@@ -36,7 +34,7 @@ public class RedAuto2 extends ParallelCommandGroup{
         this.neck = neck;
         this.shooter = shooter;
 
-        ParallelCommandGroup redAuto1 = new ParallelCommandGroup(
+        ParallelCommandGroup blueAuto1 = new ParallelCommandGroup(
             // new MoveArm(arm, ArmState.HIGH),
             // new SequentialCommandGroup(
             //     new NeckAndShoot(feeder, neck, shooter).withTimeout(1),
@@ -44,18 +42,15 @@ public class RedAuto2 extends ParallelCommandGroup{
             //     new TurnDegrees(drivetrain, 180),
             //     new MoveDistance(drivetrain, 0.5),
             //     new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(1.5),
-            //     new TurnDegrees(drivetrain, 90),
+            //     new TurnDegrees(drivetrain, 270),
             //     new MoveDistance(drivetrain, 1.5),
             //     new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(1.5),
-            //     new TurnDegrees(drivetrain, 90),
+            //     new TurnDegrees(drivetrain, 270),
             //     new MoveDistance(drivetrain, 1.5),
             //     new NeckAndShoot(feeder, neck, shooter).withTimeout(2)
             // )
         );
 
-        addCommands(redAuto1);
-
+        addCommands(blueAuto1);
     }
 }
-
-

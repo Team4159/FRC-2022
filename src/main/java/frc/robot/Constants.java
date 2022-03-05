@@ -6,8 +6,6 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 
 import java.lang.Math;
 
-import org.w3c.dom.views.DocumentView;
-
 public class Constants {
 
     public class CanIds {
@@ -56,6 +54,16 @@ public class Constants {
     }
 
     public static class DriveTrainConstants {
+        public final static double lP = 0.55;
+        public final static double lI = 0.0000; //0.0001
+        public final static double lD = 0.00; //0.01
+        public final static double lTolerance = 0; //In meters
+
+        public final static double aP = 0.01;
+        public final static double aI = 0;
+        public final static double aD = 0.0015;
+        public final static double aTolerance = 5; // In Degrees
+
         public final static double encoderEdgesPerRev = 2048;
         public final static double gearRatio = 8.667;
         public final static double wheelCircumference = 2 * Math.PI * Units.inchesToMeters(3);
@@ -71,8 +79,8 @@ public class Constants {
 
         public static final double kPDriveVel = 3.06255;
 
-        public static final double kMaxSpeedMetersPerSecond = 5;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 2;
+        public static final double kMaxSpeedMetersPerSecond = 2;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 0.5;
 
         //Officially Tested 
         public static final double kRamseteB = 2;

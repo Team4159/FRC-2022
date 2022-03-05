@@ -19,7 +19,7 @@ import frc.robot.subsystems.Arm.ArmState;
 import frc.robot.trajectories.Trajectories;
 
 
-public class RedAuto2 extends ParallelCommandGroup{
+public class RedAuto1 extends ParallelCommandGroup {
     private Drivetrain drivetrain;
     private Arm arm;
     private Intake intake;
@@ -28,7 +28,7 @@ public class RedAuto2 extends ParallelCommandGroup{
     private Shooter shooter;
 
 
-    public RedAuto2(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Shooter shooter, Neck neck) {
+    public RedAuto1(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Shooter shooter, Neck neck) {
         this.drivetrain = drivetrain;
         this.arm = arm;
         this.intake = intake;
@@ -56,6 +56,5 @@ public class RedAuto2 extends ParallelCommandGroup{
         addCommands(redAuto1);
 
     }
+
 }
-
-

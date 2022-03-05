@@ -9,10 +9,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-import frc.robot.auto.BlueAuto2;
-import frc.robot.auto.FirstAuto;
-import frc.robot.auto.ThirdAuto;
-import frc.robot.auto.ZeroAuto;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Climber.ClimberState;
@@ -22,11 +18,20 @@ import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
 import frc.robot.commands.RunNeck;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.AutoCommands.MoveDistance;
+import frc.robot.commands.AutoCommands.TurnDegrees;
 import frc.robot.commands.CommandGroups.ArmIntakeAndFeeder;
 import frc.robot.commands.CommandGroups.NeckAndShoot;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Arm.ArmState;
 import frc.robot.Constants.Direction;
+import frc.robot.auto.BlueAuto1;
+import frc.robot.auto.BlueAuto2;
+import frc.robot.auto.BlueAuto3;
+import frc.robot.auto.RedAuto1;
+import frc.robot.auto.RedAuto2;
+import frc.robot.auto.RedAuto3;
+import frc.robot.auto.ZeroAuto;
 
 
 public class RobotContainer {
@@ -77,8 +82,14 @@ public class RobotContainer {
   private final NeckAndShoot neckAndShoot = new NeckAndShoot(feeder,neck, shooter);
   private final ArmIntakeAndFeeder armIntakeAndFeeder = new ArmIntakeAndFeeder(arm, intake, feeder);
 
-  private Trajectories trajectories = new Trajectories();
-  private Trajectory trajectory = trajectories.loadTrajectory("paths/BlueAuto2.wpilib.json");
+  //Autos
+  private BlueAuto1 blueAuto1 = new BlueAuto1(drivetrain, arm, intake, feeder, shooter, neck);
+  private BlueAuto2 blueAuto2 = new BlueAuto2(drivetrain, arm, intake, feeder, shooter, neck);
+  private BlueAuto3 blueAUto3 = new BlueAuto3(drivetrain, arm, intake, feeder, shooter, neck);
+  private RedAuto1 redAuto1 = new RedAuto1(drivetrain, arm, intake, feeder, shooter, neck);
+  private RedAuto2 redAuto2 = new RedAuto2(drivetrain, arm, intake, feeder, shooter, neck);
+  private RedAuto3 redAuto3 = new RedAuto3(drivetrain, arm, intake, feeder, shooter, neck);
+  private ZeroAuto zeroAuto  = new ZeroAuto(drivetrain, arm, intake, feeder, neck, shooter);
 
 
   public RobotContainer() {
@@ -91,12 +102,9 @@ public class RobotContainer {
 
   }  
 
-  public Arm getArm() {
-    return arm;
-  }
-
-  private void zeroSubsystems() {
+  public void zeroSubsystems() {
     arm.zeroArm();
+    drivetrain.zeroSensors();
     climber.zeroClimber();
   }
 
@@ -124,7 +132,12 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Trajectories.followTrajectory(drivetrain, trajectory);
+
+    return zeroAuto;
+  }
+
+  public Arm getArm() {
+    return arm;
   }
 
   public Feeder getFeeder() {
