@@ -31,7 +31,7 @@ public class ZeroAuto extends SequentialCommandGroup{
         this.shooter = shooter;
 
         addCommands(
-            new MoveDistance(drivetrain, 1).withTimeout(1),
+            new MoveDistance(drivetrain, 1),
             new TurnDegrees(drivetrain, 90)
         );
     }

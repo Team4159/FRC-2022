@@ -22,11 +22,11 @@ public class MoveDistance extends CommandBase{
         // double outputSpeed = 0.5 * error + kI * errorSum + kD * errorRate;
 
         drivetrain.moveDistance(distance);
-        isFinished();
     }
 
+    @Override
     public boolean isFinished() {
-        
+        //System.out.println(drivetrain.atDistanceSetpoint(distance, Constants.DriveTrainConstants.lTolerance));
         return drivetrain.atDistanceSetpoint(distance, Constants.DriveTrainConstants.lTolerance);
     }
 

@@ -81,7 +81,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public boolean atDistanceSetpoint(double distance, double tolerance) {
-    if(-getRightPosition() <= distance + tolerance && -getRightPosition() >= distance - tolerance) {
+    if(getRightPosition() <= distance + tolerance && getRightPosition() >= distance - tolerance) {
       return true;
     }
     else {

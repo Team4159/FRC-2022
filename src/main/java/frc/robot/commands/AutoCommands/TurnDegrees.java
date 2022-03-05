@@ -20,6 +20,7 @@ public class TurnDegrees extends CommandBase{
         drivetrain.turnDegrees(angle);
     }
 
+    @Override
     public boolean isFinished() {
         return drivetrain.atAngleSetpoint(angle, Constants.DriveTrainConstants.aTolerance);
     }

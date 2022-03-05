@@ -57,7 +57,7 @@ public class Constants {
         public final static double lP = 0.55;
         public final static double lI = 0.0000; //0.0001
         public final static double lD = 0.00; //0.01
-        public final static double lTolerance = 0; //In meters
+        public final static double lTolerance = 0.05; //In meters
 
         public final static double aP = 0.01;
         public final static double aI = 0;
