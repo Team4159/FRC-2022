@@ -45,8 +45,6 @@ public class Shooter extends SubsystemBase {
         return shooterTalonRight.getSelectedSensorVelocity();
     }
 
-    //WaitUntilCommand Refuses to Accept Boolean Values
-
 
     public WPI_TalonFX getLeftShooterTalon() {
         return shooterTalonLeft;

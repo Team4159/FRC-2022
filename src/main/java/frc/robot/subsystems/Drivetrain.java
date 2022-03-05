@@ -75,13 +75,13 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void moveDistance(double distance) {
-    double output = linearDriveTrainPID.calculate(getRightPosition(), distance);
+    double output = linearDriveTrainPID.calculate(getRobotPosition(), distance);
     leftMotors.set(output);
     rightMotors.set(-output);
   }
 
   public boolean atDistanceSetpoint(double distance, double tolerance) {
-    if(getRightPosition() <= distance + tolerance && getRightPosition() >= distance - tolerance) {
+    if(getRobotPosition() <= distance + tolerance && getRobotPosition() >= distance - tolerance) {
       return true;
     }
     else {
@@ -90,11 +90,14 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void turnDegrees(double angle) { //Angle needs to be between 0 and 360
-    //angle = angle%360;
-    double output = angularDriveTrainPID.calculate(getAngle(), angle);
-    // if (angle < 0) {
-    //   output = -1 * angularDriveTrainPID.calculate(getAngle(), angle);
-    // }
+    double output;
+    if(angle <= 180 && angle > 0) {
+      output = angularDriveTrainPID.calculate(getAngle(), angle);
+    }
+    else {
+      output = -angularDriveTrainPID.calculate(getAngle(), 360 - angle);
+    }
+
 
     leftMotors.set(output);
     rightMotors.set(output);
@@ -149,6 +152,10 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     pose = odometry.update(getHeading(), getLeftPosition(), getRightPosition());
+  }
+
+  public double getRobotPosition() {
+    return (getLeftPosition() + getRightPosition())/2;
   }
 
   public double getLeftPosition() {

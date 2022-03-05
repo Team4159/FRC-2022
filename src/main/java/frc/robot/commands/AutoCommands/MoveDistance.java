@@ -17,16 +17,11 @@ public class MoveDistance extends CommandBase{
     }
 
     public void execute() {
-        // double error = distance - drivetrain.getRightPosition();
-
-        // double outputSpeed = 0.5 * error + kI * errorSum + kD * errorRate;
-
         drivetrain.moveDistance(distance);
     }
 
     @Override
     public boolean isFinished() {
-        //System.out.println(drivetrain.atDistanceSetpoint(distance, Constants.DriveTrainConstants.lTolerance));
         return drivetrain.atDistanceSetpoint(distance, Constants.DriveTrainConstants.lTolerance);
     }
 
