@@ -1,9 +1,11 @@
 package frc.robot.auto;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.AutoCommands.MoveDistance;
 import frc.robot.commands.AutoCommands.TurnDegrees;
+import frc.robot.commands.CommandGroups.ArmIntakeAndFeeder;
 import frc.robot.commands.CommandGroups.NeckAndShoot;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
@@ -31,8 +33,15 @@ public class ZeroAuto extends SequentialCommandGroup{
         this.shooter = shooter;
 
         addCommands(
-            new MoveDistance(drivetrain, 1),
-            new TurnDegrees(drivetrain, 90)
+            new ParallelCommandGroup(
+                new MoveDistance(drivetrain, 1.4),
+                new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(1)
+            ),
+            new TurnDegrees(drivetrain, 180),
+            new MoveArm(arm, ArmState.HIGH).withTimeout(0.3),
+            new MoveDistance(drivetrain, 2),
+            new NeckAndShoot(feeder, neck, shooter).withTimeout(0.5),
+            new MoveArm(arm, ArmState.HIGH).withTimeout(0.3)
         );
     }
 

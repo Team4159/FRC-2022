@@ -1,5 +1,7 @@
 package frc.robot.commands.AutoCommands;
 
+import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.commands.Drive;
@@ -22,7 +24,7 @@ public class TurnDegrees extends CommandBase{
 
     @Override
     public boolean isFinished() {
-        return drivetrain.atAngleSetpoint(angle, Constants.DriveTrainConstants.aTolerance);
+        return drivetrain.atAngleSetpoint(angle, 5);
     }
 
     public void end(boolean i) {

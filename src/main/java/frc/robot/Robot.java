@@ -9,6 +9,37 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.cameraserver.CameraServer;
 import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Climber.ClimberState;
+import frc.robot.trajectories.Trajectories;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Intake;
+import frc.robot.commands.RunNeck;
+import frc.robot.commands.Shoot;
+import frc.robot.commands.AutoCommands.MoveDistance;
+import frc.robot.commands.AutoCommands.TurnDegrees;
+import frc.robot.commands.CommandGroups.ArmIntakeAndFeeder;
+import frc.robot.commands.CommandGroups.NeckAndShoot;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Arm.ArmState;
+import frc.robot.Constants.Direction;
+import frc.robot.auto.BlueAuto1;
+import frc.robot.auto.BlueAuto2;
+import frc.robot.auto.BlueAuto3;
+import frc.robot.auto.RedAuto1;
+import frc.robot.auto.RedAuto2;
+import frc.robot.auto.RedAuto3;
+import frc.robot.auto.ZeroAuto;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -47,8 +78,8 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-    //System.out.println(m_robotContainer.getDriveTrain().getRightPosition());
-    
+    //new MoveArm(m_robotContainer.getArm(), ArmState.HIGH);
+    System.out.println(m_robotContainer.getDriveTrain().getRobotPosition());
     CommandScheduler.getInstance().run();
   }
 

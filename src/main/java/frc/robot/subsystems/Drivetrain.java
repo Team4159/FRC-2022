@@ -90,14 +90,13 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void turnDegrees(double angle) { //Angle needs to be between 0 and 360
-    double output;
-    if(angle <= 180 && angle > 0) {
-      output = angularDriveTrainPID.calculate(getAngle(), angle);
-    }
-    else {
-      output = -angularDriveTrainPID.calculate(getAngle(), 360 - angle);
-    }
-
+    //angle = angle%360;
+    
+    double output = angularDriveTrainPID.calculate(getAngle(), angle);
+    System.out.println(output);
+    // if (angle < 0) {
+    //   output = -1 * angularDriveTrainPID.calculate(getAngle(), angle);
+    // }
 
     leftMotors.set(output);
     rightMotors.set(output);
@@ -159,7 +158,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getLeftPosition() {
-      return -leftFrontTalon.getSelectedSensorPosition() * Constants.DriveTrainConstants.wheelCircumference / (Constants.DriveTrainConstants.gearRatio * Constants.DriveTrainConstants.encoderEdgesPerRev);
+      return leftFrontTalon.getSelectedSensorPosition() * Constants.DriveTrainConstants.wheelCircumference / (Constants.DriveTrainConstants.gearRatio * Constants.DriveTrainConstants.encoderEdgesPerRev);
   }
 
   public double getRightPosition() {

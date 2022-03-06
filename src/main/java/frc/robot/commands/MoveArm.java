@@ -40,15 +40,15 @@ public class MoveArm extends CommandBase{
 
     @Override
     public void end(boolean i) {
-        // if(armState == ArmState.HIGH && arm.atSetpoint(Constants.IntakeAndArmConstants.pidHighSetPoint, Constants.IntakeAndArmConstants.tolerance)) {
-        //     arm.setArmSpeed(0);
-        //     //System.out.println("true");
-        // }
-        // else {
-        //     arm.runArm(ArmState.HIGH);
-        //     //System.out.println("false");
-        // }
-        arm.setArmSpeed(0);
+        if(armState == ArmState.HIGH && arm.atSetpoint(Constants.IntakeAndArmConstants.pidHighSetPoint, Constants.IntakeAndArmConstants.tolerance)) {
+            arm.setArmSpeed(0);
+            //System.out.println("true");
+        }
+        else {
+            arm.runArm(ArmState.HIGH);
+            //System.out.println("false");
+        }
+        //arm.setArmSpeed(0);
     }
 
 }

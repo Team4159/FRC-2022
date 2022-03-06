@@ -133,7 +133,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
 
-    return zeroAuto;
+    return zeroAuto.withTimeout(5);
   }
 
   public Arm getArm() {
@@ -162,6 +162,10 @@ public class RobotContainer {
 
   public Neck getNeck() {
     return neck;
+  }
+
+  public JoystickButton getArmButton() {
+    return lowerArmIntakeAndFeederButton;
   }
 }
 
