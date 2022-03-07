@@ -24,6 +24,7 @@ public class RedAuto1 extends SequentialCommandGroup{
     private Neck neck;
     private Shooter shooter;
 
+    //Not Tested
     public RedAuto1(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Neck neck, Shooter shooter) {
         this.drivetrain = drivetrain;
         this.arm = arm;

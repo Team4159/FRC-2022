@@ -79,13 +79,14 @@ public class RobotContainer {
   private final ArmIntakeAndFeeder armIntakeAndFeeder = new ArmIntakeAndFeeder(arm, intake, feeder);
 
   //Autos
+  private AutoSelector autoSelector = new AutoSelector(drivetrain, arm, intake, feeder, neck, shooter);
   private BlueAuto1 blueAuto1 = new BlueAuto1(drivetrain, arm, intake, feeder, neck, shooter);
   private RedAuto1 redAuto1 = new RedAuto1(drivetrain, arm, intake, feeder, neck, shooter);
   private RedAuto3 redAuto3 = new RedAuto3(drivetrain, arm, intake, feeder, neck, shooter);
 
+
   public RobotContainer() {
     configureButtonBindings();
-    configureAutos();
     zeroSubsystems();
   }
 
@@ -117,14 +118,10 @@ public class RobotContainer {
     lowerArmIntakeAndFeederButton.whenReleased(new MoveArm(arm, ArmState.HIGH));
     lowerArmButton.whenReleased(new MoveArm(arm, ArmState.HIGH));
   }
-
-  private void configureAutos() {
-
-  }
-
+  
   public Command getAutonomousCommand() {
 
-    return redAuto3;
+    return autoSelector.getSelectedAuto();
   }
 
   public Arm getArm() {
@@ -155,8 +152,5 @@ public class RobotContainer {
     return neck;
   }
 
-  public JoystickButton getArmButton() {
-    return lowerArmIntakeAndFeederButton;
-  }
 }
 
