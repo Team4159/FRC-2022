@@ -10,7 +10,7 @@ public class Shoot extends CommandBase {
 
 
 
-    public Shoot(Shooter shooter) {
+    public Shoot(Shooter shooter, double targetvelocity) {
         this.shooter = shooter;
 
         addRequirements(shooter);

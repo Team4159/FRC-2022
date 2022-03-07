@@ -1,4 +1,4 @@
-package frc.robot.auto;
+/*package frc.robot.auto;
 
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -87,6 +87,6 @@ public class RedAuto3 extends CommandBase{
         ).withTimeout(15); //< what ever is the purpose of this
     
     }
-}
+}*/
 
     

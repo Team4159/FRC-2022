@@ -1,10 +1,15 @@
 package frc.robot.auto;
 
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants;
+import frc.robot.Constants.Direction;
+import frc.robot.commands.RunFeeder;
 import frc.robot.commands.*;
 import frc.robot.commands.CommandGroups.ArmIntakeAndFeeder;
 import frc.robot.subsystems.Arm;
@@ -38,18 +43,17 @@ public class RedAuto2 extends ParallelCommandGroup{
             new WaitCommand(15d),
             Trajectories.followTrajectory(drivetrain, trajectory),
             new SequentialCommandGroup(
-                new Shoot(shooter).withTimeout(1),
+                new Shoot(shooter, Constants.ShooterConstants.targetVelocity).withTimeout(1),
                 new WaitCommand(3),
                 new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(2),
                 new WaitCommand(2),
                 new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(2),
                 new WaitCommand(3),
-                new Shoot(shooter).withTimeout(2)
+                new Shoot(shooter, Constants.ShooterConstants.targetVelocity).withTimeout(2)
             )  
         );
 
         addCommands(BlueAuto2);
     }
 }
-
 
