@@ -10,6 +10,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -23,7 +24,7 @@ import frc.robot.commands.Drive;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class Drivetrain extends SubsystemBase {
-    private WPI_TalonFX rightFrontTalon;
+    public WPI_TalonFX rightFrontTalon;
     private WPI_TalonFX rightRearTalon;
     private WPI_TalonFX leftFrontTalon;
     private WPI_TalonFX leftRearTalon;
@@ -61,6 +62,8 @@ public class Drivetrain extends SubsystemBase {
         kinematics = new DifferentialDriveKinematics(Constants.DriveTrainConstants.trackWidth);
         feedforward = new SimpleMotorFeedforward(Constants.DriveTrainConstants.ksVolts, Constants.DriveTrainConstants.kvVoltSecondsPerMeter, Constants.DriveTrainConstants.kaVoltSecondsSquaredPerMeter);
         odometry = new DifferentialDriveOdometry(getHeading());
+
+        zeroSensors();
     }
 
     public void drive(double leftSpeed, double rightSpeed) {
@@ -71,6 +74,12 @@ public class Drivetrain extends SubsystemBase {
     public void stop(){
         leftMotors.set(0);
         rightMotors.set(0);
+    }
+
+    public void zeroSensors() {
+      leftFrontTalon.setSelectedSensorPosition(0);
+      rightFrontTalon.setSelectedSensorPosition(0);
+      pigeon.setFusedHeading(0);
     }
 
     public Rotation2d getHeading() {
@@ -89,7 +98,7 @@ public class Drivetrain extends SubsystemBase {
       }
     
       public Pose2d getPose() {
-        return pose;
+        return odometry.getPoseMeters();
       }
     
       public SimpleMotorFeedforward getFeedforward() {

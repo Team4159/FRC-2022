@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.cameraserver.CameraServer;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -33,6 +34,8 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     dashboard = new Dashboard(m_robotContainer);
+    m_robotContainer.drivetrain.zeroSensors();
+    CameraServer.startAutomaticCapture();
   }
 
   /**
@@ -78,7 +81,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-
+    System.out.println(m_robotContainer.getDriveTrain().rightFrontTalon.get());
   }
 
   @Override

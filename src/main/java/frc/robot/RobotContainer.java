@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -8,13 +9,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-import frc.robot.auto.BlueAuto2;
-import frc.robot.auto.FirstAuto;
-import frc.robot.auto.ThirdAuto;
-import frc.robot.auto.ZeroAuto;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Climber.ClimberState;
+import frc.robot.trajectories.Trajectories;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
@@ -25,13 +23,14 @@ import frc.robot.commands.CommandGroups.NeckAndShoot;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Arm.ArmState;
 import frc.robot.Constants.Direction;
+import frc.robot.auto.BlueAuto2;
 
 
 public class RobotContainer {
   //Power Distribution
   private final PowerDistribution PDH = new PowerDistribution();
   //Subsystems, will be accessed with getters here in the same file
-  private final Drivetrain drivetrain = new Drivetrain();
+  final Drivetrain drivetrain = new Drivetrain();
   private final Intake intake = new Intake();
   public final Arm arm = new Arm();
   private final Feeder feeder = new Feeder();
@@ -89,6 +88,7 @@ public class RobotContainer {
   private BlueAuto2 blueAuto2 = new BlueAuto2(drivetrain, arm, intake, feeder, shooter);
 
 
+  private Trajectory trajectory = Trajectories.loadTrajectory("paths/output/ZeroAuto.wpilib.json");
 
 
   public RobotContainer() {
@@ -103,6 +103,7 @@ public class RobotContainer {
 
   private void zeroSubsystems() {
     arm.zeroArm();
+    //drivetrain.zeroSensors();
     climber.zeroClimber();
     drivetrain.zeroSensors();
   }
@@ -132,6 +133,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return blueAuto2;
+    //return Trajectories.followTrajectory(drivetrain, trajectory).withTimeout(1.5);
   }
 
   //Getters for the subsystems

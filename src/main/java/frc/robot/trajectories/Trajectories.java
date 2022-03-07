@@ -46,7 +46,6 @@ public class Trajectories {
       drivetrain::setOutputVolts,
       drivetrain
   );
-
     return command.andThen(() -> drivetrain.setOutputVolts(0, 0));
   }
  
@@ -59,7 +58,7 @@ public class Trajectories {
     } catch (IOException e) {
       DriverStation.reportError("Trajectory not found. " + path, e.getStackTrace());
       e.printStackTrace();
-      return TrajectoryGenerator.generateTrajectory(Arrays.asList(new Pose2d(), new Pose2d()), config);
+      return new Trajectory();
       }
     }
  }
