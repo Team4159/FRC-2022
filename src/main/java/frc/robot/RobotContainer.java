@@ -26,12 +26,8 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Arm.ArmState;
 import frc.robot.Constants.Direction;
 import frc.robot.auto.BlueAuto1;
-import frc.robot.auto.BlueAuto2;
-import frc.robot.auto.BlueAuto3;
 import frc.robot.auto.RedAuto1;
-import frc.robot.auto.RedAuto2;
 import frc.robot.auto.RedAuto3;
-import frc.robot.auto.ZeroAuto;
 
 
 public class RobotContainer {
@@ -46,9 +42,9 @@ public class RobotContainer {
   private final Shooter shooter = new Shooter();
 
   //Joysticks
-  private Joystick leftJoystick = new Joystick(Constants.JoystickConstants.leftJoystickPort);
-  private Joystick rightJoystick = new Joystick(Constants.JoystickConstants.rightJoystickPort);
-  private Joystick secondaryJoystick = new Joystick(Constants.JoystickConstants.secondaryJoystickPort);
+  public Joystick leftJoystick = new Joystick(Constants.JoystickConstants.leftJoystickPort);
+  public Joystick rightJoystick = new Joystick(Constants.JoystickConstants.rightJoystickPort);
+  public Joystick secondaryJoystick = new Joystick(Constants.JoystickConstants.secondaryJoystickPort);
 
 
   //Buttons
@@ -83,14 +79,9 @@ public class RobotContainer {
   private final ArmIntakeAndFeeder armIntakeAndFeeder = new ArmIntakeAndFeeder(arm, intake, feeder);
 
   //Autos
-  private BlueAuto1 blueAuto1 = new BlueAuto1(drivetrain, arm, intake, feeder, shooter, neck);
-  private BlueAuto2 blueAuto2 = new BlueAuto2(drivetrain, arm, intake, feeder, shooter, neck);
-  private BlueAuto3 blueAUto3 = new BlueAuto3(drivetrain, arm, intake, feeder, shooter, neck);
-  private RedAuto1 redAuto1 = new RedAuto1(drivetrain, arm, intake, feeder, shooter, neck);
-  private RedAuto2 redAuto2 = new RedAuto2(drivetrain, arm, intake, feeder, shooter, neck);
-  private RedAuto3 redAuto3 = new RedAuto3(drivetrain, arm, intake, feeder, shooter, neck);
-  private ZeroAuto zeroAuto  = new ZeroAuto(drivetrain, arm, intake, feeder, neck, shooter);
-
+  private BlueAuto1 blueAuto1 = new BlueAuto1(drivetrain, arm, intake, feeder, neck, shooter);
+  private RedAuto1 redAuto1 = new RedAuto1(drivetrain, arm, intake, feeder, neck, shooter);
+  private RedAuto3 redAuto3 = new RedAuto3(drivetrain, arm, intake, feeder, neck, shooter);
 
   public RobotContainer() {
     configureButtonBindings();
@@ -133,7 +124,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
 
-    return zeroAuto.withTimeout(5);
+    return redAuto3;
   }
 
   public Arm getArm() {

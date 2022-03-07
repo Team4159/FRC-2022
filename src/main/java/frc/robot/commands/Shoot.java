@@ -18,7 +18,8 @@ public class Shoot extends CommandBase {
 
     @Override
     public void execute() {
-        shooter.getRightShooterTalon().set(1);
+        //System.out.println(shooter.getVelocity());
+        shooter.shoot(5000);//In RPM
     }
 
     @Override 

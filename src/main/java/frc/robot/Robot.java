@@ -33,13 +33,7 @@ import frc.robot.commands.CommandGroups.NeckAndShoot;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Arm.ArmState;
 import frc.robot.Constants.Direction;
-import frc.robot.auto.BlueAuto1;
-import frc.robot.auto.BlueAuto2;
-import frc.robot.auto.BlueAuto3;
-import frc.robot.auto.RedAuto1;
-import frc.robot.auto.RedAuto2;
-import frc.robot.auto.RedAuto3;
-import frc.robot.auto.ZeroAuto;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -79,7 +73,9 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     //new MoveArm(m_robotContainer.getArm(), ArmState.HIGH);
-    System.out.println(m_robotContainer.getDriveTrain().getRobotPosition());
+    //System.out.println("Left:" + m_robotContainer.leftJoystick.getY());
+    //System.out.println("Right:" + m_robotContainer.rightJoystick.getY());
+    //System.out.println(m_robotContainer.getShooter().getVelocity());
     CommandScheduler.getInstance().run();
   }
 

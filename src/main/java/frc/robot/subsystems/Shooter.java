@@ -15,7 +15,6 @@ import frc.robot.Constants;
 public class Shooter extends SubsystemBase {
     private WPI_TalonFX shooterTalonLeft;
     private WPI_TalonFX shooterTalonRight;
-    private double targetVelocity;
 
     public Shooter() {
         shooterTalonLeft = new WPI_TalonFX(Constants.CanIds.shooterTalonLeft);
@@ -31,10 +30,10 @@ public class Shooter extends SubsystemBase {
     }
 
     public void shoot(double targetVelocity) {
-        this.targetVelocity = targetVelocity;
+        double targetVelocityInTicks =  targetVelocity * 2048.0 / 600.0;
         System.out.println(getVelocity());
-        System.out.println(shooterTalonLeft.getMotorOutputPercent());
-        shooterTalonRight.set(ControlMode.Velocity, targetVelocity); 
+        //System.out.println(shooterTalonLeft.getMotorOutputPercent());
+        shooterTalonRight.set(ControlMode.Velocity, targetVelocityInTicks); 
     }
 
     public void stop() {
@@ -43,6 +42,10 @@ public class Shooter extends SubsystemBase {
 
     public double getVelocity() {
         return shooterTalonRight.getSelectedSensorVelocity();
+    }
+
+    public double getMotorOuput() {
+        return shooterTalonRight.getMotorOutputPercent();
     }
 
 

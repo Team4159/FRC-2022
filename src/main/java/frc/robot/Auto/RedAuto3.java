@@ -1,25 +1,14 @@
 package frc.robot.auto;
 
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.MoveArm;
-import frc.robot.commands.AutoCommands.MoveDistance;
-import frc.robot.commands.AutoCommands.TurnDegrees;
-import frc.robot.commands.CommandGroups.ArmIntakeAndFeeder;
-import frc.robot.commands.CommandGroups.NeckAndShoot;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Feeder;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Neck;
-import frc.robot.subsystems.Shooter;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 import frc.robot.subsystems.Arm.ArmState;
-import frc.robot.trajectories.Trajectories;
+import frc.robot.commands.CommandGroups.*;
+import frc.robot.commands.AutoCommands.*;
 
-
-public class RedAuto3 extends ParallelCommandGroup{
+public class RedAuto3 extends SequentialCommandGroup{
     private Drivetrain drivetrain;
     private Arm arm;
     private Intake intake;
@@ -27,8 +16,7 @@ public class RedAuto3 extends ParallelCommandGroup{
     private Neck neck;
     private Shooter shooter;
 
-
-    public RedAuto3(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Shooter shooter, Neck neck) {
+    public RedAuto3(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Neck neck, Shooter shooter) {
         this.drivetrain = drivetrain;
         this.arm = arm;
         this.intake = intake;
@@ -36,31 +24,19 @@ public class RedAuto3 extends ParallelCommandGroup{
         this.neck = neck;
         this.shooter = shooter;
 
-        ParallelCommandGroup blueAuto3 = new ParallelCommandGroup(
-            // new MoveArm(arm, ArmState.HIGH),
-            // new SequentialCommandGroup(
-            //     new MoveDistance(drivetrain, -1),
-            //     new TurnDegrees(drivetrain, 180),
-            //     new MoveDistance(drivetrain, 0.5),
-            //     new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(1.5),
-            //     new TurnDegrees(drivetrain, 180),
-            //     new MoveDistance(drivetrain, 1.5),
-            //     new NeckAndShoot(feeder, neck, shooter).withTimeout(1.5),
-            //     new MoveDistance(drivetrain, -1),
-            //     new TurnDegrees(drivetrain, 135),
-            //     new MoveDistance(drivetrain, 0.5),
-            //     new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(1.5),
-            //     new MoveDistance(drivetrain, 1),
-            //     new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(1.5),
-            //     new TurnDegrees(drivetrain, 180),
-            //     new MoveDistance(drivetrain, 2),
-            //     new NeckAndShoot(feeder, neck, shooter).withTimeout(2)
-            // )
+        addCommands(
+            new ParallelCommandGroup(
+                new MoveDistance(drivetrain, 1.4),
+                new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(1)
+            ),
+            new TurnDegrees(drivetrain, 180),
+            new MoveArm(arm, ArmState.HIGH).withTimeout(0.3),
+            new MoveDistance(drivetrain, 2),
+            new NeckAndShoot(feeder, neck, shooter).withTimeout(0.5),
+            new MoveArm(arm, ArmState.HIGH).withTimeout(0.3),
+            new TurnDegrees(drivetrain, 225)
         );
-
-        addCommands(blueAuto3);
     }
 
-}
-
     
+}
