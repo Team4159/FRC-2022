@@ -24,31 +24,17 @@ public class MoveArm extends CommandBase{
         arm.runArm(armState);
     }
 
-    public boolean isFinished() {
-        double setpoint;
-        if(armState == armState.HIGH) {
-            setpoint = Constants.IntakeAndArmConstants.pidHighSetPoint;
-        }
-        else {
-            setpoint = Constants.IntakeAndArmConstants.pidLowSetPoint;
-        }
-        if(arm.atSetpoint(setpoint, Constants.IntakeAndArmConstants.tolerance)) {
-            return true;
-        }
-        return false;
-    }
-
     @Override
     public void end(boolean i) {
+        System.out.println(arm.atSetpoint(Constants.IntakeAndArmConstants.pidHighSetPoint, Constants.IntakeAndArmConstants.tolerance));
         if(armState == ArmState.HIGH && arm.atSetpoint(Constants.IntakeAndArmConstants.pidHighSetPoint, Constants.IntakeAndArmConstants.tolerance)) {
             arm.setArmSpeed(0);
             //System.out.println("true");
         }
         else {
-            arm.runArm(ArmState.HIGH);
+            arm.runArm(armState.HIGH);
             //System.out.println("false");
         }
-        //arm.setArmSpeed(0);
     }
 
 }

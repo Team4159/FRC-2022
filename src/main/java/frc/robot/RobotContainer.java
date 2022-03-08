@@ -26,6 +26,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Arm.ArmState;
 import frc.robot.Constants.Direction;
 import frc.robot.auto.BlueAuto1;
+import frc.robot.auto.BlueAuto2;
 import frc.robot.auto.RedAuto1;
 import frc.robot.auto.RedAuto3;
 
@@ -102,6 +103,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     drivetrain.setDefaultCommand(drive);
+    //arm.setDefaultCommand(new MoveArm(arm, ArmState.HIGH));
     runIntakeButton.whenHeld(runIntakeForwards);
     //shootButton.whenHeld(shoot);
     runNeckButton.whenHeld(runNeck);
@@ -121,6 +123,7 @@ public class RobotContainer {
   
   public Command getAutonomousCommand() {
 
+    //return autoSelector.getSelectedAuto();
     return autoSelector.getSelectedAuto();
   }
 

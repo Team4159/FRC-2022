@@ -22,7 +22,6 @@ import frc.robot.auto.RedAuto3;
 
 public class AutoSelector {
     private ShuffleboardTab preMatch = Shuffleboard.getTab("Pre-Match");
-    private Command selectedAuto;
 
    // Auto
     private final SendableChooser<Command> autoSelector = new SendableChooser<>();
@@ -41,6 +40,7 @@ public class AutoSelector {
         blueAuto1 = new BlueAuto1(drivetrain, arm, intake, feeder, neck, shooter);
         blueAuto2 = new BlueAuto2(drivetrain, arm, intake, feeder, neck, shooter);
         blueAuto3 = new BlueAuto3(drivetrain, arm, intake, feeder, neck, shooter);
+        configureAutoSelector();
         
     }
 
@@ -59,7 +59,7 @@ public class AutoSelector {
     }
 
     public Command getSelectedAuto() {
-        return selectedAuto;
+        return autoSelector.getSelected();
     }
 
 

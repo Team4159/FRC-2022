@@ -2,7 +2,11 @@ package frc.robot.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
+import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
+
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -27,7 +31,7 @@ public class BlueAuto2 extends SequentialCommandGroup{
         this.shooter = shooter;
 
         addCommands(
-
+            new RunFeeder(feeder, frc.robot.Constants.Direction.FORWARDS).withTimeout(1)
         );
     }
 }

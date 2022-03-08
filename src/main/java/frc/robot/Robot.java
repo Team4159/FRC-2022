@@ -5,11 +5,20 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
+import java.util.function.Consumer;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -24,8 +33,6 @@ import frc.robot.trajectories.Trajectories;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
-import frc.robot.commands.RunNeck;
-import frc.robot.commands.Shoot;
 import frc.robot.commands.AutoCommands.MoveDistance;
 import frc.robot.commands.AutoCommands.TurnDegrees;
 import frc.robot.commands.CommandGroups.ArmIntakeAndFeeder;
@@ -77,6 +84,8 @@ public class Robot extends TimedRobot {
     //System.out.println("Right:" + m_robotContainer.rightJoystick.getY());
     //System.out.println(m_robotContainer.getShooter().getVelocity());
     CommandScheduler.getInstance().run();
+
+    
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -95,6 +104,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     m_robotContainer.zeroSubsystems();
+    System.out.println(m_autonomousCommand);
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -105,7 +115,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-
+    
   }
 
   @Override
@@ -117,12 +127,19 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    
   }
+  NetworkTableEntry xEntry;
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    
+    NetworkTableInstance shooterVelocity = NetworkTableInstance.getDefault();
+    NetworkTable table = shooterVelocity.getTable("datatable");
+    xEntry = table.getEntry("X");
+    xEntry.setDouble(m_robotContainer.getShooter().getVelocity());
+
+    //Shuffleboard.getTab("Test").add("QWERTY", m_robotContainer.getShooter().getVelocity()).withWidget(BuiltInWidgets.kGraph);
   }
 
   @Override

@@ -2,6 +2,7 @@ package frc.robot.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -26,7 +27,7 @@ public class RedAuto2 extends SequentialCommandGroup{
         this.shooter = shooter;
 
         addCommands(
-
+            new Shoot(shooter).withTimeout(1)
         );
     }
 }

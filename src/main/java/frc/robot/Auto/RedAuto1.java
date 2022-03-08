@@ -41,7 +41,7 @@ public class RedAuto1 extends SequentialCommandGroup{
             new TurnDegrees(drivetrain, 180),
             new MoveArm(arm, ArmState.HIGH).withTimeout(0.3),
             new MoveDistance(drivetrain, 2),
-            new NeckAndShoot(feeder, neck, shooter).withTimeout(0.5),
+            new NeckAndShoot(feeder, neck, shooter).withTimeout(2),
             new MoveArm(arm, ArmState.HIGH).withTimeout(0.3)
         );
     }

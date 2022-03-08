@@ -1,7 +1,11 @@
 package frc.robot.commands;
 
 
+import java.util.concurrent.locks.Condition;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Neck;
 import frc.robot.subsystems.Shooter;
 
@@ -18,8 +22,8 @@ public class Shoot extends CommandBase {
 
     @Override
     public void execute() {
-        //System.out.println(shooter.getVelocity());
-        shooter.shoot(5000);//In RPM
+        
+        shooter.shoot(Constants.ShooterConstants.targetVelocity);//In RPM
     }
 
     @Override 

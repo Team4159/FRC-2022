@@ -146,13 +146,15 @@ public class Constants {
     }
 
     public static class ShooterConstants {
-        public final static int kPIDLoopIdx = 0;
-        public final static double kP = 0.8;
-        public final static double kI = 0;
-        public final static double kD = 0.000;
-        public final static double kF = 0.1;
 
-        public final static double targetVelocity = 5000;
+        public final static double targetVelocity = 4000;
+
+        public final static int kPIDLoopIdx = 0;
+        public final static double kP = 0.2;
+        public final static double kI = 0000;
+        public final static double kD = 0.5;
+        public final static double kF = 12/6052 * targetVelocity; //1023/20660
+
     }
 
 }
