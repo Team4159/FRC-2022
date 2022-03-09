@@ -81,6 +81,12 @@ public class Drivetrain extends SubsystemBase {
       rightFrontTalon.setSelectedSensorPosition(0);
       pigeon.setFusedHeading(0);
     }
+    public WPI_TalonFX getLeftTalon() {
+      return leftFrontTalon;
+    }
+    public WPI_TalonFX getRightTalon() {
+      return rightFrontTalon;
+    }
 
     public Rotation2d getHeading() {
         return Rotation2d.fromDegrees(-pigeon.getAngle());
