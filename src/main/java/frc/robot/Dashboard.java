@@ -26,7 +26,8 @@ public class Dashboard {
         //test();
         //pigeonData();
         armEncoderData();
-        //climberEncoderData();
+        climberEncoderData();
+        powerDistData();
 
         //lJoystickPort();
         //rJoystickPort();
