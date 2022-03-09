@@ -26,6 +26,7 @@ public class Dashboard {
         //test();
         //pigeonData();
         armEncoderData();
+        getJoystickInputs();
         //climberEncoderData();
 
         //lJoystickPort();
@@ -34,14 +35,30 @@ public class Dashboard {
 
         System.out.println("update");
     }
-    //Pigeon Gyro, check if it works
-    //public void pigeonData() {
-        /*Shuffleboard.getTab("Electrical")
-            .add("Gyro data", hope this works->robotContainer.getDriveTrain().getRotation())
-            /*.withWidget(BuiltInWidgets.kGyro)
+
+    public void getJoystickInputs(){
+        Shuffleboard.getTab("Electrical")
+            .add("Left Joystick", robotContainer.getLJoystick().getY())
+            .withWidget(BuiltInWidgets.kNumberBar)
+            .withSize(1,1)
+            .withPosition(0,0);
+        Shuffleboard.getTab("Electrical")
+            .add("Right Joystick", robotContainer.getRJoystick().getY())
+            .withWidget(BuiltInWidgets.kNumberBar)
+            .withSize(1,1)
+            .withPosition(1,0);
+    }
+    public void getMotorOutputs(){
+        Shuffleboard.getTab("Electrical")
+            .add("Intake", robotContainer.getIntake().getIntakeSpark().get());
+    }
+    public void pigeonData() {
+        Shuffleboard.getTab("Electrical")
+            .add("Gyro data", robotContainer.getDriveTrain().getRotation())
+            .withWidget(BuiltInWidgets.kGyro)
             .withSize(2, 2)
-            .withPosition(4, 0);*/
-    //}
+            .withPosition(0, 1);
+    }
     //Encoders for arm and climber, check if they work
     public void armEncoderData(){
         SmartDashboard.putNumber("Arm Encoder", robotContainer.getArm().getEncoderRaw());
