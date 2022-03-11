@@ -31,9 +31,10 @@ import frc.robot.auto.RedAuto3;
 
 
 public class RobotContainer {
-
-  //Subsystems
-  public final Drivetrain drivetrain = new Drivetrain();
+  //Power Distribution
+  private final PowerDistribution PDH = new PowerDistribution();
+  //Subsystems, will be accessed with getters here in the same file
+  final Drivetrain drivetrain = new Drivetrain();
   private final Intake intake = new Intake();
   public final Arm arm = new Arm();
   private final Feeder feeder = new Feeder();
@@ -46,6 +47,16 @@ public class RobotContainer {
   public Joystick rightJoystick = new Joystick(Constants.JoystickConstants.rightJoystickPort);
   public Joystick secondaryJoystick = new Joystick(Constants.JoystickConstants.secondaryJoystickPort);
 
+  //Joystick getters
+  public Joystick getLJoystick() {
+    return leftJoystick;
+  }
+  public Joystick getRJoystick(){
+    return rightJoystick;
+  }
+  public Joystick getSecJoystick(){
+    return secondaryJoystick;
+  }
 
   //Buttons
   private final JoystickButton runIntakeButton = new JoystickButton(secondaryJoystick, Constants.JoystickConstants.SecondaryJoystick.runIntakeForwards);
@@ -74,15 +85,12 @@ public class RobotContainer {
   private final Climb lowerClimber = new Climb(climber, ClimberState.LOWER);
   private final RunNeck runNeck = new RunNeck(neck, Direction.FORWARDS);
   private final RunNeck runNeckBackwards = new RunNeck(neck, Direction.BACKWARDS);
-  private final Shoot shoot = new Shoot(shooter);
+  private final Shoot shoot = new Shoot(shooter, Constants.ShooterConstants.targetVelocity);
   private final NeckAndShoot neckAndShoot = new NeckAndShoot(feeder,neck, shooter);
   private final ArmIntakeAndFeeder armIntakeAndFeeder = new ArmIntakeAndFeeder(arm, intake, feeder);
 
-  //Autos
   private AutoSelector autoSelector = new AutoSelector(drivetrain, arm, intake, feeder, neck, shooter);
-  private BlueAuto1 blueAuto1 = new BlueAuto1(drivetrain, arm, intake, feeder, neck, shooter);
-  private RedAuto1 redAuto1 = new RedAuto1(drivetrain, arm, intake, feeder, neck, shooter);
-  private RedAuto3 redAuto3 = new RedAuto3(drivetrain, arm, intake, feeder, neck, shooter);
+
 
 
   public RobotContainer() {
@@ -98,6 +106,7 @@ public class RobotContainer {
     arm.zeroArm();
     drivetrain.zeroSensors();
     climber.zeroClimber();
+    drivetrain.zeroSensors();
   }
 
   private void configureButtonBindings() {
@@ -126,20 +135,20 @@ public class RobotContainer {
     return autoSelector.getSelectedAuto();
   }
 
+  //Getters for the subsystems
   public Arm getArm() {
     return arm;
   }
-
-  public Feeder getFeeder() {
-    return feeder;
-  }
-
   public Drivetrain getDriveTrain() {
     return drivetrain;
   }
 
   public Intake getIntake() {
     return intake;
+  }
+
+  public Feeder getFeeder() {
+    return feeder;
   }
 
   public Climber getClimber() {
@@ -150,9 +159,11 @@ public class RobotContainer {
     return shooter;
   }
 
-  public Neck getNeck() {
+  public Neck getNeck(){
     return neck;
   }
-
+  //Getter for power distribtion
+  public PowerDistribution getPDP(){
+    return PDH;
+  }
 }
-

@@ -52,17 +52,21 @@ public class Robot extends TimedRobot {
   
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-
+  private Dashboard dashboard;
 
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+
+
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // Instantiate our RobotContainer. This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    dashboard = new Dashboard(m_robotContainer);
+    m_robotContainer.drivetrain.zeroSensors();
     CameraServer.startAutomaticCapture();
   }
 
@@ -84,8 +88,8 @@ public class Robot extends TimedRobot {
     //System.out.println("Right:" + m_robotContainer.rightJoystick.getY());
     //System.out.println(m_robotContainer.getShooter().getVelocity());
     CommandScheduler.getInstance().run();
-
-    
+    dashboard.update();
+    //System.out.println("KJLDG");
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

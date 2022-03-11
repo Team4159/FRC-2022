@@ -16,14 +16,14 @@ public class ClimberTests {
         climber = new Climber();
     }
 
-    /*@Test
-    public void climberEncoderTest() {
-        System.out.println("Climber Encoder should output a number");
-        System.out.println("Encoder output: " + climber.getEncoderRaw());
-        assertEquals(climber.getEncoderRaw(), 0, delta);
-    }
+    // @Test
+    // public void climberEncoderTest() {
+    //     System.out.println("Climber Encoder should output a number");
+    //     System.out.println("Encoder output: " + climber.getEncoderRaw());
+    //     assertEquals(climber.getEncoderRaw(), 0, delta);
+    // }
 
-    @Test
+    /*@Test
     public void climberPidTest() {
         System.out.println("Climber PID should output a number");
         System.out.println("PID output: " + climber.calculatePID(0, 0));
