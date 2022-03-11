@@ -14,39 +14,26 @@ import frc.robot.subsystems.*;
 import frc.robot.trajectories.Trajectories;
 
 public class BlueAuto2 extends ParallelCommandGroup{
-    Drivetrain drivetrain;
-    Arm arm;
-    Intake intake;
-    Feeder feeder;
-    Shooter shooter;
-    Trajectories trajectories = new Trajectories();
-    Trajectory trajectory;
+    private Drivetrain drivetrain;
+    private Arm arm;
+    private Intake intake;
+    private Feeder feeder;
+    private Neck neck;
+    private Shooter shooter;
 
-    public BlueAuto2(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Shooter shooter) {
-        this.drivetrain = drivetrain;
-        this.arm = arm;
-        this.intake = intake;
-        this.feeder = feeder;
-        this.shooter = shooter;
-        trajectory =  trajectories.loadTrajectory("paths/BlueAuto2.wpilib.json");
 
-        ParallelDeadlineGroup BlueAuto2 = new ParallelDeadlineGroup(
-            new WaitCommand(15),
-            Trajectories.followTrajectory(drivetrain, trajectory),
-            new SequentialCommandGroup(
-                new Shoot(shooter, Constants.ShooterConstants.targetVelocity).withTimeout(1),
-                new WaitCommand(3),
-                new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(2),
-                new WaitCommand(2),
-                new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(2),
-                new WaitCommand(3),
-                new Shoot(shooter, Constants.ShooterConstants.targetVelocity).withTimeout(1),
-                new Shoot(shooter, Constants.ShooterConstants.targetVelocity).withTimeout(1)
-            )  
-        );
 
-        addCommands(BlueAuto2);
+    public BlueAuto2(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Neck neck, Shooter shooter) {
+       this.drivetrain = drivetrain;
+       this.arm = arm;
+       this.intake = intake;
+       this.feeder = feeder;
+       this.neck = neck;
+       this.shooter = shooter;
 
-    }
+       addCommands(
+
+       );
+   }
 
 }
