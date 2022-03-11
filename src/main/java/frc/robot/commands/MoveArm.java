@@ -32,7 +32,7 @@ public class MoveArm extends CommandBase{
             //System.out.println("true");
         }
         else {
-            arm.runArm(ArmState.HIGH);
+            arm.runArm(armState.HIGH);
             //System.out.println("false");
         }
     }

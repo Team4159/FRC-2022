@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Climber.ClimberState;
 
-public class Climb extends CommandBase {
+public class ClimbArm extends CommandBase {
     private Climber climber;
     private ClimberState climberState;
 
-    public Climb(Climber climber, ClimberState climberState) {
+    public ClimbArm(Climber climber, ClimberState climberState) {
         this.climber = climber;
         this.climberState = climberState;
         addRequirements(climber);
@@ -16,6 +16,6 @@ public class Climb extends CommandBase {
 
     @Override
     public void execute() {
-        climber.runClimberArm(climberState);
+        climber.runClimberElevator(climberState);
     }
 }

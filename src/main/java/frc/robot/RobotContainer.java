@@ -18,12 +18,13 @@ import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
 import frc.robot.commands.RunNeck;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.AutoCommands.MoveDistance;
+import frc.robot.commands.AutoCommands.TurnDegrees;
 import frc.robot.commands.CommandGroups.ArmIntakeAndFeeder;
 import frc.robot.commands.CommandGroups.NeckAndShoot;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Arm.ArmState;
 import frc.robot.Constants.Direction;
-import frc.robot.auto.BlueAuto2;
 
 
 public class RobotContainer {
@@ -39,9 +40,9 @@ public class RobotContainer {
   private final Shooter shooter = new Shooter();
 
   //Joysticks
-  private Joystick leftJoystick = new Joystick(Constants.JoystickConstants.leftJoystickPort);
-  private Joystick rightJoystick = new Joystick(Constants.JoystickConstants.rightJoystickPort);
-  private Joystick secondaryJoystick = new Joystick(Constants.JoystickConstants.secondaryJoystickPort);
+  public Joystick leftJoystick = new Joystick(Constants.JoystickConstants.leftJoystickPort);
+  public Joystick rightJoystick = new Joystick(Constants.JoystickConstants.rightJoystickPort);
+  public Joystick secondaryJoystick = new Joystick(Constants.JoystickConstants.secondaryJoystickPort);
 
   //Joystick getters
   public Joystick getLJoystick() {
@@ -84,16 +85,13 @@ public class RobotContainer {
   private final Shoot shoot = new Shoot(shooter, Constants.ShooterConstants.targetVelocity);
   private final NeckAndShoot neckAndShoot = new NeckAndShoot(feeder,neck, shooter);
   private final ArmIntakeAndFeeder armIntakeAndFeeder = new ArmIntakeAndFeeder(arm, intake, feeder);
-  
-  private BlueAuto2 blueAuto2 = new BlueAuto2(drivetrain, arm, intake, feeder, shooter);
 
+  private AutoSelector autoSelector = new AutoSelector(drivetrain, arm, intake, feeder, neck, shooter);
 
-  private Trajectory trajectory = Trajectories.loadTrajectory("paths/output/ZeroAuto.wpilib.json");
 
 
   public RobotContainer() {
     configureButtonBindings();
-    configureAutos();
     zeroSubsystems();
   }
 
@@ -101,15 +99,16 @@ public class RobotContainer {
 
   }  
 
-  private void zeroSubsystems() {
+  public void zeroSubsystems() {
     arm.zeroArm();
-    //drivetrain.zeroSensors();
+    drivetrain.zeroSensors();
     climber.zeroClimber();
     drivetrain.zeroSensors();
   }
 
   private void configureButtonBindings() {
     drivetrain.setDefaultCommand(drive);
+    //arm.setDefaultCommand(new MoveArm(arm, ArmState.HIGH));
     runIntakeButton.whenHeld(runIntakeForwards);
     //shootButton.whenHeld(shoot);
     runNeckButton.whenHeld(runNeck);
@@ -126,14 +125,11 @@ public class RobotContainer {
     lowerArmIntakeAndFeederButton.whenReleased(new MoveArm(arm, ArmState.HIGH));
     lowerArmButton.whenReleased(new MoveArm(arm, ArmState.HIGH));
   }
-
-  private void configureAutos() {
-
-  }
-
+  
   public Command getAutonomousCommand() {
-    return blueAuto2;
-    //return Trajectories.followTrajectory(drivetrain, trajectory).withTimeout(1.5);
+
+    //return autoSelector.getSelectedAuto();
+    return autoSelector.getSelectedAuto();
   }
 
   //Getters for the subsystems

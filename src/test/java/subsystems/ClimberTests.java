@@ -23,13 +23,13 @@ public class ClimberTests {
     //     assertEquals(climber.getEncoderRaw(), 0, delta);
     // }
 
-    @Test
+    /*@Test
     public void climberPidTest() {
         System.out.println("Climber PID should output a number");
         System.out.println("PID output: " + climber.calculatePID(0, 0));
         climber.resetPID();
         assertEquals(climber.calculatePID(0, 0), 0, delta);
-    }
+    }*/
 
     @After
     public void shutdown() {

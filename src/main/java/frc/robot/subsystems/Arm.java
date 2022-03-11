@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.math.controller.PIDController;
 
 public class Arm extends SubsystemBase{
@@ -87,6 +88,7 @@ public class Arm extends SubsystemBase{
 
     public void runArm(ArmState armState) {
         this.armState = armState;
+        //Shuffleboard.getTab("Test").add("Percent Output", armSpark1.get());
         switch (this.armState) {
             case HIGH:
                 setArmSpeed(calculatePID(getEncoderRaw(), highSetPoint));

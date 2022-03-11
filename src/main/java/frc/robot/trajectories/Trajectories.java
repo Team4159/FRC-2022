@@ -28,37 +28,38 @@ import frc.robot.subsystems.Drivetrain;
 
 public class Trajectories {
 
-  public Trajectories() {
+  // public Trajectories() {
 
-  }  //Max velocity & acceleration
+  // }  //Max velocity & acceleration
 
-  public static CommandGroupBase followTrajectory(Drivetrain drivetrain, Trajectory trajectory) {
+  // public static CommandGroupBase followTrajectory(Drivetrain drivetrain, Trajectory trajectory) {
       
-      RamseteCommand command = new RamseteCommand(
-      trajectory,
-      drivetrain::getPose,
-      new RamseteController(Constants.DriveTrainConstants.kRamseteB, Constants.DriveTrainConstants.kRamseteZeta),
-      drivetrain.getFeedforward(),
-      drivetrain.getKinematics(),
-      drivetrain::getSpeeds,
-      drivetrain.getLeftPIDController(),
-      drivetrain.getRightPIDController(),
-      drivetrain::setOutputVolts,
-      drivetrain
-  );
-    return command.andThen(() -> drivetrain.setOutputVolts(0, 0));
-  }
- 
-  public static Trajectory loadTrajectory(String path) { //JSON path
-    TrajectoryConfig config = new TrajectoryConfig(Constants.DriveTrainConstants.kMaxSpeedMetersPerSecond, Constants.DriveTrainConstants.kMaxAccelerationMetersPerSecondSquared);
-    config.setKinematics(Constants.DriveTrainConstants.kDriveKinematics);
+  //     RamseteCommand command = new RamseteCommand(
+  //     trajectory,
+  //     drivetrain::getPose,
+  //     new RamseteController(Constants.DriveTrainConstants.kRamseteB, Constants.DriveTrainConstants.kRamseteZeta),
+  //     drivetrain.getFeedforward(),
+  //     drivetrain.getKinematics(),
+  //     drivetrain::getSpeeds,
+  //     drivetrain.getLeftPIDController(),
+  //     drivetrain.getRightPIDController(),
+  //     drivetrain::setOutputVolts,
+  //     drivetrain
+  // );
 
-    try {
-      return TrajectoryUtil.fromPathweaverJson(Filesystem.getDeployDirectory().toPath().resolve(path));
-    } catch (IOException e) {
-      DriverStation.reportError("Trajectory not found. " + path, e.getStackTrace());
-      e.printStackTrace();
-      return new Trajectory();
-      }
-    }
+  //   return command.andThen(() -> drivetrain.setOutputVolts(0, 0));
+  // }
+ 
+  // public static Trajectory loadTrajectory(String path) { //JSON path
+  //   TrajectoryConfig config = new TrajectoryConfig(Constants.DriveTrainConstants.kMaxSpeedMetersPerSecond, Constants.DriveTrainConstants.kMaxAccelerationMetersPerSecondSquared);
+  //   config.setKinematics(Constants.DriveTrainConstants.kDriveKinematics);
+
+  //   try {
+  //     return TrajectoryUtil.fromPathweaverJson(Filesystem.getDeployDirectory().toPath().resolve(path));
+  //   } catch (IOException e) {
+  //     DriverStation.reportError("Trajectory not found. " + path, e.getStackTrace());
+  //     e.printStackTrace();
+  //     return TrajectoryGenerator.generateTrajectory(Arrays.asList(new Pose2d(), new Pose2d()), config);
+  //     }
+  //   }
  }
