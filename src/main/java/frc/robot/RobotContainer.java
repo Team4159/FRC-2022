@@ -26,7 +26,6 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Arm.ArmState;
 import frc.robot.Constants.Direction;
 import frc.robot.auto.BlueAuto1;
-import frc.robot.auto.BlueAuto2;
 import frc.robot.auto.RedAuto1;
 import frc.robot.auto.RedAuto3;
 
