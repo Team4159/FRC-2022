@@ -88,6 +88,12 @@ public class Drivetrain extends SubsystemBase {
       return false;
     }
   }
+  public WPI_TalonFX getLeftTalon() {
+    return leftFrontTalon;
+  }
+  public WPI_TalonFX getRightTalon() {
+    return rightFrontTalon;
+  }
 
   public void turnDegrees(double angle) { //Angle needs to be between 0 and 360
     //angle = angle%360;

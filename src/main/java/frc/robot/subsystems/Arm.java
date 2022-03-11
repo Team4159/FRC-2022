@@ -74,6 +74,10 @@ public class Arm extends SubsystemBase{
         return encoder2.getRaw();
     }
 
+    public Encoder getEncoder() {
+        return encoder2;
+    }
+
     public double calculatePID(double encoderRaw, double setPoint) {
         if (atSetpoint(setPoint, Constants.IntakeAndArmConstants.tolerance)) {
             return 0;

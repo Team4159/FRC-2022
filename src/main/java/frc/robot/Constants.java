@@ -9,7 +9,7 @@ import java.lang.Math;
 public class Constants {
 
     public class CanIds {
-      
+        //Ports??
         public final static int pigeonId = 0;
         public final static int rightFrontTalon = 1;
         public final static int rightRearTalon = 2;

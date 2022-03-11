@@ -38,5 +38,4 @@ public class RedAuto3 extends SequentialCommandGroup{
         );
     }
 
-    
 }

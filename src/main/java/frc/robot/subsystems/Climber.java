@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -26,6 +27,8 @@ public class Climber extends SubsystemBase{
     private int elevatorLowSetPoint, elevatorHighSetPoint;
 
     private MotorControllerGroup climberSparks;
+
+    private Encoder encoder;
 
     public static enum ClimberState {
         RAISE,
@@ -120,6 +123,10 @@ public class Climber extends SubsystemBase{
 
     public MotorControllerGroup getClimberGroup() {
         return climberSparks;
+    }
+
+    public Encoder getEncoder() {
+        return encoder;
     }
 
     public void zeroClimber() {
