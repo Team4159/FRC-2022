@@ -24,6 +24,8 @@ public class Constants {
         public final static int neckSpark = 7;
         public final static int climberSpark1 = 8;
         public final static int climberSpark2 = 11;
+        public final static int climberTalon1 =  14;
+        public final static int climberTalon2 = 15;
         
     }
 
@@ -93,12 +95,22 @@ public class Constants {
         public final static Boolean encoderReverse = false;
         public final static EncodingType encodingType = EncodingType.k1X;
 
-        public final static double kP = 0;
-        public final static double kI = 0;
-        public final static double kD = 0;
+        public final static double armKP = 0;
+        public final static double armKI = 0;
+        public final static double armKD = 0;
+        
+        public final static int kPIDLoopIdx = 0;
+        public final static double elevatorKP = 0;
+        public final static double elevatorKI = 0;
+        public final static double elevatorKD = 0;
+        public final static double elevatorKF = 1023; // TODO: Need to figure out what this constant does
 
-        public final static int pidLowSetPoint = 0;
-        public final static int pidHighSetPoint = 0;
+        public final static int armLowSetPoint = 0;
+        public final static int armHighSetPoint = 0;
+
+        public final static int elevatorLowSetPoint = 0;
+        public final static int elevatorHighSetPoint = 0;
+
         public final double trackWidth = Units.inchesToMeters(25); // TODO: Need To Determine In Meters
 
 

@@ -1,8 +1,11 @@
 package frc.robot.subsystems;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,10 +16,14 @@ public class Climber extends SubsystemBase{
     private CANSparkMax climberSparkMotorOne;
     private CANSparkMax climberSparkMotorTwo;
 
-    private PIDController pid;
-    private RelativeEncoder encoder;
+    private WPI_TalonFX climberTalonOne;
+    private WPI_TalonFX climberTalonTwo;
 
-    private int lowSetPoint, highSetPoint;
+    private PIDController climberArmPid;
+    private Encoder climberArmEncoder;
+
+    private int armLowSetPoint, armHighSetPoint;
+    private int elevatorLowSetPoint, elevatorHighSetPoint;
 
     private MotorControllerGroup climberSparks;
 
@@ -24,7 +31,8 @@ public class Climber extends SubsystemBase{
         RAISE,
         LOWER
     }
-    private ClimberState climberState;
+    private ClimberState armClimberState;
+    private ClimberState elevatorClimberState;
 
     public Climber() {
         climberSparkMotorOne = new CANSparkMax(Constants.CanIds.climberSpark1, MotorType.kBrushless);
@@ -32,53 +40,82 @@ public class Climber extends SubsystemBase{
 
         climberSparks = new MotorControllerGroup(climberSparkMotorOne, climberSparkMotorTwo);
 
-        encoder = climberSparkMotorOne.getEncoder();
+        climberArmEncoder = new Encoder(
+            Constants.ClimberConstants.encoderChannelA,
+            Constants.ClimberConstants.encoderChannelB,
+            Constants.ClimberConstants.encoderReverse,
+            Constants.ClimberConstants.encodingType
+        ); climberSparkMotorOne.getEncoder();
 
-        pid = new PIDController(
-            Constants.ClimberConstants.kP,
-            Constants.ClimberConstants.kI,
-            Constants.ClimberConstants.kD
+        climberArmPid = new PIDController(
+            Constants.ClimberConstants.armKP,
+            Constants.ClimberConstants.armKI,
+            Constants.ClimberConstants.armKD
         );
-
-        lowSetPoint = Constants.ClimberConstants.pidLowSetPoint;
-        lowSetPoint = Constants.ClimberConstants.pidHighSetPoint;
         
-        climberState = ClimberState.LOWER;
+        climberTalonOne = new WPI_TalonFX(Constants.CanIds.climberTalon1);
+        climberTalonTwo = new WPI_TalonFX(Constants.CanIds.climberTalon2);
+
+        climberTalonTwo.follow(climberTalonOne);
+
+        climberTalonOne.config_kP(Constants.ClimberConstants.kPIDLoopIdx, Constants.ClimberConstants.elevatorKP);
+        climberTalonOne.config_kI(Constants.ClimberConstants.kPIDLoopIdx, Constants.ClimberConstants.elevatorKI);
+        climberTalonOne.config_kD(Constants.ClimberConstants.kPIDLoopIdx, Constants.ClimberConstants.elevatorKD);
+        climberTalonOne.config_kF(Constants.ClimberConstants.kPIDLoopIdx, Constants.ClimberConstants.elevatorKF);
+
+        armLowSetPoint = Constants.ClimberConstants.armLowSetPoint;
+        armHighSetPoint = Constants.ClimberConstants.armHighSetPoint;
+
+        elevatorLowSetPoint = Constants.ClimberConstants.elevatorLowSetPoint;
+        elevatorHighSetPoint = Constants.ClimberConstants.elevatorHighSetPoint;
+        
+        armClimberState = ClimberState.LOWER;
+        elevatorClimberState = ClimberState.LOWER;
     }
 
     public void setClimberSpeed(double speed) {
         climberSparks.set(speed);
     }
 
-    public double calculatePID(double encoderRaw, int setPoint) {
+    public double calculatePID(PIDController pid, double encoderRaw, int setPoint) {
         return pid.calculate(encoderRaw, setPoint);
     }
 
-    public double getEncoderRaw() {
-        return encoder.getPosition();
-    }
-    public int getLowSetPoint() {
-        return this.lowSetPoint;
+    public double getArmEncoderRaw() {
+        return climberArmEncoder.getRaw();
     }
 
-    public int getHighSetPoint() {
-        return this.highSetPoint;
+    public double getElevatorEncoders() {
+        return climberTalonTwo.getSelectedSensorPosition();
     }
 
-    public void runClimber(ClimberState climberState) {
-        this.climberState = climberState;
-        switch (this.climberState) {
+    public void runClimberArm(ClimberState climberState) {
+        this.armClimberState = climberState;
+        switch (this.armClimberState) {
             case RAISE:
-                setClimberSpeed(calculatePID(getEncoderRaw(), highSetPoint));
+                setClimberSpeed(calculatePID(climberArmPid, getArmEncoderRaw(), armHighSetPoint));
                 break;
             case LOWER:
-                setClimberSpeed(calculatePID(getEncoderRaw(), lowSetPoint));
+                setClimberSpeed(calculatePID(climberArmPid, getArmEncoderRaw(), armLowSetPoint));
                 break;
         }
     }
 
+    public void runClimberElevator(ClimberState climberState) {
+        this.elevatorClimberState = climberState;
+        switch (this.elevatorClimberState) {
+            case RAISE:
+                climberTalonOne.set(ControlMode.Position, elevatorHighSetPoint);
+                break;
+            case LOWER:
+            climberTalonOne.set(ControlMode.Position, elevatorLowSetPoint);
+                break;
+        }
+    }
+
+
     public void resetPID() {
-        pid.reset();
+        climberArmPid.reset();
     }
 
     public MotorControllerGroup getClimberGroup() {
@@ -86,16 +123,18 @@ public class Climber extends SubsystemBase{
     }
 
     public void zeroClimber() {
-        pid.reset();
-        climberState = ClimberState.LOWER;
-        runClimber(ClimberState.LOWER);
+        resetPID();
+        armClimberState = ClimberState.LOWER;
+        elevatorClimberState = ClimberState.LOWER;
+        runClimberArm(ClimberState.LOWER);
+        runClimberElevator(ClimberState.LOWER);
     }
 
     public void close() {
         climberSparks.close();
         climberSparkMotorOne.close();
         climberSparkMotorTwo.close();
-        pid.close();
+        climberArmPid.close();
     }
 
 }

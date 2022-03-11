@@ -16,7 +16,7 @@ public class ClimberTests {
         climber = new Climber();
     }
 
-    @Test
+    /*@Test
     public void climberEncoderTest() {
         System.out.println("Climber Encoder should output a number");
         System.out.println("Encoder output: " + climber.getEncoderRaw());
@@ -29,7 +29,7 @@ public class ClimberTests {
         System.out.println("PID output: " + climber.calculatePID(0, 0));
         climber.resetPID();
         assertEquals(climber.calculatePID(0, 0), 0, delta);
-    }
+    }*/
 
     @After
     public void shutdown() {
