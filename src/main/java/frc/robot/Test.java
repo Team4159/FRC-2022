@@ -84,7 +84,7 @@ public class Test extends SequentialCommandGroup{
     }
 
     public void Test() {
-        //TODO: Remove duplicates
+        //TODO: Tolerances
         //Ordered based on the order in vscode (alphabetical inside the robot folder)
         //AutoCommands
         if(timer.get() < 1) {
@@ -100,6 +100,7 @@ public class Test extends SequentialCommandGroup{
                 System.out.print("------------------------------");
                 System.out.print("MoveDistance: OK \u2713");
             }
+            moveDistance.end(true);
         }
         
         else if(timer.get() < 2) {
@@ -115,6 +116,7 @@ public class Test extends SequentialCommandGroup{
                 System.out.print("------------------------------");
                 System.out.print("TurnDegrees: OK \u2713");
             }
+            turnDegrees.end(true);
         }
 
         //CommandGroups
@@ -196,6 +198,7 @@ public class Test extends SequentialCommandGroup{
                 System.out.print("------------------------------");
                 System.out.print("RunFeeder (Forwards): OK \u2713");
             }
+            feeder.stop();
         }
         else if(timer.get() < 8) {
             runFeederBackwards.execute();
@@ -210,6 +213,7 @@ public class Test extends SequentialCommandGroup{
                 System.out.print("------------------------------");
                 System.out.print("RunFeeder (Backwards): OK \u2713");
             }
+            feeder.stop();
         }
         else if(timer.get() < 9) {
             runIntakeForwards.execute();
@@ -224,6 +228,7 @@ public class Test extends SequentialCommandGroup{
                 System.out.print("------------------------------");
                 System.out.print("RunIntake (Forwards): OK \u2713");
             }
+            intake.stop()
         }
         else if(timer.get() < 10) {
             runIntakeBackwards.execute();
@@ -238,6 +243,7 @@ public class Test extends SequentialCommandGroup{
                 System.out.print("------------------------------");
                 System.out.print("RunIntake (Backwards): OK \u2713");
             }
+            intake.stop()
         }
         else if(timer.get() < 11) {
             runNeckForwards.execute();
@@ -266,6 +272,7 @@ public class Test extends SequentialCommandGroup{
                 System.out.print("------------------------------");
                 System.out.print("RunNeck (Backwards): OK \u2713");
             }
+            neck.stop();
         }
 
 
@@ -273,7 +280,7 @@ public class Test extends SequentialCommandGroup{
             shoot.execute();
         }
         else if(timer.get() == 13) {
-            if(!tolerance(shooter.getVelocity(), Constants.ShooterConstants.targetVelocity, 0.01)) {//TODO: Tolerance
+            if(!tolerance(shooter.getVelocity(), Constants.ShooterConstants.targetVelocity, 0.01)) {
                 System.out.println("------------------------------");
                 System.out.println("Shoot: BROKEN \u2715");
                 fail += "Shoot, ";
@@ -282,6 +289,22 @@ public class Test extends SequentialCommandGroup{
                 System.out.print("------------------------------");
                 System.out.print("Shoot: OK \u2713");
             }
+            shooter.stop();
+        }
+        else if(timer.get() < 14) {
+            shooter.shoot(-Constants.ShooterConstants.targetVelocity);
+        }
+        else if(timer.get() == 14) {
+            if(!tolerance(shooter.getVelocity(), -Constants.ShooterConstants.targetVelocity, 0.01)) {
+                System.out.println("------------------------------");
+                System.out.println("Shoot Backwards: BROKEN \u2715");
+                fail += "Shoot Backwards, ";
+            }
+            else {
+                System.out.print("------------------------------");
+                System.out.print("Shoot Backwards: OK \u2713");
+            }
+            shooter.stop();
         }
 
 
