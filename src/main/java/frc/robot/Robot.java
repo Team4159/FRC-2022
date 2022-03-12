@@ -134,15 +134,12 @@ public class Robot extends TimedRobot {
     }
     
   }
-  // NetworkTableEntry xEntry;
+
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    // NetworkTableInstance shooterVelocity = NetworkTableInstance.getDefault();
-    // NetworkTable table = shooterVelocity.getTable("datatable");
-    // xEntry = table.getEntry("X");
-    // xEntry.setDouble(m_robotContainer.getShooter().getVelocity());
+
     System.out.println(m_robotContainer.getDriveTrain().getAngle());
     //Shuffleboard.getTab("Test").add("QWERTY", m_robotContainer.getShooter().getVelocity()).withWidget(BuiltInWidgets.kGraph);
   }

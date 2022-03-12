@@ -32,7 +32,15 @@ public class Dashboard {
 
     private NetworkTableEntry leftJoystick = electrical.add("Left Joystick", 0).getEntry();
     private NetworkTableEntry rightJoystick = electrical.add("Right Joystick", 0).getEntry();
-    private NetworkTableEntry gyro = electrical.add("Pigeon", 0).getEntry();
+    
+    // NetworkTableEntry xEntry;
+    // NetworkTableInstance shooterVelocity = NetworkTableInstance.getDefault();
+    // NetworkTable table = shooterVelocity.getTable("datatable");
+
+    // NetworkTable table = shooterVelocity.getTable("datatable");
+    // xEntry = table.getEntry("X");
+    // xEntry.setDouble(m_robotContainer.getShooter().getVelocity());
+
     
 
     //Call methods here to run them so they do their thing in shuffleboard
@@ -47,6 +55,7 @@ public class Dashboard {
         // commands();
         // pigeonData();
         // powerDistData();
+        //xEntry.setDouble(robotContainer.getShooter().getVelocity());
     }
 
     public void getJoystickInputs(){
@@ -154,8 +163,8 @@ public class Dashboard {
         //     .withWidget(BuiltInWidgets.kGyro)
         //     .withSize(2, 2)
         //     .withPosition(0, 1);
-        double gyroOutput = robotContainer.getDriveTrain().getAngle();
-        gyro.setDouble(gyroOutput);
+        //double gyroOutput = robotContainer.getDriveTrain().getAngle();
+        //gyro.setDouble(gyroOutput);
     }
 
     // public void encoderValues() {

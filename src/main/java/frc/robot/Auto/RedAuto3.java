@@ -1,5 +1,6 @@
 package frc.robot.auto;
 
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
@@ -15,7 +16,8 @@ public class RedAuto3 extends SequentialCommandGroup{
     private Feeder feeder;
     private Neck neck;
     private Shooter shooter;
-
+    
+    //Not Tested
     public RedAuto3(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Neck neck, Shooter shooter) {
         this.drivetrain = drivetrain;
         this.arm = arm;
@@ -38,4 +40,5 @@ public class RedAuto3 extends SequentialCommandGroup{
         );
     }
 
+    
 }

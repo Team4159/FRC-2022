@@ -19,10 +19,12 @@ import frc.robot.Constants;
 public class Shooter extends SubsystemBase {
     private WPI_TalonFX shooterTalonLeft;
     private WPI_TalonFX shooterTalonRight;
+    private MotorControllerGroup shooterTalons;
 
     public Shooter() {
         shooterTalonLeft = new WPI_TalonFX(Constants.CanIds.shooterTalonLeft);
         shooterTalonRight = new WPI_TalonFX(Constants.CanIds.shooterTalonRight);
+        shooterTalons = new MotorControllerGroup(shooterTalonLeft, shooterTalonRight);
 
         shooterTalonLeft.follow(shooterTalonRight);
 
