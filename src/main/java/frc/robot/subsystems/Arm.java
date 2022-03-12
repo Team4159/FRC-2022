@@ -37,14 +37,12 @@ public class Arm extends SubsystemBase{
         armSpark2.setInverted(false);
 
         armSparks = new MotorControllerGroup(armSpark1, armSpark2);
-        encoder1 = new Encoder(
+
+        encoder2 = new Encoder(
             2,
             3
         );
-        encoder2 = new Encoder(
-            0,
-            1
-        );
+
         lowSetPoint = Constants.IntakeAndArmConstants.pidLowSetPoint;
         highSetPoint = Constants.IntakeAndArmConstants.pidHighSetPoint;
 
@@ -65,7 +63,7 @@ public class Arm extends SubsystemBase{
         } else if (speed <= -0.6) {
             speed = -0.6;
         }
-        //System.out.println(speed);
+        System.out.println(speed);
         armSparks.set(speed);
     }
 
@@ -109,7 +107,6 @@ public class Arm extends SubsystemBase{
 
     public void zeroArm() {
         resetPID();
-        encoder1.reset();
         encoder2.reset();
         armState = ArmState.HIGH;
         runArm(armState);

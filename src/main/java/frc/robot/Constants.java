@@ -19,11 +19,11 @@ public class Constants {
         public final static int shooterTalonLeft = 6;
         public final static int intakeSpark = 13;
         public final static int armSpark1 = 10;
-        public final static int armSpark2 = 12;
-        public final static int feederSpark = 9;
-        public final static int neckSpark = 7;
-        public final static int climberSpark1 = 8;
-        public final static int climberSpark2 = 11;
+        public final static int armSpark2 = 9;
+        public final static int feederSpark = 11;
+        public final static int neckSpark = 8;
+        public final static int climberSpark1 = 12;
+        public final static int climberSpark2 = 7;
         public final static int climberTalon1 =  14;
         public final static int climberTalon2 = 15;
         
@@ -71,7 +71,7 @@ public class Constants {
         public final static double wheelCircumference = 2 * Math.PI * Units.inchesToMeters(3);
 
         public final static double trackWidth = Units.inchesToMeters(25);
-        public static final DifferentialDriveKinematics kDriveKinematics =new DifferentialDriveKinematics(trackWidth);
+        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(trackWidth);
 
         
         //TODO: Need to get actual values later from the characterization tool.
@@ -90,8 +90,8 @@ public class Constants {
     }
     
     public static class ClimberConstants {
-        public final static int encoderChannelA = 2;
-        public final static int encoderChannelB = 3;
+        public final static int encoderChannelA = 0;
+        public final static int encoderChannelB = 1;
         public final static Boolean encoderReverse = false;
         public final static EncodingType encodingType = EncodingType.k1X;
 
@@ -141,9 +141,9 @@ public class Constants {
         public final static double kP = 0.00022; //Don't touch these constants unless yaknow whatcha doing
         public final static double kI = 0;
         public final static double kD = 0.00000001;
-        public final static double tolerance = 100;
+        public final static double tolerance = 200;
         
-        public final static double pidLowSetPoint = 2200;
+        public final static double pidLowSetPoint = -2200;
         public final static double pidHighSetPoint = 0;
     }
 

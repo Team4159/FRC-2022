@@ -87,6 +87,7 @@ public class Robot extends TimedRobot {
     //System.out.println("Left:" + m_robotContainer.leftJoystick.getY());
     //System.out.println("Right:" + m_robotContainer.rightJoystick.getY());
     //System.out.println(m_robotContainer.getShooter().getVelocity());
+    //System.out.println(m_robotContainer.getArm().get);
     CommandScheduler.getInstance().run();
     dashboard.update();
     //System.out.println("KJLDG");
@@ -133,16 +134,16 @@ public class Robot extends TimedRobot {
     }
     
   }
-  NetworkTableEntry xEntry;
+  // NetworkTableEntry xEntry;
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    NetworkTableInstance shooterVelocity = NetworkTableInstance.getDefault();
-    NetworkTable table = shooterVelocity.getTable("datatable");
-    xEntry = table.getEntry("X");
-    xEntry.setDouble(m_robotContainer.getShooter().getVelocity());
-
+    // NetworkTableInstance shooterVelocity = NetworkTableInstance.getDefault();
+    // NetworkTable table = shooterVelocity.getTable("datatable");
+    // xEntry = table.getEntry("X");
+    // xEntry.setDouble(m_robotContainer.getShooter().getVelocity());
+    System.out.println(m_robotContainer.getDriveTrain().getAngle());
     //Shuffleboard.getTab("Test").add("QWERTY", m_robotContainer.getShooter().getVelocity()).withWidget(BuiltInWidgets.kGraph);
   }
 

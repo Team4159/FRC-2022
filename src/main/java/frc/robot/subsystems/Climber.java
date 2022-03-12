@@ -48,7 +48,7 @@ public class Climber extends SubsystemBase{
             Constants.ClimberConstants.encoderChannelB,
             Constants.ClimberConstants.encoderReverse,
             Constants.ClimberConstants.encodingType
-        ); climberSparkMotorOne.getEncoder();
+        ); ;
 
         climberArmPid = new PIDController(
             Constants.ClimberConstants.armKP,
