@@ -26,21 +26,7 @@ public class BlueAuto3 extends SequentialCommandGroup{
         this.shooter = shooter;
 
         addCommands(
-            //new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(1),
-            new ParallelDeadlineGroup(
-                new MoveDistance(drivetrain, 1.4),
-                new ArmIntakeAndFeeder(arm, intake, feeder)
-            ),
-            new TurnDegrees(drivetrain, 180),
-
-            new MoveDistance(drivetrain, 2.3),
-            new NeckAndShoot(feeder, neck, shooter).withTimeout(1),
-            //First Part
-            new TurnDegrees(drivetrain, 225),
-            new ParallelDeadlineGroup(
-                new MoveDistance(drivetrain, 1.4),
-                new ArmIntakeAndFeeder(arm, intake, feeder)
-            )
+            new MoveDistance(drivetrain, 2)
         );
     }
 

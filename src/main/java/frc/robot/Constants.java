@@ -148,8 +148,8 @@ public class Constants {
     }
 
     public static class FeederConstants {
-        public final static double feederSpeed = 1;
-        public final static double backwardsFeederSpeed = -1;
+        public final static double feederSpeed = 0.7;
+        public final static double backwardsFeederSpeed = -0.7;
     }
 
     public static class NeckConstants {
@@ -159,7 +159,7 @@ public class Constants {
 
     public static class ShooterConstants {
 
-        public final static double targetVelocity = 4000;
+        public final static double targetVelocity = 5000;
 
         public final static int kPIDLoopIdx = 0;
         public final static double kP = 0.2;

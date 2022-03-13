@@ -33,7 +33,7 @@ public class BlueAuto1 extends SequentialCommandGroup{
         addCommands(
             new ParallelCommandGroup(
                 new MoveDistance(drivetrain, 1.4),
-                new ArmIntakeAndFeeder(arm, intake, feeder).withTimeout(1)
+                new ArmIntakeAndFeeder(arm, intake, feeder,neck).withTimeout(1)
             ),
             new TurnDegrees(drivetrain, 180),
             new MoveArm(arm, ArmState.HIGH).withTimeout(0.3),

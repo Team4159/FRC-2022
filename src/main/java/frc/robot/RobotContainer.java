@@ -87,7 +87,7 @@ public class RobotContainer {
   private final RunNeck runNeckBackwards = new RunNeck(neck, Direction.BACKWARDS);
   private final Shoot shoot = new Shoot(shooter, Constants.ShooterConstants.targetVelocity);
   private final NeckAndShoot neckAndShoot = new NeckAndShoot(feeder,neck, shooter);
-  private final ArmIntakeAndFeeder armIntakeAndFeeder = new ArmIntakeAndFeeder(arm, intake, feeder);
+  private final ArmIntakeAndFeeder armIntakeAndFeeder = new ArmIntakeAndFeeder(arm, intake, feeder,neck);
 
   private AutoSelector autoSelector = new AutoSelector(drivetrain, arm, intake, feeder, neck, shooter);
 
@@ -111,7 +111,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     drivetrain.setDefaultCommand(drive);
-    arm.setDefaultCommand(new MoveArm(arm, ArmState.HIGH));
+    //arm.setDefaultCommand(new MoveArm(arm, ArmState.HIGH));
     runIntakeButton.whenHeld(runIntakeForwards);
     //shootButton.whenHeld(shoot);
     runNeckButton.whenHeld(runNeck);
@@ -126,7 +126,9 @@ public class RobotContainer {
     runNeckAndShootButton.whenHeld(neckAndShoot);
     lowerArmIntakeAndFeederButton.whenHeld(armIntakeAndFeeder);
     lowerArmIntakeAndFeederButton.whenReleased(new MoveArm(arm, ArmState.HIGH));
+    lowerArmIntakeAndFeederButton.whenReleased(new RunNeck(neck, Direction.BACKWARDS).withTimeout(0.5));
     lowerArmButton.whenReleased(new MoveArm(arm, ArmState.HIGH));
+
   }
   
   public Command getAutonomousCommand() {
