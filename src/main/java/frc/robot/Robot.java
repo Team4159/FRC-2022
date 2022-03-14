@@ -60,6 +60,12 @@ public class Robot extends TimedRobot {
    */
 
 
+  NetworkTableEntry shooterEncoder;
+  NetworkTableEntry distanceValue;
+  NetworkTableEntry distancePercentageOutput;
+  NetworkTableEntry rotationValue;
+  NetworkTableEntry rotationPercentageOutput;
+
   @Override
   public void robotInit() {
     // Instantiate our RobotContainer. This will perform all our button bindings, and put our
@@ -68,6 +74,16 @@ public class Robot extends TimedRobot {
     dashboard = new Dashboard(m_robotContainer);
     m_robotContainer.drivetrain.zeroSensors();
     CameraServer.startAutomaticCapture();
+
+    NetworkTableInstance instance = NetworkTableInstance.getDefault();
+
+    NetworkTable table = instance.getTable("datatable");
+
+    shooterEncoder = table.getEntry("Shoot Encoder Values");
+    distanceValue = table.getEntry("Distance Encder Value");
+    distancePercentageOutput = table.getEntry("Distance Percentage Output");
+    rotationValue = table.getEntry("Rotation Encoder Value");
+    rotationPercentageOutput = table.getEntry("Rotation Percentage Output");
   }
 
   /**
@@ -77,19 +93,22 @@ public class Robot extends TimedRobot {
    * <p>This runs after the mode specific periodic functions, but before LiveWindow and
    * SmartDashboard integrated updating.
    */
+
+
   @Override
   public void robotPeriodic() {
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-    //new MoveArm(m_robotContainer.getArm(), ArmState.HIGH);
-    //System.out.println("Left:" + m_robotContainer.leftJoystick.getY());
-    //System.out.println("Right:" + m_robotContainer.rightJoystick.getY());
-    //System.out.println(m_robotContainer.getShooter().getVelocity());
-    //System.out.println(m_robotContainer.getArm().get);
     CommandScheduler.getInstance().run();
     dashboard.update();
+
+    shooterEncoder.setDouble(m_robotContainer.getShooter().getVelocity());
+    distanceValue.setDouble(m_robotContainer.getDriveTrain().getRobotPosition());
+    distancePercentageOutput.setDouble(m_robotContainer.getDriveTrain().getRightTalon().get());
+    rotationValue.setDouble(m_robotContainer.getDriveTrain().getAngle());
+    rotationPercentageOutput.setDouble(m_robotContainer.getDriveTrain().getRightTalon().get());
     //System.out.println("KJLDG");
   }
 

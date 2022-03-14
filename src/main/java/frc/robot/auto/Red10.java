@@ -35,8 +35,7 @@ public class Red10 extends SequentialCommandGroup{
             new MoveArm(arm, ArmState.HIGH).withTimeout(0.3),
             new MoveDistance(drivetrain, 2),
             new NeckAndShoot(feeder, neck, shooter).withTimeout(0.5),
-            new MoveArm(arm, ArmState.HIGH).withTimeout(0.3),
-            new TurnDegrees(drivetrain, 225)
+            new MoveArm(arm, ArmState.HIGH).withTimeout(0.3)
         );
     }
 
