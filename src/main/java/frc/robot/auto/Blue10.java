@@ -9,7 +9,7 @@ import frc.robot.subsystems.Arm.ArmState;
 import frc.robot.commands.CommandGroups.*;
 import frc.robot.commands.AutoCommands.*;
 
-public class BlueAuto3 extends SequentialCommandGroup{
+public class Blue10 extends SequentialCommandGroup{
     private Drivetrain drivetrain;
     private Arm arm;
     private Intake intake;
@@ -17,7 +17,7 @@ public class BlueAuto3 extends SequentialCommandGroup{
     private Neck neck;
     private Shooter shooter;
 
-    public BlueAuto3(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Neck neck, Shooter shooter) {
+    public Blue10(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Neck neck, Shooter shooter) {
         this.drivetrain = drivetrain;
         this.arm = arm;
         this.intake = intake;

@@ -27,40 +27,23 @@ public class NeckAndShoot extends SequentialCommandGroup {
 
 
         addCommands(
-            /*new ParallelCommandGroup(
-                new Shoot(shooter,Constants.ShooterConstants.targetVelocity).withTimeout(0.5),
-                new RunNeck(neck, Direction.BACKWARDS).withTimeout(0.5),
-                new RunFeeder(feeder, Direction.BACKWARDS).withTimeout(0.05)
-            ),
-            
-            //new ParallelCommandGroup(
-                //new Shoot(shooter, Constants.ShooterConstants.targetVelocity).withTimeout(0.3),
-                //new RunNeck(neck, Direction.FORWARDS).withTimeout(0.3)
-            //),
-
-            new ParallelCommandGroup(
-                new Shoot(shooter, Constants.ShooterConstants.targetVelocity).withTimeout(0.3),
-                new RunNeck(neck, Direction.FORWARDS).withTimeout(0.3),
-                new RunFeeder(feeder, Direction.FORWARDS).withTimeout(0.3)
-        */  new ParallelCommandGroup(
+          new ParallelCommandGroup(
                 new Shoot(shooter, Constants.ShooterConstants.targetVelocity),
                 new SequentialCommandGroup(
                     new ParallelCommandGroup(
                         new RunNeck(neck, Direction.BACKWARDS),
                         new RunFeeder(feeder, Direction.BACKWARDS)
                     ).withTimeout(0.1),
-                
-                    //new RunFeeder(feeder, Direction.FORWARDS).withTimeout(0.2),
-                    new ParallelCommandGroup(
-                        new RunNeck(neck, Direction.FORWARDS),
-                        new RunFeeder(feeder, Direction.FORWARDS)
-                    ).withTimeout(0.2),
-                    new RunFeeder(feeder, Direction.FORWARDS).withTimeout(0.7),
-                    new ParallelCommandGroup(
-                        new RunNeck(neck, Direction.FORWARDS),
-                        new RunFeeder(feeder, Direction.FORWARDS)
-                    )
+                new ParallelCommandGroup(
+                    new RunNeck(neck, Direction.FORWARDS),
+                    new RunFeeder(feeder, Direction.FORWARDS)
+                ).withTimeout(0.2),
+                new RunFeeder(feeder, Direction.FORWARDS).withTimeout(0.7),
+                new ParallelCommandGroup(
+                    new RunNeck(neck, Direction.FORWARDS),
+                    new RunFeeder(feeder, Direction.FORWARDS)
                 )
+            )
             )
         );
     }

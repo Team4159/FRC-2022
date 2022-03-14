@@ -25,9 +25,9 @@ import frc.robot.commands.CommandGroups.NeckAndShoot;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Arm.ArmState;
 import frc.robot.Constants.Direction;
-import frc.robot.auto.BlueAuto1;
-import frc.robot.auto.RedAuto1;
-import frc.robot.auto.BlueAuto3;
+import frc.robot.auto.Blue6;
+import frc.robot.auto.Red6;
+import frc.robot.auto.Blue10;
 
 
 public class RobotContainer {

@@ -1,4 +1,5 @@
 package frc.robot.auto;
+
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.MoveArm;
@@ -14,7 +15,8 @@ import frc.robot.subsystems.Neck;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Arm.ArmState;
 
-public class BlueAuto1 extends SequentialCommandGroup{
+
+public class Red6 extends SequentialCommandGroup{
     private Drivetrain drivetrain;
     private Arm arm;
     private Intake intake;
@@ -22,7 +24,8 @@ public class BlueAuto1 extends SequentialCommandGroup{
     private Neck neck;
     private Shooter shooter;
 
-    public BlueAuto1(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Neck neck, Shooter shooter) {
+    //Not Tested
+    public Red6(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Neck neck, Shooter shooter) {
         this.drivetrain = drivetrain;
         this.arm = arm;
         this.intake = intake;
@@ -38,8 +41,9 @@ public class BlueAuto1 extends SequentialCommandGroup{
             new TurnDegrees(drivetrain, 180),
             new MoveArm(arm, ArmState.HIGH).withTimeout(0.3),
             new MoveDistance(drivetrain, 2),
-            new NeckAndShoot(feeder, neck, shooter).withTimeout(0.5),
+            new NeckAndShoot(feeder, neck, shooter).withTimeout(2),
             new MoveArm(arm, ArmState.HIGH).withTimeout(0.3)
         );
     }
+
 }
