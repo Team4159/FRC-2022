@@ -122,7 +122,7 @@ public class RobotContainer {
     runNeckAndShootButton.whenHeld(neckAndShoot);
     lowerArmIntakeAndFeederButton.whenHeld(armIntakeAndFeeder);
     lowerArmIntakeAndFeederButton.whenReleased(new MoveArm(arm, ArmState.HIGH));
-    lowerArmIntakeAndFeederButton.whenReleased(new RunNeck(neck, Direction.BACKWARDS).withTimeout(0.5));
+    lowerArmIntakeAndFeederButton.whenReleased(new RunNeck(neck, Direction.BACKWARDS).withTimeout(1));
     lowerArmButton.whenReleased(new MoveArm(arm, ArmState.HIGH));
 
   }

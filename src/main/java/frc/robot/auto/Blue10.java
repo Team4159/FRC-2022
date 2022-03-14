@@ -26,7 +26,13 @@ public class Blue10 extends SequentialCommandGroup{
         this.shooter = shooter;
 
         addCommands(
-            new MoveDistance(drivetrain, 2)
+            new ParallelDeadlineGroup(
+                new MoveDistance(drivetrain, 1.4),
+                new ArmIntakeAndFeeder(arm, intake, feeder,neck)
+            ),
+            new TurnDegrees(drivetrain, 180),
+            new MoveDistance(drivetrain, 2),
+            new NeckAndShoot(feeder, neck, shooter).withTimeout(1)
         );
     }
 

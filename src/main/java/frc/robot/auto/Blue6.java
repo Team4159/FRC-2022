@@ -1,6 +1,9 @@
 package frc.robot.auto;
+import com.ctre.phoenix.schedulers.SequentialScheduler;
+
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.AutoCommands.MoveDistance;
 import frc.robot.commands.AutoCommands.TurnDegrees;
@@ -31,15 +34,12 @@ public class Blue6 extends SequentialCommandGroup{
         this.shooter = shooter;
 
         addCommands(
-            new ParallelCommandGroup(
-                new MoveDistance(drivetrain, 1.4),
-                new ArmIntakeAndFeeder(arm, intake, feeder,neck).withTimeout(1)
-            ),
-            new TurnDegrees(drivetrain, 180),
-            new MoveArm(arm, ArmState.HIGH).withTimeout(0.3),
-            new MoveDistance(drivetrain, 2),
-            new NeckAndShoot(feeder, neck, shooter).withTimeout(0.5),
-            new MoveArm(arm, ArmState.HIGH).withTimeout(0.3)
+            new SequentialCommandGroup(
+                new NeckAndShoot(feeder, neck, shooter).withTimeout(2),
+                new WaitCommand(8),
+                new TurnDegrees(drivetrain, 180),
+                new MoveDistance(drivetrain, 4)                 
+            )  
         );
     }
 }

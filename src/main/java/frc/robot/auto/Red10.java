@@ -2,6 +2,7 @@ package frc.robot.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -27,15 +28,13 @@ public class Red10 extends SequentialCommandGroup{
         this.shooter = shooter;
 
         addCommands(
-            new ParallelCommandGroup(
+            new ParallelDeadlineGroup(
                 new MoveDistance(drivetrain, 1.4),
-                new ArmIntakeAndFeeder(arm, intake, feeder,neck).withTimeout(1)
+                new ArmIntakeAndFeeder(arm, intake, feeder,neck)
             ),
             new TurnDegrees(drivetrain, 180),
-            new MoveArm(arm, ArmState.HIGH).withTimeout(0.3),
             new MoveDistance(drivetrain, 2),
-            new NeckAndShoot(feeder, neck, shooter).withTimeout(0.5),
-            new MoveArm(arm, ArmState.HIGH).withTimeout(0.3)
+            new NeckAndShoot(feeder, neck, shooter).withTimeout(1)
         );
     }
 
