@@ -12,10 +12,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
-import frc.robot.auto.Blue6;
-import frc.robot.auto.Red10;
-import frc.robot.auto.Red6;
-import frc.robot.auto.Blue10;
+import frc.robot.auto.Blue1Ball;
+import frc.robot.auto.Red2Ball;
+import frc.robot.auto.Red1Ball;
+import frc.robot.auto.Blue2Ball;
 
 
 public class AutoSelector {
@@ -23,26 +23,26 @@ public class AutoSelector {
 
    // Auto
     private final SendableChooser<Command> autoSelector = new SendableChooser<>();
-    private final Red6 redAuto6;
-    private final Blue10 blueAuto10;
-    private final Blue6 blueAuto6;
-    private final Red10 redAuto10;
+    private final Red1Ball redAuto6;
+    private final Blue2Ball blueAuto10;
+    private final Blue1Ball blueAuto6;
+    private final Red2Ball redAuto10;
    
 
     public AutoSelector(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Neck neck, Shooter shooter) {
-        redAuto6 = new Red6(drivetrain, arm, intake, feeder, neck, shooter);
-        redAuto10 = new Red10(drivetrain, arm, intake, feeder, neck, shooter);
-        blueAuto6 = new Blue6(drivetrain, arm, intake, feeder, neck, shooter);
-        blueAuto10 = new Blue10(drivetrain, arm, intake, feeder, neck, shooter);
+        redAuto6 = new Red1Ball(drivetrain, arm, intake, feeder, neck, shooter);
+        redAuto10 = new Red2Ball(drivetrain, arm, intake, feeder, neck, shooter);
+        blueAuto6 = new Blue1Ball(drivetrain, arm, intake, feeder, neck, shooter);
+        blueAuto10 = new Blue2Ball(drivetrain, arm, intake, feeder, neck, shooter);
         configureAutoSelector();
         
     }
 
     public void configureAutoSelector() {
-        autoSelector.addOption("Red-Auto-6", redAuto6);
-        autoSelector.addOption("Red-Auto-10", redAuto10);
-        autoSelector.addOption("Blue-Auto-6", blueAuto6);
-        autoSelector.addOption("Blue-Auto-10", blueAuto10);
+        autoSelector.addOption("Red-Auto-1-Ball", redAuto6);
+        autoSelector.addOption("Red-Auto-2-Ball", redAuto10);
+        autoSelector.addOption("Blue-Auto-1-Ball", blueAuto6);
+        autoSelector.addOption("Blue-Auto-2-Ball", blueAuto10);
         Shuffleboard.getTab("Pre-Match")
             .add("Auto Selector", autoSelector)
             .withWidget(BuiltInWidgets.kComboBoxChooser)

@@ -17,7 +17,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Arm.ArmState;
 
 
-public class Red6 extends SequentialCommandGroup{
+public class Red1Ball extends SequentialCommandGroup{
     private Drivetrain drivetrain;
     private Arm arm;
     private Intake intake;
@@ -26,7 +26,7 @@ public class Red6 extends SequentialCommandGroup{
     private Shooter shooter;
 
     //Not Tested
-    public Red6(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Neck neck, Shooter shooter) {
+    public Red1Ball(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Neck neck, Shooter shooter) {
         this.drivetrain = drivetrain;
         this.arm = arm;
         this.intake = intake;
@@ -39,7 +39,7 @@ public class Red6 extends SequentialCommandGroup{
                 new NeckAndShoot(feeder, neck, shooter).withTimeout(2),
                 new WaitCommand(8),
                 new TurnDegrees(drivetrain, 180),
-                new MoveDistance(drivetrain, 4)                 
+                new MoveDistance(drivetrain, 3)                 
             )  
         );
     }
