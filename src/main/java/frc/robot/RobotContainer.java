@@ -16,8 +16,6 @@ import frc.robot.trajectories.Trajectories;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
-import frc.robot.commands.RunNeck;
-import frc.robot.commands.Shoot;
 import frc.robot.commands.AutoCommands.MoveDistance;
 import frc.robot.commands.AutoCommands.TurnDegrees;
 import frc.robot.commands.CommandGroups.ArmIntakeAndFeeder;
@@ -107,7 +105,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     drivetrain.setDefaultCommand(drive);
-    //arm.setDefaultCommand(new MoveArm(arm, ArmState.HIGH));
+    arm.setDefaultCommand(new MoveArm(arm, ArmState.HIGH));
     runIntakeButton.whenHeld(runIntakeForwards);
     //shootButton.whenHeld(shoot);
     runNeckButton.whenHeld(runNeck);
@@ -122,8 +120,10 @@ public class RobotContainer {
     runNeckAndShootButton.whenHeld(neckAndShoot);
     lowerArmIntakeAndFeederButton.whenHeld(armIntakeAndFeeder);
     lowerArmIntakeAndFeederButton.whenReleased(new MoveArm(arm, ArmState.HIGH));
-    lowerArmIntakeAndFeederButton.whenReleased(new RunNeck(neck, Direction.BACKWARDS).withTimeout(1));
-    lowerArmButton.whenReleased(new MoveArm(arm, ArmState.HIGH));
+    lowerArmIntakeAndFeederButton.whenReleased(new RunNeck(neck, Direction.BACKWARDS).withTimeout(0.5));
+    lowerArmIntakeAndFeederButton.whenReleased(new RunFeeder(feeder, Direction.BACKWARDS).withTimeout(0.05));
+
+    //lowerArmButton.whenReleased(new MoveArm(arm, ArmState.HIGH));
 
   }
   
