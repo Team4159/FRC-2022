@@ -141,9 +141,9 @@ public class Constants {
         public final static double kP = 0.00022; //Don't touch these constants unless yaknow whatcha doing
         public final static double kI = 0;
         public final static double kD = 0.00000001;
-        public final static double tolerance = 200;
+        public final static double tolerance = 100;
         
-        public final static double pidLowSetPoint = -2200;
+        public final static double pidLowSetPoint = -1600;
         public final static double pidHighSetPoint = 0;
     }
 

@@ -109,7 +109,7 @@ public class Robot extends TimedRobot {
     distancePercentageOutput.setDouble(m_robotContainer.getDriveTrain().getRightTalon().get());
     rotationValue.setDouble(m_robotContainer.getDriveTrain().getAngle());
     rotationPercentageOutput.setDouble(m_robotContainer.getDriveTrain().getRightTalon().get());
-    //System.out.println("KJLDG");
+    System.out.println(m_robotContainer.getArm().getEncoderRaw());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -148,7 +148,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    m_robotContainer.zeroSubsystems();
+    //m_robotContainer.zeroSubsystems();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -160,7 +160,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    System.out.println(m_robotContainer.getDriveTrain().getAngle());
+    //System.out.println(m_robotContainer.getDriveTrain().getAngle());
     //Shuffleboard.getTab("Test").add("QWERTY", m_robotContainer.getShooter().getVelocity()).withWidget(BuiltInWidgets.kGraph);
   }
 
