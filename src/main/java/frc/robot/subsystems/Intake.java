@@ -19,7 +19,7 @@ public class Intake extends SubsystemBase {
         this.direction = direction;
         switch(direction) {
             case FORWARDS:
-                intakeSpark.set(Constants.IntakeAndArmConstants.intakeSpeed);
+                intakeSpark.set(-Constants.IntakeAndArmConstants.intakeSpeed);
                 break;
             case BACKWARDS:
                 intakeSpark.set(Constants.IntakeAndArmConstants.backwardsIntakeSpeed);

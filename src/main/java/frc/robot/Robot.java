@@ -103,13 +103,14 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     dashboard.update();
-
+    m_robotContainer.getArm().setDefaultCommand(new MoveArm(m_robotContainer.getArm(), ArmState.HIGH));
     shooterEncoder.setDouble(m_robotContainer.getShooter().getVelocity());
     distanceValue.setDouble(m_robotContainer.getDriveTrain().getRobotPosition());
     distancePercentageOutput.setDouble(m_robotContainer.getDriveTrain().getRightTalon().get());
     rotationValue.setDouble(m_robotContainer.getDriveTrain().getAngle());
     rotationPercentageOutput.setDouble(m_robotContainer.getDriveTrain().getRightTalon().get());
     System.out.println(m_robotContainer.getArm().getEncoderRaw());
+    System.out.println("Output:" + m_robotContainer.getArm().getArmSpark().get());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -128,7 +129,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     m_robotContainer.zeroSubsystems();
-    System.out.println(m_autonomousCommand);
+    //System.out.println(m_autonomousCommand);
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

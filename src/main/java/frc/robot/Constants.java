@@ -90,8 +90,8 @@ public class Constants {
     }
     
     public static class ClimberConstants {
-        public final static int encoderChannelA = 0;
-        public final static int encoderChannelB = 1;
+        public final static int encoderChannelA = 2;
+        public final static int encoderChannelB = 3;
         public final static Boolean encoderReverse = false;
         public final static EncodingType encodingType = EncodingType.k1X;
 
@@ -143,7 +143,7 @@ public class Constants {
         public final static double kD = 0.00000001;
         public final static double tolerance = 100;
         
-        public final static double pidLowSetPoint = -1600;
+        public final static double pidLowSetPoint = 1900; //-1600
         public final static double pidHighSetPoint = 0;
     }
 
@@ -159,12 +159,12 @@ public class Constants {
 
     public static class ShooterConstants {
 
-        public final static double targetVelocity = 5000;
+        public final static double targetVelocity = 4300;
 
         public final static int kPIDLoopIdx = 0;
         public final static double kP = 0.2;
         public final static double kI = 0000;
-        public final static double kD = 0.5;
+        public final static double kD = 0.4;
         public final static double kF = 12/6052 * targetVelocity; //1023/20660
 
     }

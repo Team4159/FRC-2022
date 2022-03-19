@@ -51,7 +51,7 @@ public class AutoSelector {
     }
 
     public Command getSelectedAuto() {
-        return autoSelector.getSelected();
+        return autoSelector.getSelected().withTimeout(15);
     }
 
 

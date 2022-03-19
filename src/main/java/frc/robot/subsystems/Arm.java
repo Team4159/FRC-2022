@@ -33,14 +33,14 @@ public class Arm extends SubsystemBase{
         armSpark2 = new CANSparkMax(Constants.CanIds.armSpark2, MotorType.kBrushless);
 
         //TODO: CHECK WHICH ONES ARE INVERTED
-        armSpark1.setInverted(true);
-        armSpark2.setInverted(false);
+        armSpark1.setInverted(false);
+        armSpark2.setInverted(true);
 
         armSparks = new MotorControllerGroup(armSpark1, armSpark2);
 
         encoder2 = new Encoder(
-            2,
-            3
+            0,
+            1
         );
 
         lowSetPoint = Constants.IntakeAndArmConstants.pidLowSetPoint;
@@ -63,7 +63,7 @@ public class Arm extends SubsystemBase{
         } else if (speed <= -0.6) {
             speed = -0.6;
         }
-        System.out.println(speed);
+        //System.out.println(speed);
         armSparks.set(speed);
     }
 
