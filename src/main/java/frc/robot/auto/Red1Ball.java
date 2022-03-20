@@ -3,7 +3,9 @@ package frc.robot.auto;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants;
 import frc.robot.commands.MoveArm;
+import frc.robot.commands.Shoot;
 import frc.robot.commands.AutoCommands.MoveDistance;
 import frc.robot.commands.AutoCommands.TurnDegrees;
 import frc.robot.commands.CommandGroups.ArmIntakeAndFeeder;
@@ -36,7 +38,10 @@ public class Red1Ball extends SequentialCommandGroup{
 
         addCommands(
             new SequentialCommandGroup(
-                new NeckAndShoot(feeder, neck, shooter).withTimeout(2),
+                new ParallelCommandGroup(
+                    new NeckAndShoot(feeder, neck, shooter).withTimeout(3),
+                    new Shoot(shooter, Constants.ShooterConstants.targetVelocity).withTimeout(3)
+                ),    
                 new WaitCommand(8),
                 new TurnDegrees(drivetrain, 180),
                 new MoveDistance(drivetrain, 2),

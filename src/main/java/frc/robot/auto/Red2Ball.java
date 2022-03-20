@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Arm.ArmState;
@@ -28,16 +29,18 @@ public class Red2Ball extends SequentialCommandGroup{
         this.shooter = shooter;
 
         addCommands(
-            new ParallelCommandGroup(
+            new ParallelDeadlineGroup(
                 new MoveDistance(drivetrain, 2),
                 new ArmIntakeAndFeeder(arm, intake, feeder,neck).withTimeout(2)
-            ),
+            ).withTimeout(3),
             new TurnDegrees(drivetrain, 180),
             new MoveDistance(drivetrain, 2.8),
-            new NeckAndShoot(feeder, neck, shooter).withTimeout(5),
+            new ParallelCommandGroup(
+                new NeckAndShoot(feeder, neck, shooter).withTimeout(5),
+                new Shoot(shooter, Constants.ShooterConstants.targetVelocity).withTimeout(5)
+            ),
             new TurnDegrees(drivetrain, 180),
-            new MoveDistance(drivetrain, 1),
-            new MoveArm(arm, ArmState.HIGH)
+            new MoveDistance(drivetrain, 1)
         );
     }
 

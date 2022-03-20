@@ -19,11 +19,11 @@ public class Constants {
         public final static int shooterTalonLeft = 6;
         public final static int intakeSpark = 13;
         public final static int armSpark1 = 10;
-        public final static int armSpark2 = 9;
+        public final static int armSpark2 = 7;
         public final static int feederSpark = 11;
         public final static int neckSpark = 8;
         public final static int climberSpark1 = 12;
-        public final static int climberSpark2 = 7;
+        public final static int climberSpark2 = 9;
         public final static int climberTalon1 =  14;
         public final static int climberTalon2 = 15;
         
@@ -64,7 +64,7 @@ public class Constants {
         public final static double aP = 0.01;
         public final static double aI = 0;
         public final static double aD = 0.0015;
-        public final static double aTolerance = 5; // In Degrees
+        public final static double aTolerance = 20; // In Degrees
 
         public final static double encoderEdgesPerRev = 2048;
         public final static double gearRatio = 8.667;
@@ -159,12 +159,12 @@ public class Constants {
 
     public static class ShooterConstants {
 
-        public final static double targetVelocity = 4300;
+        public final static double targetVelocity = 4000;
 
         public final static int kPIDLoopIdx = 0;
-        public final static double kP = 0.2;
-        public final static double kI = 0000;
-        public final static double kD = 0.4;
+        public final static double kP = 0.175;
+        public final static double kI = 0.0002;
+        public final static double kD = 0;
         public final static double kF = 12/6052 * targetVelocity; //1023/20660
 
     }

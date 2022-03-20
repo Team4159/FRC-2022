@@ -27,14 +27,12 @@ public class NeckAndShoot extends SequentialCommandGroup {
 
 
         addCommands(
-          new ParallelCommandGroup(
-                new Shoot(shooter, Constants.ShooterConstants.targetVelocity),
                 new SequentialCommandGroup(
                     new ParallelCommandGroup(
                         new RunNeck(neck, Direction.BACKWARDS),
                         new RunFeeder(feeder, Direction.BACKWARDS)
-                    ).withTimeout(0.25),
-                new WaitCommand(0.1),
+                    ).withTimeout(0.1),
+                new WaitCommand(0.75),
                 new ParallelCommandGroup(
                     new RunNeck(neck, Direction.FORWARDS),
                     new RunFeeder(feeder, Direction.FORWARDS)
@@ -43,8 +41,7 @@ public class NeckAndShoot extends SequentialCommandGroup {
                 new ParallelCommandGroup(
                     new RunNeck(neck, Direction.FORWARDS),
                     new RunFeeder(feeder, Direction.FORWARDS)
-                )
-            )
+                ).withTimeout(0.2)
             )
         );
     }

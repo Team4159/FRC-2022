@@ -117,7 +117,8 @@ public class RobotContainer {
     runFeederBackwardsButton.whenHeld(runFeederBackwards);
     raiseClimberButton.whenHeld(raiseClimber);
     lowerClimberButton.whenHeld(lowerClimber);
-    runNeckAndShootButton.whenHeld(neckAndShoot);
+    runNeckAndShootButton.whenPressed(neckAndShoot);
+    runNeckAndShootButton.whenHeld(shoot);
     lowerArmIntakeAndFeederButton.whenHeld(armIntakeAndFeeder);
     lowerArmIntakeAndFeederButton.whenReleased(new MoveArm(arm, ArmState.HIGH));
     lowerArmIntakeAndFeederButton.whenReleased(new RunNeck(neck, Direction.BACKWARDS).withTimeout(0.5));
@@ -129,8 +130,8 @@ public class RobotContainer {
   
   public Command getAutonomousCommand() {
 
-    //return autoSelector.getSelectedAuto();
     return autoSelector.getSelectedAuto();
+
   }
 
   //Getters for the subsystems

@@ -40,6 +40,7 @@ public class Shooter extends SubsystemBase {
         System.out.println(getVelocity());
         //System.out.println(shooterTalonLeft.getMotorOutputPercent());
         shooterTalonRight.set(ControlMode.Velocity, targetVelocityInTicks); 
+        //shooterTalonLeft.set(0.8);
     }
 
     public void stop() {
