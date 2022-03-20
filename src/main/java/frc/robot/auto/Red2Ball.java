@@ -31,8 +31,9 @@ public class Red2Ball extends SequentialCommandGroup{
         addCommands(
             new ParallelDeadlineGroup(
                 new MoveDistance(drivetrain, 2),
-                new ArmIntakeAndFeeder(arm, intake, feeder,neck).withTimeout(2)
+                new ArmIntakeAndFeeder(arm, intake, feeder,neck)
             ).withTimeout(3),
+            new MoveArm(arm, ArmState.HIGH),
             new TurnDegrees(drivetrain, 180),
             new MoveDistance(drivetrain, 2.8),
             new ParallelCommandGroup(

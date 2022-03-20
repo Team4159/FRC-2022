@@ -14,8 +14,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 import frc.robot.auto.Blue1Ball;
 import frc.robot.auto.Red2Ball;
+import frc.robot.auto.Red3Ball;
 import frc.robot.auto.Red1Ball;
 import frc.robot.auto.Blue2Ball;
+import frc.robot.auto.Blue3Ball;
 
 
 public class AutoSelector {
