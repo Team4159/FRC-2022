@@ -33,6 +33,11 @@ public class Constants {
         public final static int leftJoystickPort = 0;
         public final static int rightJoystickPort = 1;
         public final static int secondaryJoystickPort = 2;
+        
+        public class RightJoystick {
+            public final static int halfPowerToggle = 2;
+            public final static int flipDrivetrainToggle = 4;
+        }
 
         public class SecondaryJoystick { 
             public final static int lowerArm = 13; 

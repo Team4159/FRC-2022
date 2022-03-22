@@ -29,6 +29,11 @@ public class Drivetrain extends SubsystemBase {
     HALF_POWER
   }
 
+  public static enum Orientation {
+    FORWARD,
+    BACKWARD
+  }
+
   public WPI_TalonFX rightFrontTalon;
   private WPI_TalonFX rightRearTalon;
   private WPI_TalonFX leftFrontTalon;
@@ -38,7 +43,8 @@ public class Drivetrain extends SubsystemBase {
 
   private WPI_PigeonIMU pigeon;
   private PowerOutput powerOutput;
-  private double orientationConstant;;
+  private Orientation orientation;
+
 
 
   private DifferentialDriveKinematics kinematics;
@@ -63,20 +69,46 @@ public class Drivetrain extends SubsystemBase {
     pigeon = new WPI_PigeonIMU(Constants.CanIds.pigeonId);
 
     powerOutput = powerOutput.FULL_POWER;
+    orientation = orientation.FORWARD;
 
     kinematics = new DifferentialDriveKinematics(Constants.DriveTrainConstants.trackWidth);
     feedforward = new SimpleMotorFeedforward(Constants.DriveTrainConstants.ksVolts, Constants.DriveTrainConstants.kvVoltSecondsPerMeter, Constants.DriveTrainConstants.kaVoltSecondsSquaredPerMeter);
     odometry = new DifferentialDriveOdometry(getHeading());
-    orientationConstant = 1;
   }
 
   public void drive(double leftSpeed, double rightSpeed) {
-    leftMotors.set(leftSpeed * orientationConstant);
-    rightMotors.set(rightSpeed * orientationConstant);
+
+    if (orientation == Orientation.FORWARD) {
+      double temp = leftSpeed * -1;
+      leftSpeed = rightSpeed * -1;
+      rightSpeed = temp;
+    }
+
+    switch (powerOutput) {
+      case FULL_POWER:
+        leftMotors.set(leftSpeed);
+        rightMotors.set(rightSpeed);
+      case HALF_POWER:
+      leftMotors.set(leftSpeed * 0.5);
+      rightMotors.set(rightSpeed * 0.5);
+    }
   }
 
-  public void setOrientation(double constant){
-    orientationConstant = constant;
+  public void halfPower() {
+    powerOutput = PowerOutput.HALF_POWER;
+  }
+
+  public void fullPower() {
+    powerOutput = PowerOutput.FULL_POWER;
+  }
+
+  public void flipDrivetrain() {
+    switch (orientation) {
+      case FORWARD:
+        orientation = Orientation.BACKWARD;
+      case BACKWARD:
+        orientation = Orientation.FORWARD;
+    }
   }
 
   public void stop(){
