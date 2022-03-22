@@ -14,7 +14,7 @@ import edu.wpi.first.math.controller.PIDController;
 
 public class Arm extends SubsystemBase{
     private CANSparkMax armSpark1;
-    private CANSparkMax armSpark2;
+    // private CANSparkMax armSpark2;
     private MotorControllerGroup armSparks;
     private Encoder encoder1, encoder2;
     private PIDController pid;
@@ -30,17 +30,17 @@ public class Arm extends SubsystemBase{
 
     public Arm() {
         armSpark1 = new CANSparkMax(Constants.CanIds.armSpark1, MotorType.kBrushless);
-        armSpark2 = new CANSparkMax(Constants.CanIds.armSpark2, MotorType.kBrushless);
+        // armSpark2 = new CANSparkMax(Constants.CanIds.armSpark2, MotorType.kBrushless);
 
         //TODO: CHECK WHICH ONES ARE INVERTED
         armSpark1.setInverted(false);
-        armSpark2.setInverted(true);
+        // armSpark2.setInverted(true);
 
-        armSparks = new MotorControllerGroup(armSpark1, armSpark2);
+        armSparks = new MotorControllerGroup(armSpark1);
 
         encoder2 = new Encoder(
-            0,
-            1
+            2,
+            3
         );
 
         lowSetPoint = Constants.IntakeAndArmConstants.pidLowSetPoint;
@@ -51,8 +51,6 @@ public class Arm extends SubsystemBase{
             Constants.IntakeAndArmConstants.kI, 
             Constants.IntakeAndArmConstants.kD
         );
-
-        //pid.setTolerance(Constants.IntakeAndArmConstants.tolerance);
 
         armState = ArmState.HIGH;
     }
@@ -83,11 +81,10 @@ public class Arm extends SubsystemBase{
             return pid.calculate(encoderRaw, setPoint);
         }
     }
-
-    public void runArm(ArmState armState) {
-        this.armState = armState;
-        //Shuffleboard.getTab("Test").add("Percent Output", armSpark1.get());
-        switch (this.armState) {
+    @Override
+    public void periodic() {
+        System.out.println("Encoder: " + getEncoderRaw());
+        switch (armState) {
             case HIGH:
                 setArmSpeed(calculatePID(getEncoderRaw(), highSetPoint));
                 break;
@@ -95,6 +92,10 @@ public class Arm extends SubsystemBase{
                 setArmSpeed(calculatePID(getEncoderRaw(), lowSetPoint));
                 break;
         }
+    }
+
+    public void runArm(ArmState armState) {
+        this.armState = armState;
     }
 
     public void resetPID() {
@@ -118,7 +119,7 @@ public class Arm extends SubsystemBase{
 
     public void close() {
         armSpark1.close();
-        armSpark2.close();
+        // armSpark2.close();
         pid.close();
     }
 

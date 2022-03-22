@@ -24,6 +24,11 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class Drivetrain extends SubsystemBase {
 
+  public static enum PowerOutput {
+    FULL_POWER,
+    HALF_POWER
+  }
+
   public WPI_TalonFX rightFrontTalon;
   private WPI_TalonFX rightRearTalon;
   private WPI_TalonFX leftFrontTalon;
@@ -32,6 +37,8 @@ public class Drivetrain extends SubsystemBase {
   private MotorControllerGroup rightMotors;
 
   private WPI_PigeonIMU pigeon;
+  private PowerOutput powerOutput;
+  private double orientationConstant;;
 
 
   private DifferentialDriveKinematics kinematics;
@@ -50,17 +57,26 @@ public class Drivetrain extends SubsystemBase {
 
     leftMotors = new MotorControllerGroup(leftRearTalon, leftFrontTalon);
     rightMotors = new MotorControllerGroup(rightFrontTalon, rightRearTalon);
+
+    leftMotors.setInverted(true);
     
     pigeon = new WPI_PigeonIMU(Constants.CanIds.pigeonId);
+
+    powerOutput = powerOutput.FULL_POWER;
 
     kinematics = new DifferentialDriveKinematics(Constants.DriveTrainConstants.trackWidth);
     feedforward = new SimpleMotorFeedforward(Constants.DriveTrainConstants.ksVolts, Constants.DriveTrainConstants.kvVoltSecondsPerMeter, Constants.DriveTrainConstants.kaVoltSecondsSquaredPerMeter);
     odometry = new DifferentialDriveOdometry(getHeading());
+    orientationConstant = 1;
   }
 
   public void drive(double leftSpeed, double rightSpeed) {
-    leftMotors.set(leftSpeed);
-    rightMotors.set(rightSpeed);
+    leftMotors.set(leftSpeed * orientationConstant);
+    rightMotors.set(rightSpeed * orientationConstant);
+  }
+
+  public void setOrientation(double constant){
+    orientationConstant = constant;
   }
 
   public void stop(){

@@ -12,6 +12,7 @@ import frc.robot.subsystems.*;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Climber.ClimberState;
+import frc.robot.subsystems.Drivetrain.PowerOutput;
 import frc.robot.trajectories.Trajectories;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Feeder;
@@ -23,6 +24,7 @@ import frc.robot.commands.CommandGroups.NeckAndShoot;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Arm.ArmState;
 import frc.robot.Constants.Direction;
+import frc.robot.auto.ZeroAuto;
 
 public class RobotContainer {
   //Power Distribution
@@ -32,7 +34,7 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   public final Arm arm = new Arm();
   private final Feeder feeder = new Feeder();
-  private final Climber climber = new Climber();
+  // private final Climber climber = new Climber();
   private final Neck neck = new Neck();
   private final Shooter shooter = new Shooter();
 
@@ -68,15 +70,15 @@ public class RobotContainer {
   private final JoystickButton lowerArmIntakeAndFeederButton = new JoystickButton(secondaryJoystick, Constants.JoystickConstants.SecondaryJoystick.moveArmIntakeAndFeed);
 
   // Commands
-  private final Drive drive = new Drive(drivetrain, leftJoystick, rightJoystick);
+  private final Drive drive = new Drive(drivetrain, leftJoystick, rightJoystick, PowerOutput.FULL_POWER);
   private final MoveArm lowerArm = new MoveArm(arm, ArmState.LOW);
   private final MoveArm raiseArm = new MoveArm(arm, ArmState.HIGH);
   private final RunIntake runIntakeForwards = new RunIntake(intake, Direction.FORWARDS);
   private final RunIntake runIntakeBackwards = new RunIntake(intake, Direction.BACKWARDS);
   private final RunFeeder runFeederForwards = new RunFeeder(feeder, Direction.FORWARDS);
   private final RunFeeder runFeederBackwards = new RunFeeder(feeder, Direction.BACKWARDS);
-  private final Climb raiseClimber = new Climb(climber, ClimberState.RAISE);
-  private final Climb lowerClimber = new Climb(climber, ClimberState.LOWER);
+  // private final Climb raiseClimber = new Climb(climber, ClimberState.RAISE);
+  // private final Climb lowerClimber = new Climb(climber, ClimberState.LOWER);
   private final RunNeck runNeck = new RunNeck(neck, Direction.FORWARDS);
   private final RunNeck runNeckBackwards = new RunNeck(neck, Direction.BACKWARDS);
   private final Shoot shoot = new Shoot(shooter, Constants.ShooterConstants.targetVelocity);
@@ -99,7 +101,7 @@ public class RobotContainer {
   public void zeroSubsystems() {
     arm.zeroArm();
     drivetrain.zeroSensors();
-    climber.zeroClimber();
+    // climber.zeroClimber();
     drivetrain.zeroSensors();
   }
 
@@ -115,8 +117,8 @@ public class RobotContainer {
     lowerArmButton.whenHeld(lowerArm);
     runFeederForwardsButton.whenHeld(runFeederForwards);
     runFeederBackwardsButton.whenHeld(runFeederBackwards);
-    raiseClimberButton.whenHeld(raiseClimber);
-    lowerClimberButton.whenHeld(lowerClimber);
+    // raiseClimberButton.whenHeld(raiseClimber);
+    // lowerClimberButton.whenHeld(lowerClimber);
     runNeckAndShootButton.whenPressed(neckAndShoot);
     runNeckAndShootButton.whenHeld(shoot);
     lowerArmIntakeAndFeederButton.whenHeld(armIntakeAndFeeder);
@@ -150,9 +152,10 @@ public class RobotContainer {
     return feeder;
   }
 
-  public Climber getClimber() {
-    return climber;
-  }
+  // public Climber getClimber() {
+    // return climber;
+  // }
+
 
   public Shooter getShooter(){
     return shooter;

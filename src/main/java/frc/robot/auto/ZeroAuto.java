@@ -11,7 +11,7 @@ import frc.robot.subsystems.Arm.ArmState;
 import frc.robot.commands.CommandGroups.*;
 import frc.robot.commands.AutoCommands.*;
 
-public class Red2Ball extends SequentialCommandGroup{
+public class ZeroAuto extends SequentialCommandGroup{
     private Drivetrain drivetrain;
     private Arm arm;
     private Intake intake;
@@ -20,7 +20,7 @@ public class Red2Ball extends SequentialCommandGroup{
     private Shooter shooter;
     
     //Not Tested
-    public Red2Ball(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Neck neck, Shooter shooter) {
+    public ZeroAuto(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Neck neck, Shooter shooter) {
         this.drivetrain = drivetrain;
         this.arm = arm;
         this.intake = intake;
@@ -28,19 +28,7 @@ public class Red2Ball extends SequentialCommandGroup{
         this.neck = neck;
         this.shooter = shooter;
         addCommands(
-            new SequentialCommandGroup(
-                new ParallelDeadlineGroup(
-                    new MoveDistance(drivetrain, 2),
-                    new ArmIntakeAndFeeder(arm, intake, feeder,neck)
-                ).withTimeout(2),
-                new MoveArm(arm, ArmState.HIGH).withTimeout(2),
-                new TurnDegrees(drivetrain, 180),
-                new MoveDistance(drivetrain, 2.8),
-                new ParallelCommandGroup(
-                    new NeckAndShoot(feeder, neck, shooter).withTimeout(5),
-                    new Shoot(shooter, Constants.ShooterConstants.targetVelocity).withTimeout(5)
-                ).withTimeout(5)
-            )
+            new MoveDistance(drivetrain, 1)
         );
     }
 

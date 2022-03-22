@@ -90,8 +90,8 @@ public class Constants {
     }
     
     public static class ClimberConstants {
-        public final static int encoderChannelA = 2;
-        public final static int encoderChannelB = 3;
+        public final static int encoderChannelA = 0;
+        public final static int encoderChannelB = 1;
         public final static Boolean encoderReverse = false;
         public final static EncodingType encodingType = EncodingType.k1X;
 
@@ -138,7 +138,7 @@ public class Constants {
         public final static boolean encoderReverse = false;
         public final static EncodingType encodingType = EncodingType.k1X;
 
-        public final static double kP = 0.00022; //Don't touch these constants unless yaknow whatcha doing
+        public final static double kP = 0.00023; //0.00022//Don't touch these constants unless yaknow whatcha doing
         public final static double kI = 0;
         public final static double kD = 0.00000001;
         public final static double tolerance = 100;
