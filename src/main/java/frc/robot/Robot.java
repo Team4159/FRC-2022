@@ -109,7 +109,7 @@ public class Robot extends TimedRobot {
     distancePercentageOutput.setDouble(m_robotContainer.getDriveTrain().getRightTalon().get());
     rotationValue.setDouble(m_robotContainer.getDriveTrain().getAngle());
     rotationPercentageOutput.setDouble(m_robotContainer.getDriveTrain().getRightTalon().get());
-    System.out.println(m_robotContainer.getDriveTrain().getRobotPosition());
+    //System.out.println(m_robotContainer.getDriveTrain().getRobotPosition());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

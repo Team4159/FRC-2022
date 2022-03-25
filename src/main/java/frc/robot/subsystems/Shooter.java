@@ -37,7 +37,7 @@ public class Shooter extends SubsystemBase {
 
     public void shoot(double targetVelocity) {
         double targetVelocityInTicks =  targetVelocity * 2048.0 / 600.0;
-        System.out.println(getVelocity());
+        //System.out.println(getVelocity());
         //System.out.println(shooterTalonLeft.getMotorOutputPercent());
         shooterTalonRight.set(ControlMode.Velocity, targetVelocityInTicks); 
         //shooterTalonLeft.set(0.8);

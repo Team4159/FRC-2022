@@ -13,16 +13,17 @@ public class Intake extends SubsystemBase {
 
     public Intake() {
         intakeSpark = new CANSparkMax(Constants.CanIds.intakeSpark, MotorType.kBrushless);
+        intakeSpark.setInverted(true);
     }
 
     public void runIntake(Direction direction) {
         this.direction = direction;
         switch(direction) {
             case FORWARDS:
-                intakeSpark.set(-Constants.IntakeAndArmConstants.intakeSpeed);
+                intakeSpark.set(Constants.IntakeAndArmConstants.intakeSpeed);
                 break;
             case BACKWARDS:
-                intakeSpark.set(Constants.IntakeAndArmConstants.backwardsIntakeSpeed);
+                intakeSpark.set(-Constants.IntakeAndArmConstants.backwardsIntakeSpeed);
                 break;
         }
     }

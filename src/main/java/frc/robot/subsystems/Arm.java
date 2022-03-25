@@ -83,7 +83,7 @@ public class Arm extends SubsystemBase{
     }
     @Override
     public void periodic() {
-        System.out.println("Encoder: " + getEncoderRaw());
+        //System.out.println("Encoder: " + getEncoderRaw());
         switch (armState) {
             case HIGH:
                 setArmSpeed(calculatePID(getEncoderRaw(), highSetPoint));

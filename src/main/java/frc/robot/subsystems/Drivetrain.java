@@ -78,17 +78,16 @@ public class Drivetrain extends SubsystemBase {
 
   public void drive(double leftSpeed, double rightSpeed) {
 
-    if (orientation == Orientation.FORWARD) {
+    if (orientation == Orientation.BACKWARD) {
       double temp = leftSpeed * -1;
       leftSpeed = rightSpeed * -1;
       rightSpeed = temp;
     }
-
-    switch (powerOutput) {
-      case FULL_POWER:
-        leftMotors.set(leftSpeed);
-        rightMotors.set(rightSpeed);
-      case HALF_POWER:
+    System.out.println(powerOutput);
+    if (powerOutput == PowerOutput.FULL_POWER) {
+      leftMotors.set(leftSpeed);
+      rightMotors.set(rightSpeed);
+    } else {
       leftMotors.set(leftSpeed * 0.5);
       rightMotors.set(rightSpeed * 0.5);
     }
@@ -96,18 +95,19 @@ public class Drivetrain extends SubsystemBase {
 
   public void halfPower() {
     powerOutput = PowerOutput.HALF_POWER;
+    System.out.println("Half Power");
   }
 
   public void fullPower() {
     powerOutput = PowerOutput.FULL_POWER;
+    System.out.println("Full Power");
   }
 
   public void flipDrivetrain() {
-    switch (orientation) {
-      case FORWARD:
-        orientation = Orientation.BACKWARD;
-      case BACKWARD:
-        orientation = Orientation.FORWARD;
+    if (orientation == Orientation.FORWARD) {
+      orientation = Orientation.BACKWARD;
+    } else {
+      orientation = Orientation.FORWARD;
     }
   }
 
