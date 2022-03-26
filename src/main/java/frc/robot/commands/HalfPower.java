@@ -27,4 +27,5 @@ public class HalfPower extends CommandBase {
     public boolean isFinished() {
         return true;
     }
+    
 }

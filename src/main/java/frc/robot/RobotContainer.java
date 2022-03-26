@@ -34,7 +34,7 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   public final Arm arm = new Arm();
   private final Feeder feeder = new Feeder();
-  // private final Climber climber = new Climber();
+  private final Climber climber = new Climber();
   private final Neck neck = new Neck();
   private final Shooter shooter = new Shooter();
 
@@ -42,17 +42,6 @@ public class RobotContainer {
   public Joystick leftJoystick = new Joystick(Constants.JoystickConstants.leftJoystickPort);
   public Joystick rightJoystick = new Joystick(Constants.JoystickConstants.rightJoystickPort);
   public Joystick secondaryJoystick = new Joystick(Constants.JoystickConstants.secondaryJoystickPort);
-
-  //Joystick getters
-  public Joystick getLJoystick() {
-    return leftJoystick;
-  }
-  public Joystick getRJoystick(){
-    return rightJoystick;
-  }
-  public Joystick getSecJoystick(){
-    return secondaryJoystick;
-  }
 
   //Buttons
   private final JoystickButton runIntakeButton = new JoystickButton(secondaryJoystick, Constants.JoystickConstants.SecondaryJoystick.runIntakeForwards);
@@ -123,8 +112,8 @@ public class RobotContainer {
     lowerArmButton.whenHeld(lowerArm);
     runFeederForwardsButton.whenHeld(runFeederForwards);
     runFeederBackwardsButton.whenHeld(runFeederBackwards);
-    // raiseClimberButton.whenHeld(raiseClimber);
-    // lowerClimberButton.whenHeld(lowerClimber);
+    //raiseClimberButton.whenHeld(raiseClimber);
+    //lowerClimberButton.whenHeld(lowerClimber);
     runNeckAndShootButton.whenPressed(neckAndShoot);
     runNeckAndShootButton.whenHeld(shoot);
     lowerArmIntakeAndFeederButton.whenHeld(armIntakeAndFeeder);
@@ -161,10 +150,9 @@ public class RobotContainer {
     return feeder;
   }
 
-  // public Climber getClimber() {
-    // return climber;
-  // }
-
+  public Climber getClimber() {
+    return climber;
+  }
 
   public Shooter getShooter(){
     return shooter;
@@ -172,6 +160,17 @@ public class RobotContainer {
 
   public Neck getNeck(){
     return neck;
+  }
+
+  //Joystick getters
+  public Joystick getLJoystick() {
+    return leftJoystick;
+  }
+  public Joystick getRJoystick(){
+    return rightJoystick;
+  }
+  public Joystick getSecJoystick(){
+    return secondaryJoystick;
   }
   //Getter for power distribtion
   public PowerDistribution getPDP(){

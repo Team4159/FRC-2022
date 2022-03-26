@@ -22,7 +22,6 @@ public class Shoot extends CommandBase {
 
     @Override
     public void execute() {
-        
         shooter.shoot(Constants.ShooterConstants.targetVelocity);//In RPM
     }
 

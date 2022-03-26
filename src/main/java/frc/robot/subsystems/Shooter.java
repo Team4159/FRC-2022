@@ -55,7 +55,6 @@ public class Shooter extends SubsystemBase {
         return shooterTalonRight.getMotorOutputPercent();
     }
 
-
     public WPI_TalonFX getLeftShooterTalon() {
         return shooterTalonLeft;
     }

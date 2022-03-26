@@ -28,6 +28,7 @@ public class AutoSelector {
     private final Blue2Ball blueAuto10;
     private final Blue1Ball blueAuto6;
     private final Red2Ball redAuto10;
+    private final ZeroAuto zeroAuto;
    
 
     public AutoSelector(Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Neck neck, Shooter shooter) {
@@ -35,6 +36,7 @@ public class AutoSelector {
         redAuto10 = new Red2Ball(drivetrain, arm, intake, feeder, neck, shooter);
         blueAuto6 = new Blue1Ball(drivetrain, arm, intake, feeder, neck, shooter);
         blueAuto10 = new Blue2Ball(drivetrain, arm, intake, feeder, neck, shooter);
+        zeroAuto = new ZeroAuto(drivetrain, arm, intake, feeder, neck, shooter);
         configureAutoSelector();
         
     }
@@ -44,6 +46,7 @@ public class AutoSelector {
         autoSelector.addOption("Red-Auto-2-Ball", redAuto10);
         autoSelector.addOption("Blue-Auto-1-Ball", blueAuto6);
         autoSelector.addOption("Blue-Auto-2-Ball", blueAuto10);
+        autoSelector.addOption("Zero Auto", zeroAuto);
         Shuffleboard.getTab("Pre-Match")
             .add("Auto Selector", autoSelector)
             .withWidget(BuiltInWidgets.kComboBoxChooser)
@@ -52,7 +55,6 @@ public class AutoSelector {
     }
 
     public Command getSelectedAuto() {
-        //return autoSelector.getSelected().withTimeout(15);
         return autoSelector.getSelected().withTimeout(15);
     }
 

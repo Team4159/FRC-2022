@@ -45,8 +45,6 @@ public class Drivetrain extends SubsystemBase {
   private PowerOutput powerOutput;
   private Orientation orientation;
 
-
-
   private DifferentialDriveKinematics kinematics;
   private Pose2d pose;
   private DifferentialDriveOdometry odometry;
@@ -120,9 +118,9 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void moveDistance(double distance) {
-    double output = linearDriveTrainPID.calculate(getRobotPosition(), distance);
+    double output = -linearDriveTrainPID.calculate(getRobotPosition(), distance);
     leftMotors.set(output);
-    rightMotors.set(-output);
+    rightMotors.set(output);
   }
 
   public boolean atDistanceSetpoint(double distance, double tolerance) {
@@ -140,14 +138,9 @@ public class Drivetrain extends SubsystemBase {
     return rightFrontTalon;
   }
 
-  public void turnDegrees(double angle) { //Angle needs to be between 0 and 360
-    //angle = angle%360;
+  public void turnDegrees(double angle) { 
     
     double output = angularDriveTrainPID.calculate(getAngle(), angle);
-    System.out.println(output);
-    // if (angle < 0) {
-    //   output = -1 * angularDriveTrainPID.calculate(getAngle(), angle);
-    // }
 
     leftMotors.set(output);
     rightMotors.set(output);

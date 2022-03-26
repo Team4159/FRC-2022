@@ -38,11 +38,11 @@ public class MoveArm extends CommandBase{
         // System.out.println(arm.atSetpoint(Constants.IntakeAndArmConstants.pidHighSetPoint, Constants.IntakeAndArmConstants.tolerance));
         // if(armState == ArmState.HIGH && arm.atSetpoint(Constants.IntakeAndArmConstants.pidHighSetPoint, Constants.IntakeAndArmConstants.tolerance)) {
         //     arm.setArmSpeed(0);
-        //     //System.out.println("true");
+        //     System.out.println("true");
         // }
         // else {
         //     arm.runArm(armState.HIGH);
-        //     //System.out.println("false");
+        //     System.out.println("false");
         // }
     }
 

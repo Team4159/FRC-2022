@@ -23,10 +23,11 @@ public class Drive extends CommandBase{
 
   @Override
   public void execute() {
-    if (powerOutput==PowerOutput.FULL_POWER){
+    if (powerOutput == PowerOutput.FULL_POWER){
       drivetrain.drive(leftJoystick.getY(), rightJoystick.getY());
-    } else {
-      drivetrain.drive(leftJoystick.getY()*0.5, rightJoystick.getY()*0.5);
+    } 
+    else {
+      drivetrain.drive(leftJoystick.getY() * 0.5, rightJoystick.getY() * 0.5);
     }
   }
   
