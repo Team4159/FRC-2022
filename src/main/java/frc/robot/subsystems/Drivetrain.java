@@ -83,7 +83,6 @@ public class Drivetrain extends SubsystemBase {
       leftSpeed = rightSpeed * -1;
       rightSpeed = temp;
     }
-    System.out.println(powerOutput);
     if (powerOutput == PowerOutput.FULL_POWER) {
       leftMotors.set(leftSpeed);
       rightMotors.set(rightSpeed);
@@ -95,12 +94,10 @@ public class Drivetrain extends SubsystemBase {
 
   public void halfPower() {
     powerOutput = PowerOutput.HALF_POWER;
-    System.out.println("Half Power");
   }
 
   public void fullPower() {
     powerOutput = PowerOutput.FULL_POWER;
-    System.out.println("Full Power");
   }
 
   public void flipDrivetrain() {

@@ -6,18 +6,25 @@ import frc.robot.subsystems.Drivetrain;
 public class HalfPower extends CommandBase {
     private final Drivetrain drivetrain;
 
-    public HalfPower(Drivetrain drivetrain) {
+    private boolean halfPower;
+
+    public HalfPower(Drivetrain drivetrain, boolean halfPower) {
         this.drivetrain = drivetrain;
         addRequirements(drivetrain);
+        this.halfPower = halfPower;
     }
 
     @Override
-    public void initialize() {
-        drivetrain.halfPower();
+    public void execute() {
+        if (halfPower) {
+            drivetrain.halfPower();
+        } else {
+            drivetrain.fullPower();
+        }
     }
 
     @Override
-    public void end(boolean i) {
-        drivetrain.fullPower();
+    public boolean isFinished() {
+        return true;
     }
 }

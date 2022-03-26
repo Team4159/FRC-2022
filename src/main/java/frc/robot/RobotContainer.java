@@ -87,7 +87,8 @@ public class RobotContainer {
   private final Shoot shoot = new Shoot(shooter, Constants.ShooterConstants.targetVelocity);
   private final NeckAndShoot neckAndShoot = new NeckAndShoot(feeder,neck, shooter);
   private final ArmIntakeAndFeeder armIntakeAndFeeder = new ArmIntakeAndFeeder(arm, intake, feeder,neck);
-  private final HalfPower halfPower = new HalfPower(drivetrain);
+  private final HalfPower halfPower = new HalfPower(drivetrain, true);
+  private final HalfPower fullPower = new HalfPower(drivetrain, false);
   private final FlipDrivetrain flipDrivetrain = new FlipDrivetrain(drivetrain);
 
   private AutoSelector autoSelector = new AutoSelector(drivetrain, arm, intake, feeder, neck, shooter);
@@ -130,7 +131,8 @@ public class RobotContainer {
     lowerArmIntakeAndFeederButton.whenReleased(new MoveArm(arm, ArmState.HIGH));
     lowerArmIntakeAndFeederButton.whenReleased(new RunNeck(neck, Direction.BACKWARDS).withTimeout(0.5));
     lowerArmIntakeAndFeederButton.whenReleased(new RunFeeder(feeder, Direction.BACKWARDS).withTimeout(0.05));
-    halfPowerButton.whenHeld(halfPower);
+    halfPowerButton.whenPressed(halfPower);
+    halfPowerButton.whenReleased(fullPower);
     flipDrivetrainToggleButton.whenPressed(flipDrivetrain);
 
     //lowerArmButton.whenReleased(new MoveArm(arm, ArmState.HIGH));
