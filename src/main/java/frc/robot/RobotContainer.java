@@ -69,8 +69,8 @@ public class RobotContainer {
   private final RunIntake runIntakeBackwards = new RunIntake(intake, Direction.BACKWARDS);
   private final RunFeeder runFeederForwards = new RunFeeder(feeder, Direction.FORWARDS);
   private final RunFeeder runFeederBackwards = new RunFeeder(feeder, Direction.BACKWARDS);
-  // private final Climb raiseClimber = new Climb(climber, ClimberState.RAISE);
-  // private final Climb lowerClimber = new Climb(climber, ClimberState.LOWER);
+  private final Climb raiseClimber = new Climb(climber, ClimberState.RAISE);
+  private final Climb lowerClimber = new Climb(climber, ClimberState.LOWER);
   private final RunNeck runNeck = new RunNeck(neck, Direction.FORWARDS);
   private final RunNeck runNeckBackwards = new RunNeck(neck, Direction.BACKWARDS);
   private final Shoot shoot = new Shoot(shooter, Constants.ShooterConstants.targetVelocity);
@@ -112,8 +112,8 @@ public class RobotContainer {
     lowerArmButton.whenHeld(lowerArm);
     runFeederForwardsButton.whenHeld(runFeederForwards);
     runFeederBackwardsButton.whenHeld(runFeederBackwards);
-    //raiseClimberButton.whenHeld(raiseClimber);
-    //lowerClimberButton.whenHeld(lowerClimber);
+    raiseClimberButton.whenPressed(raiseClimber);
+    lowerClimberButton.whenPressed(lowerClimber);
     runNeckAndShootButton.whenPressed(neckAndShoot);
     runNeckAndShootButton.whenHeld(shoot);
     lowerArmIntakeAndFeederButton.whenHeld(armIntakeAndFeeder);

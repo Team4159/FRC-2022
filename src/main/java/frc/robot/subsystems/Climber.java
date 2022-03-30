@@ -21,6 +21,7 @@ public class Climber extends SubsystemBase{
     private WPI_TalonFX climberTalonTwo;
 
     private PIDController climberArmPid;
+    private PIDController climberElevatorPID;
     private Encoder climberArmEncoder;
 
     private int armLowSetPoint, armHighSetPoint;
@@ -55,10 +56,17 @@ public class Climber extends SubsystemBase{
             Constants.ClimberConstants.armKI,
             Constants.ClimberConstants.armKD
         );
+
+        climberElevatorPID = new PIDController(
+            Constants.ClimberConstants.elevatorKP,
+            Constants.ClimberConstants.elevatorKI,
+            Constants.ClimberConstants.elevatorKD
+        );
         
         climberTalonOne = new WPI_TalonFX(Constants.CanIds.climberTalon1);
         climberTalonTwo = new WPI_TalonFX(Constants.CanIds.climberTalon2);
 
+        climberTalonTwo.setInverted(true);
         climberTalonTwo.follow(climberTalonOne);
 
         climberTalonOne.config_kP(Constants.ClimberConstants.kPIDLoopIdx, Constants.ClimberConstants.elevatorKP);
@@ -74,6 +82,8 @@ public class Climber extends SubsystemBase{
         
         armClimberState = ClimberState.LOWER;
         elevatorClimberState = ClimberState.LOWER;
+
+        climberTalonOne.setSelectedSensorPosition(0);
     }
 
     public void setClimberSpeed(double speed) {
@@ -89,12 +99,12 @@ public class Climber extends SubsystemBase{
     }
 
     public double getElevatorEncoders() {
-        return climberTalonTwo.getSelectedSensorPosition();
+        return climberTalonOne.getSelectedSensorPosition();
     }
 
-    public void runClimberArm(ClimberState climberState) {
-        this.armClimberState = climberState;
-        switch (this.armClimberState) {
+    @Override
+    public void periodic() {
+        switch (armClimberState) {
             case RAISE:
                 setClimberSpeed(calculatePID(climberArmPid, getArmEncoderRaw(), armHighSetPoint));
                 break;
@@ -102,18 +112,25 @@ public class Climber extends SubsystemBase{
                 setClimberSpeed(calculatePID(climberArmPid, getArmEncoderRaw(), armLowSetPoint));
                 break;
         }
+        switch (elevatorClimberState) {
+            case RAISE:
+                //climberTalonOne.set(ControlMode.Position, elevatorHighSetPoint);
+                System.out.println(calculatePID(climberElevatorPID, getElevatorEncoders(), elevatorHighSetPoint));
+                climberTalonOne.set(calculatePID(climberElevatorPID, getElevatorEncoders(), elevatorHighSetPoint));
+                break;
+            case LOWER:
+                //climberTalonOne.set(ControlMode.Position, elevatorLowSetPoint);
+                climberTalonOne.set(calculatePID(climberElevatorPID, getElevatorEncoders(), elevatorLowSetPoint));
+                break;
+        }
+    }
+
+    public void runClimberArm(ClimberState climberState) {
+        this.armClimberState = climberState;
     }
 
     public void runClimberElevator(ClimberState climberState) {
         this.elevatorClimberState = climberState;
-        switch (this.elevatorClimberState) {
-            case RAISE:
-                climberTalonOne.set(ControlMode.Position, elevatorHighSetPoint);
-                break;
-            case LOWER:
-            climberTalonOne.set(ControlMode.Position, elevatorLowSetPoint);
-                break;
-        }
     }
 
 
