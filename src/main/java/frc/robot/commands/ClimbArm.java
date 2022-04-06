@@ -16,7 +16,7 @@ public class ClimbArm extends CommandBase {
 
     @Override
     public void execute() {
-        climber.setArmSpeed(secondaryJoystick.getY()/3);
+        climber.setArmSpeed(secondaryJoystick.getY()/10);
     }
 
     @Override

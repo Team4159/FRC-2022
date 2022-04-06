@@ -108,7 +108,7 @@ public class Constants {
         public final static double elevatorKF = 1023; // TODO: Need to figure out what this constant does
 
         public final static int elevatorLowSetPoint = 0;
-        public final static int elevatorHighSetPoint = -290000;
+        public final static int elevatorHighSetPoint = -310000;
 
         public final double trackWidth = Units.inchesToMeters(25); // TODO: Need To Determine In Meters
 
