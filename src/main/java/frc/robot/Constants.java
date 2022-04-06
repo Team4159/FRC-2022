@@ -22,8 +22,8 @@ public class Constants {
         //public final static int armSpark2 = 7;
         public final static int feederSpark = 11;
         public final static int neckSpark = 8;
-        public final static int climberSpark1 = 12;
-        public final static int climberSpark2 = 9;
+        public final static int climberSpark1 = 22;
+        public final static int climberSpark2 = 23;
         public final static int climberTalon1 =  14;
         public final static int climberTalon2 = 15;
         
@@ -55,6 +55,7 @@ public class Constants {
 
             public final static int runNeckAndShoot = 1;
             public final static int moveArmIntakeAndFeed = 2;
+
 
             //public final static int runShooter = 10;
         }
@@ -99,19 +100,12 @@ public class Constants {
         public final static int encoderChannelB = 3;
         public final static Boolean encoderReverse = false;
         public final static EncodingType encodingType = EncodingType.k1X;
-
-        public final static double armKP = 0;
-        public final static double armKI = 0;
-        public final static double armKD = 0;
         
         public final static int kPIDLoopIdx = 0;
         public final static double elevatorKP = 0.00001;
         public final static double elevatorKI = 0.0000001;
         public final static double elevatorKD = 0.00000001;
         public final static double elevatorKF = 1023; // TODO: Need to figure out what this constant does
-
-        public final static int armLowSetPoint = 0;
-        public final static int armHighSetPoint = 0;
 
         public final static int elevatorLowSetPoint = 0;
         public final static int elevatorHighSetPoint = -290000;
@@ -120,10 +114,12 @@ public class Constants {
 
 
         //Need to get actual values later from the characterization tool.
-        public static final  double kS = 1;
-        public static final double kV = 1;
-        public static final double kA = 1;
+        // public static final  double kS = 1;
+        // public static final double kV = 1;
+        // public static final double kA = 1;
 
+        public static final double climberArmFwdsSpeed = 0.5;
+        public static final double climberArmBwdsSpeed = -0.25;
     }
 
     public static enum Direction {

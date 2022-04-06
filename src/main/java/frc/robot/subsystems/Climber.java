@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.Direction;
 
 
 public class Climber extends SubsystemBase{
@@ -19,12 +20,9 @@ public class Climber extends SubsystemBase{
 
     public WPI_TalonFX climberTalonOne;
     public WPI_TalonFX climberTalonTwo;
-
-    private PIDController climberArmPid;
+       
     private PIDController climberElevatorPID;
-    private Encoder climberArmEncoder;
 
-    private int armLowSetPoint, armHighSetPoint;
     private int elevatorLowSetPoint, elevatorHighSetPoint;
 
     private MotorControllerGroup climberSparks;
@@ -36,7 +34,7 @@ public class Climber extends SubsystemBase{
         RAISE,
         LOWER
     }
-    private ClimberState armClimberState;
+
     private ClimberState elevatorClimberState;
 
     public Climber() {
@@ -44,19 +42,6 @@ public class Climber extends SubsystemBase{
         climberSparkMotorTwo = new CANSparkMax(Constants.CanIds.climberSpark2, MotorType.kBrushless);
 
         climberSparks = new MotorControllerGroup(climberSparkMotorOne, climberSparkMotorTwo);
-
-        climberArmEncoder = new Encoder(
-            Constants.ClimberConstants.encoderChannelA,
-            Constants.ClimberConstants.encoderChannelB,
-            Constants.ClimberConstants.encoderReverse,
-            Constants.ClimberConstants.encodingType
-        ); ;
-
-        climberArmPid = new PIDController(
-            Constants.ClimberConstants.armKP,
-            Constants.ClimberConstants.armKI,
-            Constants.ClimberConstants.armKD
-        );
 
         climberElevatorPID = new PIDController(
             Constants.ClimberConstants.elevatorKP,
@@ -69,7 +54,8 @@ public class Climber extends SubsystemBase{
 
         climberTalons = new MotorControllerGroup(climberTalonOne, climberTalonTwo);
 
-
+        climberSparkMotorOne.setInverted(false);
+        climberSparkMotorTwo.setInverted(true);
         climberTalonOne.setInverted(false);
         climberTalonTwo.setInverted(true);
         //climberTalonTwo.follow(climberTalonOne);
@@ -79,21 +65,19 @@ public class Climber extends SubsystemBase{
         climberTalonOne.config_kD(Constants.ClimberConstants.kPIDLoopIdx, Constants.ClimberConstants.elevatorKD);
         climberTalonOne.config_kF(Constants.ClimberConstants.kPIDLoopIdx, Constants.ClimberConstants.elevatorKF);
 
-        armLowSetPoint = Constants.ClimberConstants.armLowSetPoint;
-        armHighSetPoint = Constants.ClimberConstants.armHighSetPoint;
-
         elevatorLowSetPoint = Constants.ClimberConstants.elevatorLowSetPoint;
         elevatorHighSetPoint = Constants.ClimberConstants.elevatorHighSetPoint;
         
-        armClimberState = ClimberState.LOWER;
         elevatorClimberState = ClimberState.LOWER;
 
         climberTalonOne.setSelectedSensorPosition(0);
     }
 
-    public void setClimberSpeed(double speed) {
+    public void setArmSpeed(double speed) {
         climberSparks.set(speed);
+        System.out.println("Climber arm speed:" + speed);
     }
+
 
     public double calculatePID(PIDController pid, double encoderRaw, int setPoint) {
 
@@ -103,12 +87,6 @@ public class Climber extends SubsystemBase{
         else {
             return pid.calculate(encoderRaw, setPoint);
         }
-    }
-
-
-
-    public double getArmEncoderRaw() {
-        return climberArmEncoder.getRaw();
     }
 
     public double getElevatorEncoders() {
@@ -128,14 +106,6 @@ public class Climber extends SubsystemBase{
 
     @Override
     public void periodic() {
-        switch (armClimberState) {
-            case RAISE:
-                setClimberSpeed(calculatePID(climberArmPid, getArmEncoderRaw(), armHighSetPoint));
-                break;
-            case LOWER:
-                setClimberSpeed(calculatePID(climberArmPid, getArmEncoderRaw(), armLowSetPoint));
-                break;
-        }
         switch (elevatorClimberState) {
             case RAISE:
                 //climberTalonOne.set(ControlMode.Position, elevatorHighSetPoint);
@@ -149,21 +119,12 @@ public class Climber extends SubsystemBase{
         }
     }
 
-    public void runClimberArm(ClimberState climberState) {
-        this.armClimberState = climberState;
-    }
-
     public void runClimberElevator(ClimberState climberState) {
         this.elevatorClimberState = climberState;
     }
 
     public boolean atSetpoint(int setpoint, int tolerance) {
         return getElevatorEncoders() <= setpoint + tolerance && getElevatorEncoders() >= setpoint - tolerance;
-    }
-
-
-    public void resetPID() {
-        climberArmPid.reset();
     }
 
     public MotorControllerGroup getClimberGroup() {
@@ -175,10 +136,7 @@ public class Climber extends SubsystemBase{
     }
 
     public void zeroClimber() {
-        resetPID();
-        armClimberState = ClimberState.LOWER;
         elevatorClimberState = ClimberState.LOWER;
-        runClimberArm(ClimberState.LOWER);
         runClimberElevator(ClimberState.LOWER);
     }
 
@@ -186,7 +144,6 @@ public class Climber extends SubsystemBase{
         climberSparks.close();
         climberSparkMotorOne.close();
         climberSparkMotorTwo.close();
-        climberArmPid.close();
     }
 
 }

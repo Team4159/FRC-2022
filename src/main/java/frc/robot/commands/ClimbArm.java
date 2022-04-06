@@ -2,20 +2,25 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.Climber.ClimberState;
+import edu.wpi.first.wpilibj.Joystick;
 
 public class ClimbArm extends CommandBase {
     private Climber climber;
-    private ClimberState climberState;
+    private Joystick secondaryJoystick;
 
-    public ClimbArm(Climber climber, ClimberState climberState) {
+    public ClimbArm(Climber climber, Joystick secondaryJoystick) {
         this.climber = climber;
-        this.climberState = climberState;
-        addRequirements(climber);
+        this.secondaryJoystick = secondaryJoystick;
+        addRequirements(climber); 
     }
 
     @Override
     public void execute() {
-        climber.runClimberArm(climberState);
+        climber.setArmSpeed(secondaryJoystick.getY()/3);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 }

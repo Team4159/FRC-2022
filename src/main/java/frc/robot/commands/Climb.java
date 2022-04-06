@@ -16,7 +16,7 @@ public class Climb extends CommandBase {
     }
 
     @Override
-    public void execute() {
+    public void initialize() {
         climber.runClimberElevator(climberState);
     }
 
