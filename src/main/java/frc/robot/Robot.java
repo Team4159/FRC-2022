@@ -159,6 +159,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    //m_robotContainer.getClimber().climberTalonOne.set(0.1);
 
     //System.out.println(m_robotContainer.getDriveTrain().getAngle());
     //Shuffleboard.getTab("Test").add("QWERTY", m_robotContainer.getShooter().getVelocity()).withWidget(BuiltInWidgets.kGraph);

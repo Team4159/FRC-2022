@@ -17,8 +17,8 @@ public class Climber extends SubsystemBase{
     private CANSparkMax climberSparkMotorOne;
     private CANSparkMax climberSparkMotorTwo;
 
-    private WPI_TalonFX climberTalonOne;
-    private WPI_TalonFX climberTalonTwo;
+    public WPI_TalonFX climberTalonOne;
+    public WPI_TalonFX climberTalonTwo;
 
     private PIDController climberArmPid;
     private PIDController climberElevatorPID;
@@ -28,6 +28,7 @@ public class Climber extends SubsystemBase{
     private int elevatorLowSetPoint, elevatorHighSetPoint;
 
     private MotorControllerGroup climberSparks;
+    private MotorControllerGroup climberTalons;
 
     private Encoder encoder;
 
@@ -66,8 +67,12 @@ public class Climber extends SubsystemBase{
         climberTalonOne = new WPI_TalonFX(Constants.CanIds.climberTalon1);
         climberTalonTwo = new WPI_TalonFX(Constants.CanIds.climberTalon2);
 
+        climberTalons = new MotorControllerGroup(climberTalonOne, climberTalonTwo);
+
+
+        climberTalonOne.setInverted(false);
         climberTalonTwo.setInverted(true);
-        climberTalonTwo.follow(climberTalonOne);
+        //climberTalonTwo.follow(climberTalonOne);
 
         climberTalonOne.config_kP(Constants.ClimberConstants.kPIDLoopIdx, Constants.ClimberConstants.elevatorKP);
         climberTalonOne.config_kI(Constants.ClimberConstants.kPIDLoopIdx, Constants.ClimberConstants.elevatorKI);
@@ -91,8 +96,16 @@ public class Climber extends SubsystemBase{
     }
 
     public double calculatePID(PIDController pid, double encoderRaw, int setPoint) {
-        return pid.calculate(encoderRaw, setPoint);
+
+        if (atSetpoint(setPoint, 0)) {
+            return 0;
+        } 
+        else {
+            return pid.calculate(encoderRaw, setPoint);
+        }
     }
+
+
 
     public double getArmEncoderRaw() {
         return climberArmEncoder.getRaw();
@@ -101,6 +114,17 @@ public class Climber extends SubsystemBase{
     public double getElevatorEncoders() {
         return climberTalonOne.getSelectedSensorPosition();
     }
+
+    
+    public void teleopInit() {
+        climberElevatorPID.reset();
+    }
+
+    
+    public void autonomousInit() {
+        climberElevatorPID.reset();
+    }
+
 
     @Override
     public void periodic() {
@@ -116,11 +140,11 @@ public class Climber extends SubsystemBase{
             case RAISE:
                 //climberTalonOne.set(ControlMode.Position, elevatorHighSetPoint);
                 System.out.println(calculatePID(climberElevatorPID, getElevatorEncoders(), elevatorHighSetPoint));
-                climberTalonOne.set(calculatePID(climberElevatorPID, getElevatorEncoders(), elevatorHighSetPoint));
+                climberTalons.set(calculatePID(climberElevatorPID, getElevatorEncoders(), elevatorHighSetPoint));
                 break;
             case LOWER:
                 //climberTalonOne.set(ControlMode.Position, elevatorLowSetPoint);
-                climberTalonOne.set(calculatePID(climberElevatorPID, getElevatorEncoders(), elevatorLowSetPoint));
+                climberTalons.set(calculatePID(climberElevatorPID, getElevatorEncoders(), elevatorLowSetPoint));
                 break;
         }
     }
@@ -131,6 +155,10 @@ public class Climber extends SubsystemBase{
 
     public void runClimberElevator(ClimberState climberState) {
         this.elevatorClimberState = climberState;
+    }
+
+    public boolean atSetpoint(int setpoint, int tolerance) {
+        return getElevatorEncoders() <= setpoint + tolerance && getElevatorEncoders() >= setpoint - tolerance;
     }
 
 

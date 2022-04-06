@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Climber.ClimberState;
 
@@ -17,5 +18,9 @@ public class Climb extends CommandBase {
     @Override
     public void execute() {
         climber.runClimberElevator(climberState);
+    }
+
+    public boolean isFinished() {
+        return climber.atSetpoint(Constants.ClimberConstants.elevatorHighSetPoint, 10000);
     }
 }

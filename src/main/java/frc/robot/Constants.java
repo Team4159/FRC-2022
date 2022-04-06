@@ -106,15 +106,15 @@ public class Constants {
         
         public final static int kPIDLoopIdx = 0;
         public final static double elevatorKP = 0.00001;
-        public final static double elevatorKI = 0.0000000001;
-        public final static double elevatorKD = 0;
+        public final static double elevatorKI = 0.0000001;
+        public final static double elevatorKD = 0.00000001;
         public final static double elevatorKF = 1023; // TODO: Need to figure out what this constant does
 
         public final static int armLowSetPoint = 0;
         public final static int armHighSetPoint = 0;
 
         public final static int elevatorLowSetPoint = 0;
-        public final static int elevatorHighSetPoint = -325000;
+        public final static int elevatorHighSetPoint = -290000;
 
         public final double trackWidth = Units.inchesToMeters(25); // TODO: Need To Determine In Meters
 
