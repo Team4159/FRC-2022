@@ -144,8 +144,8 @@ public class Drivetrain extends SubsystemBase {
   public void turnDegrees(double angle) { 
     
     double output = angularDriveTrainPID.calculate(getAngle(), angle); // - 
-    if(output > 0.5 || output < -0.5) {
-      output = 0.5;
+    if(output > 0.2 || output < -0.2) {
+      output = 0.2;
     }
 
     leftMotors.set(output);
