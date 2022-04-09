@@ -27,22 +27,22 @@ public class NeckAndShoot extends SequentialCommandGroup {
 
 
         addCommands(
-                new SequentialCommandGroup(
+            new SequentialCommandGroup(
                     new ParallelCommandGroup(
                         new RunNeck(neck, Direction.BACKWARDS),
                         new RunFeeder(feeder, Direction.BACKWARDS)
                     ).withTimeout(0.1),
-                new WaitCommand(0.75),
-                new ParallelCommandGroup(
-                    new RunNeck(neck, Direction.FORWARDS),
-                    new RunFeeder(feeder, Direction.FORWARDS)
-                ).withTimeout(0.2),
-                new RunFeeder(feeder, Direction.FORWARDS).withTimeout(0.6),
-                new ParallelCommandGroup(
-                    new RunNeck(neck, Direction.FORWARDS),
-                    new RunFeeder(feeder, Direction.FORWARDS)
-                ).withTimeout(0.2)
-            )
+                    new WaitCommand(0.75),
+                    new ParallelCommandGroup(
+                        new RunNeck(neck, Direction.FORWARDS),
+                        new RunFeeder(feeder, Direction.FORWARDS)
+                    ).withTimeout(0.2),
+                    new RunFeeder(feeder, Direction.FORWARDS).withTimeout(0.6),
+                    new ParallelCommandGroup(
+                        new RunNeck(neck, Direction.FORWARDS),
+                        new RunFeeder(feeder, Direction.FORWARDS)
+                    ).withTimeout(0.2)
+                )
         );
     }
 }

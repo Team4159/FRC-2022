@@ -21,6 +21,6 @@ public class Climb extends CommandBase {
     }
 
     public boolean isFinished() {
-        return climber.atSetpoint(Constants.ClimberConstants.elevatorHighSetPoint, 10000);
+        return climber.atSetpoint(Constants.ClimberConstants.elevatorHighSetPoint, 1000);
     }
 }

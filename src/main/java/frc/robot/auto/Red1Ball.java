@@ -39,8 +39,7 @@ public class Red1Ball extends SequentialCommandGroup{
         addCommands(
             new SequentialCommandGroup(
                 new ParallelCommandGroup(
-                    new NeckAndShoot(feeder, neck, shooter).withTimeout(3),
-                    new Shoot(shooter, Constants.ShooterConstants.targetVelocity).withTimeout(3)
+                    new NeckAndShoot(feeder, neck, shooter).withTimeout(3)
                 ),    
                 new WaitCommand(8),
                 new TurnDegrees(drivetrain, 180),

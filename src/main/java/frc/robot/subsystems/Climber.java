@@ -56,7 +56,7 @@ public class Climber extends SubsystemBase{
 
         climberSparkMotorOne.setInverted(false);
         climberSparkMotorTwo.setInverted(true);
-        climberTalonOne.setInverted(false);
+        climberTalonOne.setInverted(true);
         climberTalonTwo.setInverted(true);
         //climberTalonTwo.follow(climberTalonOne);
 
@@ -75,7 +75,7 @@ public class Climber extends SubsystemBase{
 
     public void setArmSpeed(double speed) {
         climberSparks.set(speed);
-        System.out.println("Climber arm speed:" + speed);
+        //System.out.println("Climber arm speed:" + speed);
     }
 
 
@@ -109,7 +109,7 @@ public class Climber extends SubsystemBase{
         switch (elevatorClimberState) {
             case RAISE:
                 //climberTalonOne.set(ControlMode.Position, elevatorHighSetPoint);
-                System.out.println(calculatePID(climberElevatorPID, getElevatorEncoders(), elevatorHighSetPoint));
+                //System.out.println(calculatePID(climberElevatorPID, getElevatorEncoders(), elevatorHighSetPoint));
                 climberTalons.set(calculatePID(climberElevatorPID, getElevatorEncoders(), elevatorHighSetPoint));
                 break;
             case LOWER:

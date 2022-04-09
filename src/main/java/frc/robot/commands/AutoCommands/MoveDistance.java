@@ -18,6 +18,7 @@ public class MoveDistance extends CommandBase{
 
     public void execute() {
         drivetrain.moveDistance(distance);
+        System.out.println("Done");
     }
 
     @Override

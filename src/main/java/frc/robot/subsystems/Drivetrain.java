@@ -62,7 +62,7 @@ public class Drivetrain extends SubsystemBase {
     leftMotors = new MotorControllerGroup(leftRearTalon, leftFrontTalon);
     rightMotors = new MotorControllerGroup(rightFrontTalon, rightRearTalon);
 
-    leftMotors.setInverted(true);
+    //leftMotors.setInverted(true);
     
     pigeon = new WPI_PigeonIMU(Constants.CanIds.pigeonId);
 
@@ -74,8 +74,11 @@ public class Drivetrain extends SubsystemBase {
     odometry = new DifferentialDriveOdometry(getHeading());
   }
 
-  public void drive(double leftSpeed, double rightSpeed) {
+  public void teleopInit() {
+  }
 
+  public void drive(double leftSpeed, double rightSpeed) {
+    leftMotors.setInverted(true);
     if (orientation == Orientation.BACKWARD) {
       double temp = leftSpeed * -1;
       leftSpeed = rightSpeed * -1;
@@ -118,9 +121,9 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void moveDistance(double distance) {
-    double output = -linearDriveTrainPID.calculate(getRobotPosition(), distance);
+    double output = linearDriveTrainPID.calculate(getRobotPosition(), distance); //Negative
     leftMotors.set(output);
-    rightMotors.set(output);
+    rightMotors.set(-output); //Positive
   }
 
   public boolean atDistanceSetpoint(double distance, double tolerance) {
@@ -140,7 +143,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void turnDegrees(double angle) { 
     
-    double output = angularDriveTrainPID.calculate(getAngle(), angle);
+    double output = angularDriveTrainPID.calculate(getAngle(), angle); // - 
 
     leftMotors.set(output);
     rightMotors.set(output);
