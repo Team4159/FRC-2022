@@ -43,6 +43,10 @@ public class Shooter extends SubsystemBase {
         //shooterTalonLeft.set(0.8);
     }
 
+    public boolean atSetpoint(Double setpoint, Double tolerance) {
+        return getVelocity() <= setpoint + tolerance && getVelocity() >= setpoint - tolerance;
+    }
+
     public void stop() {
         shooterTalonRight.set(0);
     }

@@ -31,7 +31,9 @@ public class ZeroAuto extends SequentialCommandGroup{
             new ParallelCommandGroup(
                 new Shoot(shooter, Constants.ShooterConstants.targetVelocity),
                 new NeckAndShoot(feeder, neck, shooter)
-            ).withTimeout(5)
+            ).withTimeout(3),
+            new DriveWithoutContols(drivetrain, 0.2).withTimeout(5),
+            new MoveArm(arm, ArmState.HIGH).withTimeout(0.3)
         );
     }
 

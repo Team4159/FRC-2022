@@ -160,7 +160,7 @@ public class Constants {
 
     public static class ShooterConstants {
 
-        public final static double targetVelocity = 3800; //4000
+        public final static double targetVelocity = 3900; //4000
 
         public final static int kPIDLoopIdx = 0;
         public final static double kP = 0.175;

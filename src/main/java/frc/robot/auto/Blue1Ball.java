@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
+import frc.robot.commands.DriveWithoutContols;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.AutoCommands.MoveDistance;
@@ -35,15 +36,13 @@ public class Blue1Ball extends SequentialCommandGroup{
         this.shooter = shooter;
 
         addCommands(
-            new SequentialCommandGroup(
-                new ParallelCommandGroup(
-                    new NeckAndShoot(feeder, neck, shooter).withTimeout(3)
-                ),    
-                new WaitCommand(6),
-                new TurnDegrees(drivetrain, 180),
-                new MoveDistance(drivetrain, 2),
-                new MoveArm(arm, ArmState.HIGH)          
-            )  
+            new WaitCommand(2),
+            new ParallelCommandGroup(
+                new Shoot(shooter, Constants.ShooterConstants.targetVelocity),
+                new NeckAndShoot(feeder, neck, shooter)
+            ).withTimeout(3),
+            new DriveWithoutContols(drivetrain, 0.2).withTimeout(1.5),
+            new MoveArm(arm, ArmState.HIGH).withTimeout(0.3)
         );
     }
 }
