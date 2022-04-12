@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.Climb;
+// import frc.robot.commands.Climb;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.RunFeeder;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Climber;
+// import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
@@ -23,7 +23,7 @@ import frc.robot.commands.RunNeck;
 import frc.robot.commands.CommandGroups.ArmIntakeAndFeeder;
 import frc.robot.commands.CommandGroups.NeckAndShoot;
 import frc.robot.subsystems.Arm.ArmState;
-import frc.robot.subsystems.Climber.ClimberState;
+// import frc.robot.subsystems.Climber.ClimberState;
 
 
 public class Dashboard {

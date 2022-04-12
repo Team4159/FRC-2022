@@ -28,19 +28,23 @@ public class Red2Ball extends SequentialCommandGroup{
         this.neck = neck;
         this.shooter = shooter;
         addCommands(
-                // new HalfPower(drivetrain, true),
                 new SequentialCommandGroup(
-                    new ParallelCommandGroup(
-                        new MoveDistance(drivetrain, 3),
-                        new ArmIntakeAndFeeder(arm, intake, feeder,neck).withTimeout(3)
-                    ).withTimeout(3),
-                    new TurnDegrees(drivetrain, 150),
-                    new MoveArm(arm, ArmState.HIGH).withTimeout(0.3),
-                    new MoveDistance(drivetrain, 5.8).withTimeout(3),
                     new ParallelCommandGroup(
                         new NeckAndShoot(feeder, neck, shooter),
                         new Shoot(shooter, Constants.ShooterConstants.targetVelocity)
-                    ).withTimeout(5)
+                    ).withTimeout(2),
+                    new TurnDegrees(drivetrain, 180),
+                    new ParallelCommandGroup(
+                        new MoveDistance(drivetrain, 2),
+                        new ArmIntakeAndFeeder(arm, intake, feeder,neck).withTimeout(3)
+                    ).withTimeout(3),
+                    new TurnDegrees(drivetrain, 180),
+                    new MoveArm(arm, ArmState.HIGH).withTimeout(0.3),
+                    new MoveDistance(drivetrain, 4.8).withTimeout(3),
+                    new ParallelCommandGroup(
+                        new NeckAndShoot(feeder, neck, shooter),
+                        new Shoot(shooter, Constants.ShooterConstants.targetVelocity)
+                    ).withTimeout(2)
                 )
             );
     }

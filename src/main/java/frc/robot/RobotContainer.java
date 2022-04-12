@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.Climber.ClimberState;
+// import frc.robot.subsystems.Climber;
+// import frc.robot.subsystems.Climber.ClimberState;
 import frc.robot.subsystems.Drivetrain.PowerOutput;
 import frc.robot.trajectories.Trajectories;
 import frc.robot.subsystems.Drivetrain;
@@ -34,7 +34,7 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   public final Arm arm = new Arm();
   private final Feeder feeder = new Feeder();
-  private final Climber climber = new Climber();
+  // private final Climber climber = new Climber();
   private final Neck neck = new Neck();
   private final Shooter shooter = new Shooter();
 
@@ -69,9 +69,9 @@ public class RobotContainer {
   private final RunIntake runIntakeBackwards = new RunIntake(intake, Direction.BACKWARDS);
   private final RunFeeder runFeederForwards = new RunFeeder(feeder, Direction.FORWARDS);
   private final RunFeeder runFeederBackwards = new RunFeeder(feeder, Direction.BACKWARDS);
-  private final Climb raiseClimber = new Climb(climber, ClimberState.RAISE);
-  private final Climb lowerClimber = new Climb(climber, ClimberState.LOWER);
-  private final ClimbArm climbArm = new ClimbArm(climber, secondaryJoystick);
+  // private final Climb raiseClimber = new Climb(climber, ClimberState.RAISE);
+  // private final Climb lowerClimber = new Climb(climber, ClimberState.LOWER);
+  // private final ClimbArm climbArm = new ClimbArm(climber, secondaryJoystick);
   private final RunNeck runNeck = new RunNeck(neck, Direction.FORWARDS);
   private final RunNeck runNeckBackwards = new RunNeck(neck, Direction.BACKWARDS);
   private final Shoot shoot = new Shoot(shooter, Constants.ShooterConstants.targetVelocity);
@@ -103,7 +103,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     drivetrain.setDefaultCommand(drive);
-    climber.setDefaultCommand(climbArm);
+    // climber.setDefaultCommand(climbArm);
     arm.setDefaultCommand(new MoveArm(arm, ArmState.HIGH));
     runIntakeButton.whenHeld(runIntakeForwards);
     //shootButton.whenHeld(shoot);
@@ -114,8 +114,8 @@ public class RobotContainer {
     lowerArmButton.whenHeld(lowerArm);
     runFeederForwardsButton.whenHeld(runFeederForwards);
     runFeederBackwardsButton.whenHeld(runFeederBackwards);
-    raiseClimberButton.whenPressed(raiseClimber);
-    lowerClimberButton.whenPressed(lowerClimber);
+    // raiseClimberButton.whenPressed(raiseClimber);
+    // lowerClimberButton.whenPressed(lowerClimber);
     runNeckAndShootButton.whenPressed(neckAndShoot);
     runNeckAndShootButton.whenHeld(shoot);
     lowerArmIntakeAndFeederButton.whenHeld(armIntakeAndFeeder);
@@ -152,9 +152,9 @@ public class RobotContainer {
     return feeder;
   }
 
-  public Climber getClimber() {
-    return climber;
-  }
+  // public Climber getClimber() {
+  //   return climber;
+  // }
 
   public Shooter getShooter(){
     return shooter;

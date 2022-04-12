@@ -27,8 +27,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.Climber.ClimberState;
+// import frc.robot.subsystems.Climber;
+// import frc.robot.subsystems.Climber.ClimberState;
 import frc.robot.trajectories.Trajectories;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Feeder;
@@ -161,7 +161,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     //m_robotContainer.getClimber().climberTalonOne.set(0.1);
-
+    // if(m_robotContainer.getSecJoystick().getRawButton(16)) {
+    //   m_robotContainer.getShooter().getRightShooterTalon().set(1);
+    // }
     //System.out.println(m_robotContainer.getDriveTrain().getAngle());
     //Shuffleboard.getTab("Test").add("QWERTY", m_robotContainer.getShooter().getVelocity()).withWidget(BuiltInWidgets.kGraph);
   }

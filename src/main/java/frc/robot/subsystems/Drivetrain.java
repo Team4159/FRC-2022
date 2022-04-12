@@ -122,17 +122,15 @@ public class Drivetrain extends SubsystemBase {
 
   public void moveDistance(double distance) {
     double output = linearDriveTrainPID.calculate(getRobotPosition(), distance); //Negative
+    if(output > 0.2 || output < -0.2) {
+      output = 0.2;
+    }
     leftMotors.set(output);
     rightMotors.set(-output); //Positive
   }
 
   public boolean atDistanceSetpoint(double distance, double tolerance) {
-    if(getRobotPosition() <= distance + tolerance && getRobotPosition() >= distance - tolerance) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return getRobotPosition() <= distance + tolerance && getRobotPosition() >= distance - tolerance;
   }
   public WPI_TalonFX getLeftTalon() {
     return leftFrontTalon;
@@ -150,16 +148,10 @@ public class Drivetrain extends SubsystemBase {
 
     leftMotors.set(output);
     rightMotors.set(output);
-    
   }
 
   public boolean atAngleSetpoint(double angle, double tolerance) {
-    if(getAngle() <= angle + tolerance && getAngle() >= angle - tolerance) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return getAngle() <= angle + tolerance && getAngle() >= angle - tolerance;
   }
 
   public double getAngle() {

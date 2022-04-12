@@ -2,19 +2,19 @@ package subsystems;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
-import frc.robot.subsystems.Climber;
+// import frc.robot.subsystems.Climber;
 
 import static org.junit.Assert.assertEquals;
 
 
 public class ClimberTests {
     private static final double delta = 0.01;
-    Climber climber;
+    // Climber climber;
 
-    @Before
-    public void setup() {
-        climber = new Climber();
-    }
+    // @Before
+    // public void setup() {
+    //     climber = new Climber();
+    // }
 
     // @Test
     // public void climberEncoderTest() {
@@ -31,8 +31,8 @@ public class ClimberTests {
         assertEquals(climber.calculatePID(0, 0), 0, delta);
     }*/
 
-    @After
-    public void shutdown() {
-        climber.close();
-    }
+    // @After
+    // public void shutdown() {
+    //     climber.close();
+    // }
 }
