@@ -121,7 +121,7 @@ public class RobotContainer {
     lowerArmIntakeAndFeederButton.whenHeld(armIntakeAndFeeder);
     lowerArmIntakeAndFeederButton.whenReleased(new MoveArm(arm, ArmState.HIGH));
     lowerArmIntakeAndFeederButton.whenReleased(new RunNeck(neck, Direction.BACKWARDS).withTimeout(0.5));
-    lowerArmIntakeAndFeederButton.whenReleased(new RunFeeder(feeder, Direction.BACKWARDS).withTimeout(0.05));
+    lowerArmIntakeAndFeederButton.whenReleased(new RunFeeder(feeder, Direction.BACKWARDS).withTimeout(0.1));
     halfPowerButton.whenPressed(halfPower);
     halfPowerButton.whenReleased(fullPower);
     flipDrivetrainToggleButton.whenPressed(flipDrivetrain);
