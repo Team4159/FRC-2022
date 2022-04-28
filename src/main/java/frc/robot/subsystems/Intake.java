@@ -23,7 +23,7 @@ public class Intake extends SubsystemBase {
                 intakeSpark.set(Constants.IntakeAndArmConstants.intakeSpeed);
                 break;
             case BACKWARDS:
-                intakeSpark.set(-Constants.IntakeAndArmConstants.backwardsIntakeSpeed);
+                intakeSpark.set(Constants.IntakeAndArmConstants.backwardsIntakeSpeed);
                 break;
         }
     }

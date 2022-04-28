@@ -32,13 +32,13 @@ public class Blue2Ball extends SequentialCommandGroup{
                         new MoveDistance(drivetrain, 2),
                         new ArmIntakeAndFeeder(arm, intake, feeder,neck).withTimeout(3)
                     ).withTimeout(3),
-                    new TurnDegrees(drivetrain, 180),
+                    new TurnDegrees(drivetrain, 190).withTimeout(2),
                     new MoveArm(arm, ArmState.HIGH).withTimeout(0.3),
-                    new MoveDistance(drivetrain, 2.8).withTimeout(3), //4.8
+                    new MoveDistance(drivetrain, 4).withTimeout(4.7), //4.8
                     new ParallelCommandGroup(
                         new NeckAndShoot(feeder, neck, shooter),
                         new Shoot(shooter, Constants.ShooterConstants.targetVelocity)
-                    ).withTimeout(2)
+                    ).withTimeout(5)
                 )
             );
     }

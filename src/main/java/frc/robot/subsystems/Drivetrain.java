@@ -43,7 +43,8 @@ public class Drivetrain extends SubsystemBase {
 
   private WPI_PigeonIMU pigeon;
   private PowerOutput powerOutput;
-  private Orientation orientation;
+  public Orientation orientation;
+  private boolean climbState;
 
   private DifferentialDriveKinematics kinematics;
   private Pose2d pose;
@@ -68,6 +69,7 @@ public class Drivetrain extends SubsystemBase {
 
     powerOutput = powerOutput.FULL_POWER;
     orientation = orientation.FORWARD;
+    climbState = false;
 
     kinematics = new DifferentialDriveKinematics(Constants.DriveTrainConstants.trackWidth);
     feedforward = new SimpleMotorFeedforward(Constants.DriveTrainConstants.ksVolts, Constants.DriveTrainConstants.kvVoltSecondsPerMeter, Constants.DriveTrainConstants.kaVoltSecondsSquaredPerMeter);
@@ -77,19 +79,32 @@ public class Drivetrain extends SubsystemBase {
   public void teleopInit() {
   }
 
+  public void autoClimb() {
+    climbState = true;
+  }
+  public void stopClimb() {
+    climbState = false;
+  }
+
   public void drive(double leftSpeed, double rightSpeed) {
     leftMotors.setInverted(true);
-    if (orientation == Orientation.BACKWARD) {
-      double temp = leftSpeed * -1;
-      leftSpeed = rightSpeed * -1;
-      rightSpeed = temp;
-    }
-    if (powerOutput == PowerOutput.FULL_POWER) {
-      leftMotors.set(leftSpeed);
-      rightMotors.set(rightSpeed);
+
+    if (climbState) {
+      leftMotors.set(0.125);
+      rightMotors.set(0.125);
     } else {
-      leftMotors.set(leftSpeed * 0.5);
-      rightMotors.set(rightSpeed * 0.5);
+      if (orientation == Orientation.BACKWARD) {
+        double temp = leftSpeed * -1;
+        leftSpeed = rightSpeed * -1;
+        rightSpeed = temp;
+      }
+      if (powerOutput == PowerOutput.FULL_POWER) {
+        leftMotors.set(leftSpeed);
+        rightMotors.set(rightSpeed);
+      } else {
+        leftMotors.set(leftSpeed * 0.5);
+        rightMotors.set(rightSpeed * 0.5);
+      }
     }
   }
 

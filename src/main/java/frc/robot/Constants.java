@@ -17,13 +17,13 @@ public class Constants {
         public final static int leftRearTalon = 4;
         public final static int shooterTalonRight = 5;
         public final static int shooterTalonLeft = 6;
-        public final static int intakeSpark = 13;
+        public final static int intakeSpark = 22;
         public final static int armSpark = 10;
         //public final static int armSpark2 = 7;
         public final static int feederSpark = 11;
-        public final static int neckSpark = 8;
-        public final static int climberSpark1 = 22;
-        public final static int climberSpark2 = 23;
+        public final static int neckSpark = 23;
+        public final static int climberSpark1 = 13;
+        public final static int climberSpark2 = 8;
         public final static int climberTalon1 =  14;
         public final static int climberTalon2 = 15;
         
@@ -37,25 +37,28 @@ public class Constants {
         public class RightJoystick {
             public final static int halfPowerToggle = 2;
             public final static int flipDrivetrainToggle = 4;
+            public final static int climbAuto = 3;
         }
 
         public class SecondaryJoystick { 
-            public final static int lowerArm = 13; 
+            public final static int lowerArm = 7; 
             public final static int raiseArm = 14;
-            public final static int runIntakeForwards = 12;
-            public final static int runIntakeBackwards = 15;
+            public final static int runIntakeForwards = 6;
+            public final static int runIntakeBackwards = 9;
 
-            public final static int runFeederForwards = 7;
-            public final static int runFeederBackwards = 8;
+            public final static int runFeederForwards = 12;
+            public final static int runFeederBackwards = 15;
             
             public final static int raiseClimber = 4;
             public final static int lowerClimber = 3;
-            public final static int runNeck = 6;
-            public final static int runNeckBackwards = 9;
+            public final static int runNeck = 14;
+            public final static int runNeckBackwards = 13;
 
             public final static int runNeckAndShoot = 1;
             public final static int moveArmIntakeAndFeed = 2;
 
+            public final static int feederAndNeck = 11;
+            public final static int moveArmAndIntakeBackwards = 4;
 
             //public final static int runShooter = 10;
         }
@@ -149,8 +152,8 @@ public class Constants {
     }
 
     public static class FeederConstants {
-        public final static double feederSpeed = 0.7;
-        public final static double backwardsFeederSpeed = -0.7;
+        public final static double feederSpeed = 1;
+        public final static double backwardsFeederSpeed = -1;
     }
 
     public static class NeckConstants {
