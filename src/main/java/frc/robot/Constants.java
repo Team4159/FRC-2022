@@ -20,7 +20,7 @@ public class Constants {
         public final static int intakeSpark = 22;
         public final static int armSpark = 10;
         //public final static int armSpark2 = 7;
-        public final static int feederSpark = 11;
+        public final static int feederTalon = 11;
         public final static int neckSpark = 23;
         public final static int climberSpark1 = 13;
         public final static int climberSpark2 = 8;
