@@ -1,40 +1,42 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+// import com.revrobotics.CANSparkMax;
+// import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.Direction;
 
 public class Feeder extends SubsystemBase {
-    private CANSparkMax feederSpark;
+    private WPI_TalonSRX feederTalon;
 
     public Feeder() {
-        feederSpark = new CANSparkMax(Constants.CanIds.feederSpark, MotorType.kBrushless);
+        feederTalon = new WPI_TalonSRX(Constants.CanIds.feederTalon);
 
-        feederSpark.setInverted(true);
+        feederTalon.setInverted(true);
     }
 
     public void runFeeder(Direction direction) {
         switch(direction) {
             case FORWARDS:
-                feederSpark.set(Constants.FeederConstants.feederSpeed);
+                feederTalon.set(ControlMode.PercentOutput, Constants.FeederConstants.feederSpeed);
                 break;
             case BACKWARDS:
-                feederSpark.set(Constants.FeederConstants.backwardsFeederSpeed);
+                feederTalon.set(ControlMode.PercentOutput, Constants.FeederConstants.backwardsFeederSpeed);
                 break;
         }
     }
     public void stop() {
-        feederSpark.set(0.0);
+        feederTalon.set(0.0);
     }
 
-    public CANSparkMax getFeederSpark() {
-        return this.feederSpark;
+    public WPI_TalonSRX getFeederSpark() {
+        return this.feederTalon;
     }
 
     public void close(){
-        feederSpark.close();    
+        feederTalon.close();    
 }
 }
