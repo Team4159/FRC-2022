@@ -117,9 +117,10 @@ public class Constants {
 
 
         //Need to get actual values later from the characterization tool.
-        // public static final  double kS = 1;
-        // public static final double kV = 1;
-        // public static final double kA = 1;
+        public static final double kS = 1;
+        public static final double kG = 1;
+        public static final double kV = 1;
+        public static final double kA = 1;
 
         public static final double climberArmFwdsSpeed = 0.5;
         public static final double climberArmBwdsSpeed = -0.25;
