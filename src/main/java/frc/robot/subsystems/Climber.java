@@ -16,7 +16,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.Direction;
 
 
-public class Climber2 extends SubsystemBase{
+public class Climber extends SubsystemBase{
     private CANSparkMax climberSparkMotorOne;
     private CANSparkMax climberSparkMotorTwo;
 
@@ -56,7 +56,7 @@ public class Climber2 extends SubsystemBase{
 
     private ClimberState elevatorClimberState;
 
-    public Climber2() {
+    public Climber() {
         climberSparkMotorOne = new CANSparkMax(Constants.CanIds.climberSpark1, MotorType.kBrushless);
         climberSparkMotorTwo = new CANSparkMax(Constants.CanIds.climberSpark2, MotorType.kBrushless);
 
