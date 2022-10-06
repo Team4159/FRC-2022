@@ -20,7 +20,7 @@ public class Constants {
         public final static int intakeSpark = 22;
         public final static int armSpark = 10;
         //public final static int armSpark2 = 7;
-        public final static int feederTalon = 11;
+        public final static int feederSpark = 12;
         public final static int neckSpark = 23;
         public final static int climberSpark1 = 13;
         public final static int climberSpark2 = 8;
@@ -142,12 +142,12 @@ public class Constants {
         public final static boolean encoderReverse = false;
         public final static EncodingType encodingType = EncodingType.k1X;
 
-        public final static double kP = 0.0002; //0.00022//Don't touch these constants unless yaknow whatcha doing
+        public final static double kP = 0.03; //0.00022//Don't touch these constants unless yaknow whatcha doing
         public final static double kI = 0;
-        public final static double kD = 0.000000001;
-        public final static double tolerance = 100;
+        public final static double kD = 0;
+        public final static double tolerance = 1;
         
-        public final static double pidLowSetPoint = -2100; //-1600
+        public final static double pidLowSetPoint = -13; //-1600
         public final static double pidHighSetPoint = 0;
     }
 

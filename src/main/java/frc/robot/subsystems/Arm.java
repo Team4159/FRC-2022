@@ -59,6 +59,7 @@ public class Arm extends SubsystemBase{
             speed = -0.6;
         }
 
+        System.out.println("Speed: " + speed);
         armSpark.set(speed);
     }
 
@@ -74,12 +75,12 @@ public class Arm extends SubsystemBase{
         if (atSetpoint(setPoint, Constants.IntakeAndArmConstants.tolerance)) {
             return 0;
         } else {
-            return pid.calculate(encoderRaw, setPoint);
+            return pid.calculate(armSpark.getEncoder().getPosition(), setPoint);
         }
     }
     @Override
     public void periodic() {
-        //System.out.println("Encoder: " + getEncoderRaw());
+        System.out.println("Encoder: " + armSpark.getEncoder().getPosition());
         switch (armState) {
             case HIGH:
                 setArmSpeed(calculatePID(getEncoderRaw(), highSetPoint));
@@ -110,7 +111,7 @@ public class Arm extends SubsystemBase{
     }
 
     public boolean atSetpoint(Double setpoint, Double tolerance) {
-        return getEncoderRaw() <= setpoint + tolerance && getEncoderRaw() >= setpoint - tolerance;
+        return armSpark.getEncoder().getPosition() <= setpoint + tolerance && armSpark.getEncoder().getPosition() >= setpoint - tolerance;
     }
 
     public void close() {
