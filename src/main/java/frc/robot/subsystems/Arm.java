@@ -1,19 +1,18 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.math.controller.PIDController;
 
+// intake "arm"
 public class Arm extends SubsystemBase{
     private CANSparkMax armSpark;
-    //private CANSparkMax armSpark2;
-    //private MotorControllerGroup armSparks;
-    private Encoder encoder;
+    private RelativeEncoder encoder;
     private PIDController pid;
     
     public static enum ArmState {
@@ -27,18 +26,9 @@ public class Arm extends SubsystemBase{
 
     public Arm() {
         armSpark = new CANSparkMax(Constants.CanIds.armSpark, MotorType.kBrushless);
-        //armSpark2 = new CANSparkMax(Constants.CanIds.armSpark2, MotorType.kBrushless);
-
-        //TODO: CHECK WHICH ONES ARE INVERTED
         armSpark.setInverted(false);
-        // armSpark2.setInverted(true);
 
-        //armSparks = new MotorControllerGroup(armSpark1);
-
-        encoder = new Encoder(
-            0,
-            1
-        );
+        encoder = armSpark.getEncoder();
 
         lowSetPoint = Constants.IntakeAndArmConstants.pidLowSetPoint;
         highSetPoint = Constants.IntakeAndArmConstants.pidHighSetPoint;
@@ -59,15 +49,14 @@ public class Arm extends SubsystemBase{
             speed = -0.6;
         }
 
-        System.out.println("Speed: " + speed);
         armSpark.set(speed);
     }
 
-    public double getEncoderRaw() {
-        return encoder.getRaw();
+    public double getEncoderPosition() {
+        return encoder.getPosition();
     }
 
-    public Encoder getEncoder() {
+    public RelativeEncoder getEncoder() {
         return encoder;
     }
 
@@ -75,18 +64,17 @@ public class Arm extends SubsystemBase{
         if (atSetpoint(setPoint, Constants.IntakeAndArmConstants.tolerance)) {
             return 0;
         } else {
-            return pid.calculate(armSpark.getEncoder().getPosition(), setPoint);
+            return pid.calculate(getEncoderPosition(), setPoint);
         }
     }
     @Override
     public void periodic() {
-        System.out.println("Encoder: " + armSpark.getEncoder().getPosition());
         switch (armState) {
             case HIGH:
-                setArmSpeed(calculatePID(getEncoderRaw(), highSetPoint));
+                setArmSpeed(calculatePID(getEncoderPosition(), highSetPoint));
                 break;
             case LOW:
-                setArmSpeed(calculatePID(getEncoderRaw(), lowSetPoint));
+                setArmSpeed(calculatePID(getEncoderPosition(), lowSetPoint));
                 break;
         }
     }
@@ -99,13 +87,8 @@ public class Arm extends SubsystemBase{
         pid.reset();
     }
 
-    // public MotorControllerGroup getArmSpark() {
-    //     return armSparks;
-    // }
-
     public void zeroArm() {
         resetPID();
-        encoder.reset();
         armState = ArmState.HIGH;
         runArm(armState);
     }
