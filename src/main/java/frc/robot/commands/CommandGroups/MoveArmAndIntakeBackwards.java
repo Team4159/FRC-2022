@@ -27,7 +27,7 @@ public class MoveArmAndIntakeBackwards extends ParallelCommandGroup {
         addCommands(
             new MoveArm(arm, ArmState.LOW),
             new RunIntake(intake, Direction.BACKWARDS),
-            new RunFeeder(feeder, Direction.FORWARDS),
+            new RunFeeder(feeder, Direction.BACKWARDS),
             new RunNeck(neck, Direction.BACKWARDS)
         );
     }

@@ -20,10 +20,10 @@ public class Neck extends SubsystemBase{
     public void runNeck(Direction direction) {
         switch(direction) {
             case FORWARDS:
-                neckSpark.set(-Constants.NeckConstants.neckSpeed);
+                neckSpark.set(Constants.NeckConstants.neckSpeed);
                 break;
             case BACKWARDS:
-                neckSpark.set(-Constants.NeckConstants.backwardsNeckSpeed);
+                neckSpark.set(Constants.NeckConstants.backwardsNeckSpeed);
                 break;
         }
     }
@@ -35,5 +35,9 @@ public class Neck extends SubsystemBase{
     public CANSparkMax getNeckSpark() {
         return neckSpark;
     }
+
+    // public void periodic() {
+    //     neckSpark.set(0.2);
+    // }
     
 }

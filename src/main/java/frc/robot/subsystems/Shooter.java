@@ -42,6 +42,9 @@ public class Shooter extends SubsystemBase {
         shooterTalonRight.set(ControlMode.Velocity, targetVelocityInTicks); 
         //shooterTalonLeft.set(0.8);
     }
+    public void shootIn() {
+        shooterTalonRight.set(ControlMode.Velocity, -1000);
+    }
 
     public boolean atSetpoint(Double setpoint, Double tolerance) {
         return getVelocity() <= setpoint + tolerance && getVelocity() >= setpoint - tolerance;

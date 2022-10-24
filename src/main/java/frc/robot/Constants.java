@@ -51,8 +51,8 @@ public class Constants {
             
             public final static int raiseClimber = 4;
             public final static int lowerClimber = 3;
-            public final static int runNeck = 14;
-            public final static int runNeckBackwards = 13;
+            public final static int runNeck = 13;
+            public final static int runNeckBackwards = 14;
 
             public final static int runNeckAndShoot = 1;
             public final static int moveArmIntakeAndFeed = 2;
@@ -61,6 +61,8 @@ public class Constants {
             public final static int moveArmAndIntakeBackwards = 4;
 
             //public final static int runShooter = 10;
+            public final static int shootIn = 5;
+            public final static int vomit = 10;
         }
     }
 
@@ -70,10 +72,10 @@ public class Constants {
         public final static double lD = 0.00; //0.01
         public final static double lTolerance = 0.05; //In meters
 
-        public final static double aP = 0.01;
+        public final static double aP = 0.011;
         public final static double aI = 0;
         public final static double aD = 0.0015;
-        public final static double aTolerance = 20; // In Degrees
+        public final static double aTolerance = 5; // In Degrees
 
         public final static double encoderEdgesPerRev = 2048;
         public final static double gearRatio = 8.667;
@@ -164,10 +166,10 @@ public class Constants {
 
     public static class ShooterConstants {
 
-        public final static double targetVelocity = 3900; //4000
+        public final static double targetVelocity = 3800; //4000
 
         public final static int kPIDLoopIdx = 0;
-        public final static double kP = 0.175;
+        public final static double kP = 0.175; //0.175
         public final static double kI = 0.0002;
         public final static double kD = 0;
         public final static double kF = 12/6052 * targetVelocity; //1023/20660

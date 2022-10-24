@@ -17,16 +17,17 @@ import frc.robot.trajectories.Trajectories;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
-import frc.robot.commands.AutoClimb;
 import frc.robot.commands.AutoCommands.MoveDistance;
 import frc.robot.commands.AutoCommands.TurnDegrees;
 import frc.robot.commands.CommandGroups.ArmIntakeAndFeeder;
 import frc.robot.commands.CommandGroups.MoveArmAndIntakeBackwards;
 import frc.robot.commands.CommandGroups.NeckAndFeeder;
 import frc.robot.commands.CommandGroups.NeckAndShoot;
+import frc.robot.commands.CommandGroups.*;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Arm.ArmState;
 import frc.robot.Constants.Direction;
+import frc.robot.Constants.JoystickConstants;
 import frc.robot.auto.ZeroAuto;
 
 public class RobotContainer {
@@ -59,12 +60,14 @@ public class RobotContainer {
   private final JoystickButton raiseClimberButton = new JoystickButton(secondaryJoystick, Constants.JoystickConstants.SecondaryJoystick.raiseClimber);
   private final JoystickButton lowerClimberButton = new JoystickButton(secondaryJoystick, Constants.JoystickConstants.SecondaryJoystick.lowerClimber);
   private final JoystickButton runNeckAndShootButton = new JoystickButton(secondaryJoystick, Constants.JoystickConstants.SecondaryJoystick.runNeckAndShoot);
+  private final JoystickButton shootInButton = new JoystickButton(secondaryJoystick, Constants.JoystickConstants.SecondaryJoystick.shootIn);
   private final JoystickButton lowerArmIntakeAndFeederButton = new JoystickButton(secondaryJoystick, Constants.JoystickConstants.SecondaryJoystick.moveArmIntakeAndFeed);
   private final JoystickButton feederAndNeckButton = new JoystickButton(secondaryJoystick, Constants.JoystickConstants.SecondaryJoystick.feederAndNeck);
   private final JoystickButton halfPowerButton = new JoystickButton(rightJoystick, Constants.JoystickConstants.RightJoystick.halfPowerToggle);
   private final JoystickButton flipDrivetrainToggleButton = new JoystickButton(rightJoystick, Constants.JoystickConstants.RightJoystick.flipDrivetrainToggle);
   private final JoystickButton moveArmAndIntakeBackwardsButton = new JoystickButton(secondaryJoystick, Constants.JoystickConstants.SecondaryJoystick.moveArmAndIntakeBackwards);
   private final JoystickButton climbAutoButton = new JoystickButton(rightJoystick, Constants.JoystickConstants.RightJoystick.climbAuto);
+  private final JoystickButton vomitButton = new JoystickButton(secondaryJoystick, Constants.JoystickConstants.SecondaryJoystick.vomit);
 
   // Commands
   private final Drive drive = new Drive(drivetrain, leftJoystick, rightJoystick, PowerOutput.FULL_POWER);
@@ -80,6 +83,8 @@ public class RobotContainer {
   private final RunNeck runNeck = new RunNeck(neck, Direction.FORWARDS);
   private final RunNeck runNeckBackwards = new RunNeck(neck, Direction.BACKWARDS);
   private final Shoot shoot = new Shoot(shooter, Constants.ShooterConstants.targetVelocity);
+  private final ShootIn shootIn = new ShootIn(shooter);
+  private final MoveNeckAndFeederBackwards vomit = new MoveNeckAndFeederBackwards(feeder, neck);
   private final NeckAndShoot neckAndShoot = new NeckAndShoot(feeder,neck, shooter);
   private final ArmIntakeAndFeeder armIntakeAndFeeder = new ArmIntakeAndFeeder(arm, intake, feeder,neck);
   private final HalfPower halfPower = new HalfPower(drivetrain, true);
@@ -126,6 +131,8 @@ public class RobotContainer {
     // lowerClimberButton.whenPressed(lowerClimber);
     runNeckAndShootButton.whenPressed(neckAndShoot);
     runNeckAndShootButton.whenHeld(shoot);
+    shootInButton.whenHeld(shootIn); 
+    vomitButton.whenHeld(vomit);
     lowerArmIntakeAndFeederButton.whenHeld(armIntakeAndFeeder);
     lowerArmIntakeAndFeederButton.whenReleased(new MoveArm(arm, ArmState.HIGH));
     lowerArmIntakeAndFeederButton.whenReleased(new RunNeck(neck, Direction.BACKWARDS).withTimeout(0.5));

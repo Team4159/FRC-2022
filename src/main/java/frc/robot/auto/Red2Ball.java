@@ -1,6 +1,7 @@
 package frc.robot.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -37,9 +38,12 @@ public class Red2Ball extends SequentialCommandGroup{
                     new MoveArm(arm, ArmState.HIGH).withTimeout(0.3),
                     new MoveDistance(drivetrain, 4).withTimeout(4.7), //4.8
                     new ParallelCommandGroup(
-                        new NeckAndShoot(feeder, neck, shooter),
-                        new Shoot(shooter, Constants.ShooterConstants.targetVelocity)
-                    ).withTimeout(5)
+                        new Shoot(shooter, Constants.ShooterConstants.targetVelocity),
+                        new ParallelCommandGroup(
+                            new WaitCommand(0.5),
+                            new NeckAndShoot(feeder, neck, shooter)
+                        )
+                    ).withTimeout(7.5)
                 )
             );
     }

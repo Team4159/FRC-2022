@@ -90,8 +90,8 @@ public class Drivetrain extends SubsystemBase {
     leftMotors.setInverted(true);
 
     if (climbState) {
-      leftMotors.set(0.125);
-      rightMotors.set(0.125);
+      leftMotors.set(0.15);
+      rightMotors.set(0.15);
     } else {
       if (orientation == Orientation.BACKWARD) {
         double temp = leftSpeed * -1;
@@ -157,8 +157,8 @@ public class Drivetrain extends SubsystemBase {
   public void turnDegrees(double angle) { 
     
     double output = angularDriveTrainPID.calculate(getAngle(), angle); // - 
-    if(output > 0.2 || output < -0.2) {
-      output = 0.2;
+    if(output > 0.3 || output < -0.3) {
+      output = 0.3;
     }
 
     leftMotors.set(output);

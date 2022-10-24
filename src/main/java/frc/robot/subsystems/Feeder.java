@@ -13,7 +13,7 @@ public class Feeder extends SubsystemBase {
     public Feeder() {
         feederSpark = new CANSparkMax(Constants.CanIds.feederSpark, MotorType.kBrushless);
 
-        feederSpark.setInverted(true);
+        feederSpark.setInverted(false);
     }
 
     public void runFeeder(Direction direction) {

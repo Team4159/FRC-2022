@@ -41,7 +41,7 @@ public class Blue1Ball extends SequentialCommandGroup{
                 new Shoot(shooter, Constants.ShooterConstants.targetVelocity),
                 new NeckAndShoot(feeder, neck, shooter)
             ).withTimeout(3),
-            new DriveWithoutContols(drivetrain, 0.2).withTimeout(1.5),
+            new DriveWithoutContols(drivetrain, 0.25).withTimeout(1.75),
             new MoveArm(arm, ArmState.HIGH).withTimeout(0.3)
         );
     }
