@@ -36,7 +36,6 @@ public class AutoSelector {
         blueAuto10 = new Blue2Ball(drivetrain, arm, intake, feeder, neck, shooter);
         zeroAuto = new ZeroAuto(drivetrain, arm, intake, feeder, neck, shooter);
         configureAutoSelector();
-        
     }
 
     public void configureAutoSelector() {
@@ -55,6 +54,4 @@ public class AutoSelector {
     public Command getSelectedAuto() {
         return autoSelector.getSelected().withTimeout(15);
     }
-
-
 }

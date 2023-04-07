@@ -4,43 +4,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
-import java.util.function.Consumer;
-
-import edu.wpi.first.cameraserver.CameraServer;
-import frc.robot.subsystems.Drivetrain;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.*;
-import frc.robot.subsystems.*;
-import frc.robot.subsystems.Arm;
-// import frc.robot.subsystems.Climber;
-// import frc.robot.subsystems.Climber.ClimberState;
-import frc.robot.trajectories.Trajectories;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Feeder;
-import frc.robot.subsystems.Intake;
-import frc.robot.commands.AutoCommands.MoveDistance;
-import frc.robot.commands.AutoCommands.TurnDegrees;
-import frc.robot.commands.CommandGroups.ArmIntakeAndFeeder;
-import frc.robot.commands.CommandGroups.NeckAndShoot;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Arm.ArmState;
-import frc.robot.Constants.Direction;
-
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -49,40 +16,21 @@ import frc.robot.Constants.Direction;
  * project.
  */
 public class Robot extends TimedRobot {
-  
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-  private Dashboard dashboard;
 
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
 
-  NetworkTableEntry shooterEncoder;
-  NetworkTableEntry distanceValue;
-  NetworkTableEntry distancePercentageOutput;
-  NetworkTableEntry rotationValue;
-  NetworkTableEntry rotationPercentageOutput;
-
   @Override
   public void robotInit() {
     // Instantiate our RobotContainer. This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    dashboard = new Dashboard(m_robotContainer);
     m_robotContainer.drivetrain.zeroSensors();
     CameraServer.startAutomaticCapture();
-
-    NetworkTableInstance instance = NetworkTableInstance.getDefault();
-
-    NetworkTable table = instance.getTable("datatable");
-
-    shooterEncoder = table.getEntry("Shoot Encoder Values");
-    distanceValue = table.getEntry("Distance Encder Value");
-    distancePercentageOutput = table.getEntry("Distance Percentage Output");
-    rotationValue = table.getEntry("Rotation Encoder Value");
-    rotationPercentageOutput = table.getEntry("Rotation Percentage Output");
   }
 
   /**
@@ -101,16 +49,6 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    dashboard.update();
-    m_robotContainer.getArm().setDefaultCommand(new MoveArm(m_robotContainer.getArm(), ArmState.HIGH));
-    shooterEncoder.setDouble(m_robotContainer.getShooter().getVelocity());
-    distanceValue.setDouble(m_robotContainer.getDriveTrain().getRobotPosition());
-    distancePercentageOutput.setDouble(m_robotContainer.getDriveTrain().getRightTalon().get());
-    rotationValue.setDouble(m_robotContainer.getDriveTrain().getAngle());
-    rotationPercentageOutput.setDouble(m_robotContainer.getDriveTrain().getRightTalon().get());
-    //System.out.println(m_robotContainer.getArm().getEncoderRaw());
-    //System.out.println("Elevator encoder: " + m_robotContainer.getClimber().getElevatorEncoders());
-    //System.out.println(m_robotContainer.getDriveTrain().getAngle());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -150,22 +88,14 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     //m_robotContainer.zeroSubsystems();
-    if (m_autonomousCommand != null) {
+    if (m_autonomousCommand != null)
       m_autonomousCommand.cancel();
-    }
-    
   }
 
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    //m_robotContainer.getClimber().climberTalonOne.set(0.1);
-    // if(m_robotContainer.getSecJoystick().getRawButton(16)) {
-    //   m_robotContainer.getShooter().getRightShooterTalon().set(1);
-    // }
-    //System.out.println(m_robotContainer.getDriveTrain().getAngle());
-    //Shuffleboard.getTab("Test").add("QWERTY", m_robotContainer.getShooter().getVelocity()).withWidget(BuiltInWidgets.kGraph);
   }
 
   @Override

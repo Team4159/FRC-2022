@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-import com.ctre.phoenix.sensors.Pigeon2;
-import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -13,14 +11,9 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.DriveTrainConstants;
-import frc.robot.commands.Drive;
-
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -67,8 +60,8 @@ public class Drivetrain extends SubsystemBase {
     
     pigeon = new WPI_PigeonIMU(Constants.CanIds.pigeonId);
 
-    powerOutput = powerOutput.FULL_POWER;
-    orientation = orientation.FORWARD;
+    powerOutput = PowerOutput.FULL_POWER;
+    orientation = Orientation.FORWARD;
     climbState = false;
 
     kinematics = new DifferentialDriveKinematics(Constants.DriveTrainConstants.trackWidth);

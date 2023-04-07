@@ -9,7 +9,6 @@ import java.lang.Math;
 public class Constants {
 
     public class CanIds {
-        //Ports??
         public final static int pigeonId = 0;
         public final static int rightFrontTalon = 1;
         public final static int rightRearTalon = 2;
@@ -26,7 +25,6 @@ public class Constants {
         public final static int climberSpark2 = 8;
         public final static int climberTalon1 =  14;
         public final static int climberTalon2 = 15;
-        
     }
 
     public class JoystickConstants {
@@ -135,10 +133,7 @@ public class Constants {
 
     public static class IntakeAndArmConstants {
         public final static double intakeSpeed = 0.6;
-        public final static double backwardsIntakeSpeed = -0.6;
-        
-        public final static double raiseArmSpeed = 0.1;
-        public final static double lowerArmSpeed = -0.1;
+        public final static double armSpeed = 0.1;
 
         public final static int encoderChannelA = 0;
         public final static int encoderChannelB = 1;
@@ -156,12 +151,10 @@ public class Constants {
 
     public static class FeederConstants {
         public final static double feederSpeed = 1;
-        public final static double backwardsFeederSpeed = -1;
     }
 
     public static class NeckConstants {
         public final static double neckSpeed = 1;
-        public final static double backwardsNeckSpeed = -1;
     }
 
     public static class ShooterConstants {

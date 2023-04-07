@@ -1,13 +1,13 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.math.controller.PIDController;
 
 // intake "arm"
 public class Arm extends SubsystemBase{
@@ -22,16 +22,11 @@ public class Arm extends SubsystemBase{
     
     private ArmState armState;
 
-    private double lowSetPoint, highSetPoint;
-
     public Arm() {
         armSpark = new CANSparkMax(Constants.CanIds.armSpark, MotorType.kBrushless);
         armSpark.setInverted(false);
 
         encoder = armSpark.getEncoder();
-
-        lowSetPoint = Constants.IntakeAndArmConstants.pidLowSetPoint;
-        highSetPoint = Constants.IntakeAndArmConstants.pidHighSetPoint;
 
         pid = new PIDController(
             Constants.IntakeAndArmConstants.kP, 
@@ -42,16 +37,6 @@ public class Arm extends SubsystemBase{
         armState = ArmState.HIGH;
     }
 
-    public void setArmSpeed(double speed) {
-        if (speed >= 0.6) {
-            speed = 0.6;
-        } else if (speed <= -0.6) {
-            speed = -0.6;
-        }
-
-        armSpark.set(speed);
-    }
-
     public double getEncoderPosition() {
         return encoder.getPosition();
     }
@@ -60,23 +45,13 @@ public class Arm extends SubsystemBase{
         return encoder;
     }
 
-    public double calculatePID(double encoderRaw, double setPoint) {
-        if (atSetpoint(setPoint, Constants.IntakeAndArmConstants.tolerance)) {
-            return 0;
-        } else {
-            return pid.calculate(getEncoderPosition(), setPoint);
-        }
+    public double calculatePID(double setPoint) {
+        if (atSetpoint(setPoint, Constants.IntakeAndArmConstants.tolerance)) return 0;
+        return pid.calculate(getEncoderPosition(), setPoint);
     }
     @Override
     public void periodic() {
-        switch (armState) {
-            case HIGH:
-                setArmSpeed(calculatePID(getEncoderPosition(), highSetPoint));
-                break;
-            case LOW:
-                setArmSpeed(calculatePID(getEncoderPosition(), lowSetPoint));
-                break;
-        }
+        armSpark.set(MathUtil.clamp(calculatePID(armState.equals(ArmState.HIGH) ? Constants.IntakeAndArmConstants.pidHighSetPoint : Constants.IntakeAndArmConstants.pidLowSetPoint), -0.6, 0.6));
     }
 
     public void runArm(ArmState armState) {
@@ -101,5 +76,4 @@ public class Arm extends SubsystemBase{
         armSpark.close();
         pid.close();
     }
-
 }
