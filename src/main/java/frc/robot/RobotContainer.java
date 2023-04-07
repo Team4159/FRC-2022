@@ -29,7 +29,7 @@ public class RobotContainer {
   private final Arm arm = new Arm();
   private final SingleMotorSubsystem intake = new SingleMotorSubsystem(Constants.CanIds.intakeSpark, Constants.IntakeAndArmConstants.intakeSpeed);
   private final SingleMotorSubsystem feeder = new SingleMotorSubsystem(Constants.CanIds.feederSpark, Constants.FeederConstants.feederSpeed);
-  private final SingleMotorSubsystem neck = new SingleMotorSubsystem(Constants.CanIds.neckSpark, Constants.NeckConstants.neckSpeed);
+  private final SingleMotorSubsystem neck   = new SingleMotorSubsystem(Constants.CanIds.neckSpark, Constants.NeckConstants.neckSpeed);
   private final Shooter shooter = new Shooter();
   // private final Climber climber = new Climber();
 
